@@ -2,7 +2,7 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8">
-  <title>ดาวน์โหลดไฟล์</title>
+  <title>ดาวน์โหลดไฟล์เลย</title>
   <style>
     body {
       font-family: 'Mali', sans-serif;
@@ -34,9 +34,11 @@
   <script>
     function downloadFile() {
       const link = document.createElement('a');
-      link.href = 'https://drive.google.com/uc?export=download&id=1WtD-LOzB2ujdxtbKTS3EznBsYEymBnC0'; // ✅ ตำแหน่งไฟล์ที่อยู่ในเว็บ
-      link.download = 'Aircomp.xlsx';   // ✅ ตั้งชื่อไฟล์ขณะดาวน์โหลด
+      link.href = 'https://drive.google.com/uc?export=download&id=1WtD-LOzB2ujdxtbKTS3EznBsYEymBnC0';
+      link.setAttribute('download', 'Aircomp.xlsx');
+      document.body.appendChild(link);
       link.click();
+      document.body.removeChild(link);
     }
   </script>
 
