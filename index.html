@@ -27,15 +27,15 @@
 <body>
 
   <h1>📁 ดาวน์โหลดไฟล์แมวม๊าว</h1>
-  <p>คลิกเพื่อดาวน์โหลดไฟล์ Excel ที่อัปเดตจาก SQL</p>
+  <p>คลิกเพื่อดาวน์โหลดไฟล์ Excel ที่อัปเดตจาก Google Sheets</p>
 
   <button onclick="downloadFile()">📥 ดาวน์โหลดไฟล์</button>
 
   <script>
     function downloadFile() {
       const link = document.createElement('a');
-      link.href = 'https://drive.google.com/uc?export=download&id=1WtD-LOzB2ujdxtbKTS3EznBsYEymBnC0';
-      link.setAttribute('download', 'Aircomp.xlsx');
+      link.href = 'https://docs.google.com/spreadsheets/d/1WtD-LOzB2ujdxtbKTS3EznBsYEymBnC0/export?format=xlsx';
+      link.download = 'Aircomp.xlsx';
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
