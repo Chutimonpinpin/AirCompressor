@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>ดาวน์โหลดไฟล์</title>
+  <style>
+    body {
+      font-family: 'Mali', sans-serif;
+      text-align: center;
+      padding: 50px;
+      background-color: #fff0f5;
+    }
+    button {
+      background-color: #ffb6c1;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 18px;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #ff69b4;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>📁 ดาวน์โหลดไฟล์แมวม๊าว</h1>
+  <p>คลิกเพื่อดาวน์โหลดไฟล์ Excel ที่อัปเดตจาก SQL</p>
+
+  <button onclick="downloadFile()">📥 ดาวน์โหลดไฟล์</button>
+
+  <script>
+    function downloadFile() {
+      const link = document.createElement('a');
+      link.href = 'Aircomp.xlsx'; // ✅ ตำแหน่งไฟล์ที่อยู่ในเว็บ
+      link.download = 'Aircomp.xlsx';   // ✅ ตั้งชื่อไฟล์ขณะดาวน์โหลด
+      link.click();
+    }
+  </script>
+
+</body>
+</html>
