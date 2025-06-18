@@ -15,7 +15,9 @@
 
     body {
       font-family: 'Mali', sans-serif;
-      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 25%, #60a5fa 50%, #93c5fd 75%, #dbeafe 100%);
+      background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c, #4facfe, #00f2fe);
+      background-size: 400% 400%;
+      animation: gradientWave 8s ease infinite;
       min-height: 100vh;
       display: flex;
       align-items: center;
@@ -26,8 +28,14 @@
       padding: 50px 20px;
     }
 
-    /* Animated background elements */
-    .bg-decoration {
+    @keyframes gradientWave {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Animated background particles */
+    .particles {
       position: absolute;
       width: 100%;
       height: 100%;
@@ -35,141 +43,163 @@
       z-index: 0;
     }
 
-    .floating-shape {
+    .particle {
       position: absolute;
-      opacity: 0.1;
+      width: 8px;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
       animation: float 6s ease-in-out infinite;
     }
 
-    .shape-1 {
-      top: 10%;
-      left: 10%;
-      width: 100px;
-      height: 100px;
-      background: rgba(59, 130, 246, 0.3);
-      border-radius: 50%;
-      animation-delay: 0s;
-    }
-
-    .shape-2 {
-      top: 60%;
-      right: 15%;
-      width: 80px;
-      height: 80px;
-      background: rgba(147, 197, 253, 0.3);
-      border-radius: 20px;
-      animation-delay: 2s;
-    }
-
-    .shape-3 {
-      bottom: 20%;
-      left: 20%;
-      width: 120px;
-      height: 120px;
-      background: rgba(96, 165, 250, 0.3);
-      border-radius: 50%;
-      animation-delay: 4s;
-    }
+    .particle:nth-child(1) { top: 20%; left: 20%; animation-delay: 0s; }
+    .particle:nth-child(2) { top: 80%; left: 80%; animation-delay: 2s; }
+    .particle:nth-child(3) { top: 40%; right: 30%; animation-delay: 4s; }
+    .particle:nth-child(4) { bottom: 60%; left: 70%; animation-delay: 1s; }
+    .particle:nth-child(5) { top: 60%; left: 10%; animation-delay: 3s; }
+    .particle:nth-child(6) { bottom: 40%; right: 10%; animation-delay: 5s; }
 
     @keyframes float {
-      0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-20px) rotate(180deg); }
+      0%, 100% { 
+        transform: translateY(0px) translateX(0px) scale(1);
+        opacity: 0.8;
+      }
+      33% { 
+        transform: translateY(-30px) translateX(20px) scale(1.2);
+        opacity: 1;
+      }
+      66% { 
+        transform: translateY(20px) translateX(-15px) scale(0.8);
+        opacity: 0.6;
+      }
     }
 
     .container {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(20px);
-      border-radius: 30px;
-      padding: 60px 50px;
-      box-shadow: 0 25px 50px rgba(30, 58, 138, 0.2);
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(25px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 35px;
+      padding: 70px 60px;
+      box-shadow: 
+        0 25px 50px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
       text-align: center;
-      max-width: 600px;
+      max-width: 650px;
       width: 100%;
       position: relative;
       z-index: 1;
-      border: 1px solid rgba(147, 197, 253, 0.3);
-      transition: all 0.3s ease;
+      transition: all 0.4s ease;
+      transform: translateY(0);
     }
 
     .container:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 30px 60px rgba(30, 58, 138, 0.3);
+      transform: translateY(-10px);
+      box-shadow: 
+        0 35px 70px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
     }
 
     h1 {
-      font-size: 2.8rem;
+      font-size: 3.2rem;
       font-weight: 700;
-      color: #1e3a8a;
-      margin-bottom: 20px;
-      background: linear-gradient(45deg, #1e3a8a, #3b82f6, #60a5fa);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      text-shadow: 0 2px 4px rgba(30, 58, 138, 0.1);
-      animation: titleGlow 3s ease-in-out infinite alternate;
+      color: #ffffff;
+      margin-bottom: 25px;
+      text-shadow: 
+        0 4px 8px rgba(0, 0, 0, 0.3),
+        0 0 20px rgba(255, 255, 255, 0.5);
+      animation: titlePulse 4s ease-in-out infinite;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
-    @keyframes titleGlow {
-      0% { filter: brightness(1); }
-      100% { filter: brightness(1.2); }
+    @keyframes titlePulse {
+      0%, 100% { 
+        transform: scale(1);
+        text-shadow: 
+          0 4px 8px rgba(0, 0, 0, 0.3),
+          0 0 20px rgba(255, 255, 255, 0.5);
+      }
+      50% { 
+        transform: scale(1.03);
+        text-shadow: 
+          0 6px 12px rgba(0, 0, 0, 0.4),
+          0 0 30px rgba(255, 255, 255, 0.8);
+      }
     }
 
     .cat-emoji {
-      font-size: 2rem;
-      animation: bounce 2s infinite;
+      font-size: 2.5rem;
+      animation: bounce 3s infinite;
       display: inline-block;
-      margin: 0 15px;
+      margin: 0 20px;
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
     }
 
     @keyframes bounce {
-      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-      40% { transform: translateY(-10px); }
-      60% { transform: translateY(-5px); }
+      0%, 20%, 50%, 80%, 100% { 
+        transform: translateY(0) rotate(0deg); 
+      }
+      40% { 
+        transform: translateY(-15px) rotate(-5deg); 
+      }
+      60% { 
+        transform: translateY(-8px) rotate(5deg); 
+      }
     }
 
     p {
-      font-size: 1.3rem;
-      color: #1e40af;
+      font-size: 1.4rem;
+      color: #ffffff;
       margin-bottom: 50px;
-      line-height: 1.6;
+      line-height: 1.7;
       font-weight: 500;
-      max-width: 400px;
+      max-width: 500px;
       margin-left: auto;
       margin-right: auto;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      opacity: 0.95;
     }
 
     button {
-      background: linear-gradient(135deg, #1e3a8a, #3b82f6, #60a5fa);
+      background: linear-gradient(135deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3);
+      background-size: 300% 300%;
+      animation: buttonGradient 3s ease infinite;
       color: white;
       border: none;
-      padding: 20px 40px;
-      font-size: 1.3rem;
+      padding: 22px 45px;
+      font-size: 1.4rem;
       font-weight: 600;
-      border-radius: 50px;
+      border-radius: 60px;
       cursor: pointer;
       transition: all 0.4s ease;
-      box-shadow: 0 8px 20px rgba(30, 58, 138, 0.3);
+      box-shadow: 
+        0 12px 25px rgba(0, 0, 0, 0.2),
+        0 0 20px rgba(255, 255, 255, 0.1);
       font-family: 'Mali', sans-serif;
       position: relative;
       overflow: hidden;
-      background-size: 200% 200%;
-      animation: gradientShift 4s ease infinite;
-      min-width: 250px;
+      min-width: 280px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(10px);
     }
 
-    @keyframes gradientShift {
+    @keyframes buttonGradient {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
 
     button:hover {
-      transform: translateY(-3px) scale(1.05);
-      box-shadow: 0 15px 30px rgba(30, 58, 138, 0.4);
+      transform: translateY(-5px) scale(1.08);
+      box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.3),
+        0 0 30px rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.6);
     }
 
     button:active {
-      transform: translateY(-1px) scale(0.98);
+      transform: translateY(-2px) scale(1.02);
     }
 
     button::before {
@@ -179,45 +209,60 @@
       left: -100%;
       width: 100%;
       height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-      transition: left 0.5s;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      transition: left 0.6s;
     }
 
     button:hover::before {
       left: 100%;
     }
 
-    /* Sparkle effect */
+    /* Enhanced sparkle effects */
+    .sparkles {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
     .sparkle {
       position: absolute;
-      width: 4px;
-      height: 4px;
-      background: #60a5fa;
+      width: 6px;
+      height: 6px;
+      background: radial-gradient(circle, #ffffff, #ffd700);
       border-radius: 50%;
-      animation: sparkle 2s infinite;
+      animation: sparkle 2.5s infinite;
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
     }
 
-    .sparkle:nth-child(1) {
-      top: 20%;
-      left: 20%;
-      animation-delay: 0s;
-    }
-
-    .sparkle:nth-child(2) {
-      top: 80%;
-      right: 20%;
-      animation-delay: 0.5s;
-    }
-
-    .sparkle:nth-child(3) {
-      bottom: 60%;
-      left: 80%;
-      animation-delay: 1s;
-    }
+    .sparkle:nth-child(1) { top: 15%; left: 15%; animation-delay: 0s; }
+    .sparkle:nth-child(2) { top: 85%; right: 15%; animation-delay: 0.8s; }
+    .sparkle:nth-child(3) { bottom: 70%; left: 85%; animation-delay: 1.6s; }
+    .sparkle:nth-child(4) { top: 45%; left: 5%; animation-delay: 0.4s; }
+    .sparkle:nth-child(5) { top: 25%; right: 10%; animation-delay: 1.2s; }
+    .sparkle:nth-child(6) { bottom: 30%; left: 25%; animation-delay: 2s; }
 
     @keyframes sparkle {
-      0%, 100% { opacity: 0; transform: scale(0); }
-      50% { opacity: 1; transform: scale(1); }
+      0%, 100% { 
+        opacity: 0; 
+        transform: scale(0) rotate(0deg); 
+      }
+      50% { 
+        opacity: 1; 
+        transform: scale(1.5) rotate(180deg); 
+      }
+    }
+
+    /* Icon enhancement */
+    .download-icon {
+      font-size: 1.2em;
+      margin-right: 10px;
+      animation: iconBounce 2s infinite;
+    }
+
+    @keyframes iconBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-3px); }
     }
 
     /* Mobile responsiveness */
@@ -227,12 +272,36 @@
       }
       
       .container {
-        padding: 40px 30px;
-        border-radius: 20px;
+        padding: 50px 40px;
+        border-radius: 25px;
       }
       
       h1 {
-        font-size: 2.2rem;
+        font-size: 2.5rem;
+        white-space: normal;
+        line-height: 1.2;
+      }
+      
+      .cat-emoji {
+        font-size: 2rem;
+        margin: 0 15px;
+      }
+      
+      p {
+        font-size: 1.2rem;
+        margin-bottom: 40px;
+      }
+      
+      button {
+        padding: 20px 40px;
+        font-size: 1.3rem;
+        min-width: 250px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 2rem;
       }
       
       .cat-emoji {
@@ -242,7 +311,6 @@
       
       p {
         font-size: 1.1rem;
-        margin-bottom: 40px;
       }
       
       button {
@@ -251,45 +319,37 @@
         min-width: 220px;
       }
     }
-
-    @media (max-width: 480px) {
-      h1 {
-        font-size: 1.8rem;
-      }
-      
-      p {
-        font-size: 1rem;
-      }
-      
-      button {
-        padding: 16px 30px;
-        font-size: 1.1rem;
-        min-width: 200px;
-      }
-    }
   </style>
 </head>
 <body>
-  <div class="bg-decoration">
-    <div class="floating-shape shape-1"></div>
-    <div class="floating-shape shape-2"></div>
-    <div class="floating-shape shape-3"></div>
+  <div class="particles">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
   </div>
 
   <div class="container">
-    <div class="sparkle"></div>
-    <div class="sparkle"></div>
-    <div class="sparkle"></div>
+    <div class="sparkles">
+      <div class="sparkle"></div>
+      <div class="sparkle"></div>
+      <div class="sparkle"></div>
+      <div class="sparkle"></div>
+      <div class="sparkle"></div>
+      <div class="sparkle"></div>
+    </div>
     
     <h1>
-      <span class="cat-emoji">🐱</span>
-      ดาวน์โหลดไฟล์แมวม๊าว
-      <span class="cat-emoji">🐱</span>
+      <span class="cat-emoji">🐱</span>ดาวน์โหลดไฟล์แมวม๊าว<span class="cat-emoji">🐱</span>
     </h1>
     
     <p>คลิกเพื่อดาวน์โหลดไฟล์ Excel ที่เชื่อมต่อข้อมูลกับ SQL และอัปเดตแบบ Realtime</p>
 
-    <button onclick="downloadFile()">📥 ดาวน์โหลดไฟล์</button>
+    <button onclick="downloadFile()">
+      <span class="download-icon">📥</span>ดาวน์โหลดไฟล์
+    </button>
   </div>
 
   <script>
@@ -300,6 +360,13 @@
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+      
+      // เพิ่มเอฟเฟกต์เมื่อคลิก
+      const button = event.target;
+      button.style.transform = 'translateY(-2px) scale(0.95)';
+      setTimeout(() => {
+        button.style.transform = '';
+      }, 150);
     }
   </script>
 </body>
