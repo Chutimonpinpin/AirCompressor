@@ -536,10 +536,10 @@
       <div class="download-card unavailable">
         <div class="card-header">
           <div class="card-icon">📈</div>
-          <h2 class="card-title">-</h2>
+          <h2 class="card-title">กุมภาพันธ์ 2025</h2>
         </div>
         <p class="card-description">
-          -<br>
+          ไฟล์ข้อมูลประจำเดือนกุมภาพันธ์<br>
           กำลังเตรียมข้อมูล
         </p>
         <button class="download-button unavailable" disabled>
@@ -551,13 +551,13 @@
       <div class="download-card unavailable">
         <div class="card-header">
           <div class="card-icon">📋</div>
-          <h2 class="card-title">-</h2>
+          <h2 class="card-title">มีนาคม 2025</h2>
         </div>
         <p class="card-description">
-          -<br>
+          ไฟล์ข้อมูลประจำเดือนมีนาคม<br>
           กำลังเตรียมข้อมูล
         </p>
-        <button class="-" disabled>
+        <button class="download-button unavailable" disabled>
           <span>⏳ ยังไม่พร้อม</span>
         </button>
         <div class="coming-soon">เร็วๆ นี้</div>
@@ -566,10 +566,10 @@
       <div class="download-card unavailable">
         <div class="card-header">
           <div class="card-icon">🔄</div>
-          <h2 class="card-title">-</h2>
+          <h2 class="card-title">เมษายน 2025</h2>
         </div>
         <p class="card-description">
-          -<br>
+          ไฟล์ข้อมูลประจำเดือนเมษายน<br>
           กำลังเตรียมข้อมูล
         </p>
         <button class="download-button unavailable" disabled>
@@ -581,10 +581,10 @@
       <div class="download-card unavailable">
         <div class="card-header">
           <div class="card-icon">⚡</div>
-          <h2 class="card-title">-</h2>
+          <h2 class="card-title">พฤษภาคม 2025</h2>
         </div>
         <p class="card-description">
-          -<br>
+          ไฟล์ข้อมูลประจำเดือนพฤษภาคม<br>
           กำลังเตรียมข้อมูล
         </p>
         <button class="download-button unavailable" disabled>
@@ -596,10 +596,10 @@
       <div class="download-card unavailable">
         <div class="card-header">
           <div class="card-icon">🎯</div>
-          <h2 class="card-title">-</h2>
+          <h2 class="card-title">มิถุนายน 2025</h2>
         </div>
         <p class="card-description">
-          -<br>
+          ไฟล์ข้อมูลประจำเดือนมิถุนายน<br>
           กำลังเตรียมข้อมูล
         </p>
         <button class="download-button unavailable" disabled>
@@ -640,9 +640,9 @@
         if (progress >= 100) {
           clearInterval(progressInterval);
           
-          // Start actual download
+          // Start actual download as Excel file
           const link = document.createElement('a');
-          link.href = 'https://docs.google.com/spreadsheets/d/1IjrFBHOzfrDirCkn8cf3dukpAH4v7DiU/edit?gid=436301912#gid=436301912';
+          link.href = 'https://docs.google.com/spreadsheets/d/1IjrFBHOzfrDirCkn8cf3dukpAH4v7DiU/export?format=xlsx&gid=436301912';
           link.download = `PowerMeter_PD7_${new Date().toISOString().split('T')[0]}.xlsx`;
           document.body.appendChild(link);
           link.click();
