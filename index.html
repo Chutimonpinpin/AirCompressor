@@ -640,9 +640,9 @@
         if (progress >= 100) {
           clearInterval(progressInterval);
           
-          // Start actual download as Excel file
+          // Start actual download
           const link = document.createElement('a');
-          link.href = 'https://docs.google.com/spreadsheets/d/1IjrFBHOzfrDirCkn8cf3dukpAH4v7DiU/export?format=xlsx&gid=436301912';
+          link.href = 'https://docs.google.com/spreadsheets/d/1IjrFBHOzfrDirCkn8cf3dukpAH4v7DiU/edit?gid=436301912#gid=436301912';
           link.download = `PowerMeter_PD7_${new Date().toISOString().split('T')[0]}.xlsx`;
           document.body.appendChild(link);
           link.click();
