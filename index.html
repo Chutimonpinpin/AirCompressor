@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🐱 ดาวน์โหลดไฟล์แมวม๊าว</title>
+  <title>⚡POWER METER </title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Mali:wght@300;400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
     
     * {
       margin: 0;
@@ -14,315 +14,444 @@
     }
 
     body {
-      font-family: 'Mali', sans-serif;
-      background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c, #4facfe, #00f2fe);
-      background-size: 400% 400%;
-      animation: gradientWave 8s ease infinite;
+      font-family: 'Rajdhani', sans-serif;
+      background: linear-gradient(45deg, #0a0a0a, #001133, #002244, #003366, #004488, #0055aa);
+      background-size: 600% 600%;
+      animation: quantumFlow 12s ease infinite;
       min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
       overflow-x: hidden;
-      text-align: center;
-      padding: 50px 20px;
+      position: relative;
     }
 
-    @keyframes gradientWave {
+    @keyframes quantumFlow {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
 
-    /* Animated background particles */
-    .particles {
-      position: absolute;
+    /* Cyber Grid Background */
+    .cyber-grid {
+      position: fixed;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
-      overflow: hidden;
+      background-image: 
+        linear-gradient(rgba(0, 170, 255, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 170, 255, 0.1) 1px, transparent 1px);
+      background-size: 50px 50px;
+      animation: gridPulse 4s ease-in-out infinite;
       z-index: 0;
+    }
+
+    @keyframes gridPulse {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 0.6; }
+    }
+
+    /* Floating Particles */
+    .quantum-particles {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
     }
 
     .particle {
       position: absolute;
-      width: 8px;
-      height: 8px;
-      background: rgba(255, 255, 255, 0.8);
+      width: 4px;
+      height: 4px;
+      background: linear-gradient(45deg, #00aaff, #0088ff, #0066ff);
       border-radius: 50%;
-      animation: float 6s ease-in-out infinite;
+      animation: quantumFloat 8s linear infinite;
+      box-shadow: 0 0 20px rgba(0, 170, 255, 0.8);
     }
 
-    .particle:nth-child(1) { top: 20%; left: 20%; animation-delay: 0s; }
-    .particle:nth-child(2) { top: 80%; left: 80%; animation-delay: 2s; }
-    .particle:nth-child(3) { top: 40%; right: 30%; animation-delay: 4s; }
-    .particle:nth-child(4) { bottom: 60%; left: 70%; animation-delay: 1s; }
-    .particle:nth-child(5) { top: 60%; left: 10%; animation-delay: 3s; }
-    .particle:nth-child(6) { bottom: 40%; right: 10%; animation-delay: 5s; }
+    .particle:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+    .particle:nth-child(2) { top: 20%; left: 80%; animation-delay: 2s; }
+    .particle:nth-child(3) { top: 80%; left: 20%; animation-delay: 4s; }
+    .particle:nth-child(4) { top: 60%; left: 90%; animation-delay: 1s; }
+    .particle:nth-child(5) { top: 40%; left: 5%; animation-delay: 3s; }
+    .particle:nth-child(6) { top: 90%; left: 70%; animation-delay: 5s; }
 
-    @keyframes float {
-      0%, 100% { 
-        transform: translateY(0px) translateX(0px) scale(1);
-        opacity: 0.8;
+    @keyframes quantumFloat {
+      0% { 
+        transform: translate(0, 0) scale(0.8);
+        opacity: 0;
       }
-      33% { 
-        transform: translateY(-30px) translateX(20px) scale(1.2);
+      20% { 
+        transform: translate(50px, -30px) scale(1.2);
         opacity: 1;
       }
-      66% { 
-        transform: translateY(20px) translateX(-15px) scale(0.8);
+      50% { 
+        transform: translate(-30px, 40px) scale(1);
+        opacity: 0.8;
+      }
+      80% { 
+        transform: translate(40px, -20px) scale(1.1);
         opacity: 0.6;
       }
+      100% { 
+        transform: translate(0, 0) scale(0.8);
+        opacity: 0;
+      }
     }
 
+    /* Main Container */
     .container {
-      background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(25px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 35px;
-      padding: 70px 60px;
-      box-shadow: 
-        0 25px 50px rgba(0, 0, 0, 0.15),
-        inset 0 1px 0 rgba(255, 255, 255, 0.3);
-      text-align: center;
-      max-width: 650px;
-      width: 100%;
       position: relative;
-      z-index: 1;
-      transition: all 0.4s ease;
-      transform: translateY(0);
+      z-index: 2;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
     }
 
-    .container:hover {
-      transform: translateY(-10px);
-      box-shadow: 
-        0 35px 70px rgba(0, 0, 0, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 60px;
+      padding: 40px 0;
     }
 
-    h1 {
-      font-size: 3.2rem;
-      font-weight: 700;
-      color: #ffffff;
-      margin-bottom: 25px;
+    .main-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 4rem;
+      font-weight: 900;
+      color: #00aaff;
       text-shadow: 
-        0 4px 8px rgba(0, 0, 0, 0.3),
-        0 0 20px rgba(255, 255, 255, 0.5);
-      animation: titlePulse 4s ease-in-out infinite;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+        0 0 20px rgba(0, 170, 255, 0.8),
+        0 0 40px rgba(0, 170, 255, 0.6),
+        0 0 60px rgba(0, 170, 255, 0.4);
+      margin-bottom: 20px;
+      animation: hologramGlow 3s ease-in-out infinite;
+      letter-spacing: 3px;
     }
 
-    @keyframes titlePulse {
+    @keyframes hologramGlow {
       0%, 100% { 
-        transform: scale(1);
         text-shadow: 
-          0 4px 8px rgba(0, 0, 0, 0.3),
-          0 0 20px rgba(255, 255, 255, 0.5);
+          0 0 20px rgba(0, 170, 255, 0.8),
+          0 0 40px rgba(0, 170, 255, 0.6),
+          0 0 60px rgba(0, 170, 255, 0.4);
       }
       50% { 
-        transform: scale(1.03);
         text-shadow: 
-          0 6px 12px rgba(0, 0, 0, 0.4),
-          0 0 30px rgba(255, 255, 255, 0.8);
+          0 0 30px rgba(0, 170, 255, 1),
+          0 0 60px rgba(0, 170, 255, 0.8),
+          0 0 90px rgba(0, 170, 255, 0.6);
       }
     }
 
-    .cat-emoji {
-      font-size: 2.5rem;
-      animation: bounce 3s infinite;
-      display: inline-block;
-      margin: 0 20px;
-      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
-    }
-
-    @keyframes bounce {
-      0%, 20%, 50%, 80%, 100% { 
-        transform: translateY(0) rotate(0deg); 
-      }
-      40% { 
-        transform: translateY(-15px) rotate(-5deg); 
-      }
-      60% { 
-        transform: translateY(-8px) rotate(5deg); 
-      }
-    }
-
-    p {
-      font-size: 1.4rem;
-      color: #ffffff;
-      margin-bottom: 50px;
-      line-height: 1.7;
+    .subtitle {
+      font-size: 1.8rem;
+      color: #66ccff;
       font-weight: 500;
-      max-width: 500px;
-      margin-left: auto;
-      margin-right: auto;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-      opacity: 0.95;
+      margin-bottom: 30px;
+      opacity: 0.9;
+      text-shadow: 0 0 15px rgba(102, 204, 255, 0.5);
     }
 
-    button {
-      background: linear-gradient(135deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3);
-      background-size: 300% 300%;
-      animation: buttonGradient 3s ease infinite;
-      color: white;
-      border: none;
-      padding: 22px 45px;
-      font-size: 1.4rem;
-      font-weight: 600;
-      border-radius: 60px;
-      cursor: pointer;
+    .status-indicator {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(0, 170, 255, 0.1);
+      border: 2px solid rgba(0, 170, 255, 0.3);
+      border-radius: 50px;
+      padding: 12px 25px;
+      font-size: 1.2rem;
+      color: #00aaff;
+      backdrop-filter: blur(10px);
+      animation: statusPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes statusPulse {
+      0%, 100% { 
+        box-shadow: 0 0 20px rgba(0, 170, 255, 0.3);
+        border-color: rgba(0, 170, 255, 0.3);
+      }
+      50% { 
+        box-shadow: 0 0 40px rgba(0, 170, 255, 0.6);
+        border-color: rgba(0, 170, 255, 0.6);
+      }
+    }
+
+    .status-dot {
+      width: 12px;
+      height: 12px;
+      background: #00ff88;
+      border-radius: 50%;
+      margin-right: 10px;
+      animation: dotBlink 1.5s ease-in-out infinite;
+      box-shadow: 0 0 15px rgba(0, 255, 136, 0.8);
+    }
+
+    @keyframes dotBlink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    /* Download Cards */
+    .download-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 40px;
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .download-card {
+      background: rgba(0, 170, 255, 0.05);
+      border: 2px solid rgba(0, 170, 255, 0.2);
+      border-radius: 25px;
+      padding: 40px 30px;
+      text-align: center;
+      backdrop-filter: blur(20px);
       transition: all 0.4s ease;
-      box-shadow: 
-        0 12px 25px rgba(0, 0, 0, 0.2),
-        0 0 20px rgba(255, 255, 255, 0.1);
-      font-family: 'Mali', sans-serif;
       position: relative;
       overflow: hidden;
-      min-width: 280px;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      backdrop-filter: blur(10px);
+      transform: perspective(1000px) rotateX(0deg);
     }
 
-    @keyframes buttonGradient {
+    .download-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(0, 170, 255, 0.1), transparent);
+      transform: rotate(45deg);
+      transition: all 0.6s ease;
+      opacity: 0;
+    }
+
+    .download-card:hover::before {
+      animation: scanLine 2s linear infinite;
+      opacity: 1;
+    }
+
+    @keyframes scanLine {
+      0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+      100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+    }
+
+    .download-card:hover {
+      transform: perspective(1000px) rotateX(5deg) translateY(-15px);
+      border-color: rgba(0, 170, 255, 0.6);
+      box-shadow: 
+        0 25px 50px rgba(0, 170, 255, 0.2),
+        0 0 50px rgba(0, 170, 255, 0.1);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 25px;
+    }
+
+    .card-icon {
+      font-size: 3rem;
+      margin-right: 15px;
+      animation: iconFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes iconFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .card-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #00aaff;
+      text-shadow: 0 0 15px rgba(0, 170, 255, 0.5);
+    }
+
+    .card-description {
+      font-size: 1.3rem;
+      color: #66ccff;
+      margin-bottom: 30px;
+      line-height: 1.6;
+      opacity: 0.9;
+    }
+
+    .download-button {
+      background: linear-gradient(135deg, #0044aa, #0066cc, #0088ff, #00aaff);
+      background-size: 300% 300%;
+      animation: buttonFlow 4s ease infinite;
+      color: white;
+      border: none;
+      padding: 18px 40px;
+      font-size: 1.4rem;
+      font-weight: 600;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 
+        0 15px 30px rgba(0, 170, 255, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      font-family: 'Rajdhani', sans-serif;
+      position: relative;
+      overflow: hidden;
+      min-width: 200px;
+      border: 2px solid rgba(0, 170, 255, 0.3);
+    }
+
+    @keyframes buttonFlow {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
 
-    button:hover {
-      transform: translateY(-5px) scale(1.08);
+    .download-button:hover {
+      transform: translateY(-5px) scale(1.05);
       box-shadow: 
-        0 20px 40px rgba(0, 0, 0, 0.3),
-        0 0 30px rgba(255, 255, 255, 0.2);
-      border-color: rgba(255, 255, 255, 0.6);
+        0 25px 50px rgba(0, 170, 255, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      border-color: rgba(0, 170, 255, 0.6);
     }
 
-    button:active {
+    .download-button:active {
       transform: translateY(-2px) scale(1.02);
     }
 
-    button::before {
+    .download-button::before {
       content: '';
       position: absolute;
       top: 0;
       left: -100%;
       width: 100%;
       height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-      transition: left 0.6s;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s ease;
     }
 
-    button:hover::before {
+    .download-button:hover::before {
       left: 100%;
     }
 
-    /* Enhanced sparkle effects */
-    .sparkles {
-      position: absolute;
+    .file-size {
+      font-size: 1.1rem;
+      color: #88ddff;
+      margin-top: 15px;
+      opacity: 0.8;
+    }
+
+    /* Progress Bar */
+    .progress-container {
       width: 100%;
+      height: 4px;
+      background: rgba(0, 170, 255, 0.2);
+      border-radius: 2px;
+      margin-top: 20px;
+      overflow: hidden;
+      display: none;
+    }
+
+    .progress-bar {
       height: 100%;
-      pointer-events: none;
+      background: linear-gradient(90deg, #00aaff, #0088ff);
+      border-radius: 2px;
+      transition: width 0.3s ease;
+      width: 0%;
     }
 
-    .sparkle {
-      position: absolute;
-      width: 6px;
-      height: 6px;
-      background: radial-gradient(circle, #ffffff, #ffd700);
-      border-radius: 50%;
-      animation: sparkle 2.5s infinite;
-      box-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+    /* Footer */
+    .footer {
+      margin-top: 80px;
+      text-align: center;
+      padding: 30px 0;
+      border-top: 1px solid rgba(0, 170, 255, 0.2);
+      width: 100%;
     }
 
-    .sparkle:nth-child(1) { top: 15%; left: 15%; animation-delay: 0s; }
-    .sparkle:nth-child(2) { top: 85%; right: 15%; animation-delay: 0.8s; }
-    .sparkle:nth-child(3) { bottom: 70%; left: 85%; animation-delay: 1.6s; }
-    .sparkle:nth-child(4) { top: 45%; left: 5%; animation-delay: 0.4s; }
-    .sparkle:nth-child(5) { top: 25%; right: 10%; animation-delay: 1.2s; }
-    .sparkle:nth-child(6) { bottom: 30%; left: 25%; animation-delay: 2s; }
-
-    @keyframes sparkle {
-      0%, 100% { 
-        opacity: 0; 
-        transform: scale(0) rotate(0deg); 
-      }
-      50% { 
-        opacity: 1; 
-        transform: scale(1.5) rotate(180deg); 
-      }
+    .footer-text {
+      color: #66ccff;
+      font-size: 1.2rem;
+      opacity: 0.8;
     }
 
-    /* Icon enhancement */
-    .download-icon {
-      font-size: 1.2em;
-      margin-right: 10px;
-      animation: iconBounce 2s infinite;
-    }
-
-    @keyframes iconBounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-3px); }
-    }
-
-    /* Mobile responsiveness */
+    /* Responsive Design */
     @media (max-width: 768px) {
-      body {
-        padding: 30px 15px;
-      }
-      
-      .container {
-        padding: 50px 40px;
-        border-radius: 25px;
-      }
-      
-      h1 {
+      .main-title {
         font-size: 2.5rem;
-        white-space: normal;
-        line-height: 1.2;
+        letter-spacing: 2px;
       }
       
-      .cat-emoji {
-        font-size: 2rem;
-        margin: 0 15px;
+      .subtitle {
+        font-size: 1.4rem;
       }
       
-      p {
+      .download-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+      
+      .download-card {
+        padding: 30px 20px;
+      }
+      
+      .card-title {
+        font-size: 1.5rem;
+      }
+      
+      .card-description {
+        font-size: 1.1rem;
+      }
+      
+      .download-button {
+        padding: 16px 30px;
         font-size: 1.2rem;
-        margin-bottom: 40px;
-      }
-      
-      button {
-        padding: 20px 40px;
-        font-size: 1.3rem;
-        min-width: 250px;
+        min-width: 180px;
       }
     }
 
     @media (max-width: 480px) {
-      h1 {
+      .main-title {
         font-size: 2rem;
+        letter-spacing: 1px;
       }
       
-      .cat-emoji {
-        font-size: 1.5rem;
+      .subtitle {
+        font-size: 1.2rem;
+      }
+      
+      .status-indicator {
+        font-size: 1rem;
+        padding: 10px 20px;
+      }
+      
+      .download-card {
+        padding: 25px 15px;
         margin: 0 10px;
       }
       
-      p {
-        font-size: 1.1rem;
+      .card-icon {
+        font-size: 2.5rem;
       }
       
-      button {
-        padding: 18px 35px;
-        font-size: 1.2rem;
-        min-width: 220px;
+      .card-title {
+        font-size: 1.3rem;
+      }
+      
+      .download-button {
+        padding: 14px 25px;
+        font-size: 1.1rem;
+        min-width: 160px;
       }
     }
   </style>
 </head>
 <body>
-  <div class="particles">
+  <div class="cyber-grid"></div>
+  
+  <div class="quantum-particles">
     <div class="particle"></div>
     <div class="particle"></div>
     <div class="particle"></div>
@@ -332,42 +461,186 @@
   </div>
 
   <div class="container">
-    <div class="sparkles">
-      <div class="sparkle"></div>
-      <div class="sparkle"></div>
-      <div class="sparkle"></div>
-      <div class="sparkle"></div>
-      <div class="sparkle"></div>
-      <div class="sparkle"></div>
+    <div class="header">
+      <h1 class="main-title">🚀 QUANTUM DATA CENTER</h1>
+      <p class="subtitle">ระบบดาวน์โหลดข้อมูลแบบ Real-time</p>
+      <div class="status-indicator">
+        <div class="status-dot"></div>
+        <span>SYSTEM ONLINE</span>
+      </div>
     </div>
-    
-    <h1>
-      <span class="cat-emoji">🐱</span>ดาวน์โหลดไฟล์แมวม๊าว<span class="cat-emoji">🐱</span>
-    </h1>
-    
-    <p>คลิกเพื่อดาวน์โหลดไฟล์ Excel ที่เชื่อมต่อข้อมูลกับ SQL และอัปเดตแบบ Realtime</p>
 
-    <button onclick="downloadFile()">
-      <span class="download-icon">📥</span>ดาวน์โหลดไฟล์
-    </button>
+    <div class="download-grid">
+      <div class="download-card">
+        <div class="card-header">
+          <div class="card-icon">📊</div>
+          <h2 class="card-title">มกราคม 2025</h2>
+        </div>
+        <p class="card-description">
+          ไฟล์ข้อมูลประจำเดือนมกราคม พร้อมการเชื่อมต่อ SQL Database
+        </p>
+        <button class="download-button" onclick="downloadFile('january')">
+          <span>📥 ดาวน์โหลดไฟล์</span>
+        </button>
+        <div class="file-size">ขนาดไฟล์: ~2.5 MB</div>
+        <div class="progress-container" id="progress-january">
+          <div class="progress-bar"></div>
+        </div>
+      </div>
+
+      <div class="download-card">
+        <div class="card-header">
+          <div class="card-icon">📈</div>
+          <h2 class="card-title">กุมภาพันธ์ 2025</h2>
+        </div>
+        <p class="card-description">
+          ไฟล์ข้อมูลประจำเดือนกุมภาพันธ์ อัปเดตล่าสุด
+        </p>
+        <button class="download-button" onclick="downloadFile('february')">
+          <span>📥 ดาวน์โหลดไฟล์</span>
+        </button>
+        <div class="file-size">ขนาดไฟล์: ~2.8 MB</div>
+        <div class="progress-container" id="progress-february">
+          <div class="progress-bar"></div>
+        </div>
+      </div>
+
+      <div class="download-card">
+        <div class="card-header">
+          <div class="card-icon">📋</div>
+          <h2 class="card-title">มีนาคม 2025</h2>
+        </div>
+        <p class="card-description">
+          ไฟล์ข้อมูลประจำเดือนมีนาคม รายงานครบถ้วน
+        </p>
+        <button class="download-button" onclick="downloadFile('march')">
+          <span>📥 ดาวน์โหลดไฟล์</span>
+        </button>
+        <div class="file-size">ขนาดไฟล์: ~3.1 MB</div>
+        <div class="progress-container" id="progress-march">
+          <div class="progress-bar"></div>
+        </div>
+      </div>
+
+      <div class="download-card">
+        <div class="card-header">
+          <div class="card-icon">🔄</div>
+          <h2 class="card-title">เมษายน 2025</h2>
+        </div>
+        <p class="card-description">
+          ไฟล์ข้อมูลประจำเดือนเมษายน ข้อมูลการวิเคราะห์
+        </p>
+        <button class="download-button" onclick="downloadFile('april')">
+          <span>📥 ดาวน์โหลดไฟล์</span>
+        </button>
+        <div class="file-size">ขนาดไฟล์: ~2.9 MB</div>
+        <div class="progress-container" id="progress-april">
+          <div class="progress-bar"></div>
+        </div>
+      </div>
+
+      <div class="download-card">
+        <div class="card-header">
+          <div class="card-icon">⚡</div>
+          <h2 class="card-title">พฤษภาคม 2025</h2>
+        </div>
+        <p class="card-description">
+          ไฟล์ข้อมูลประจำเดือนพฤษภาคม รายงานผลงาน
+        </p>
+        <button class="download-button" onclick="downloadFile('may')">
+          <span>📥 ดาวน์โหลดไฟล์</span>
+        </button>
+        <div class="file-size">ขนาดไฟล์: ~3.3 MB</div>
+        <div class="progress-container" id="progress-may">
+          <div class="progress-bar"></div>
+        </div>
+      </div>
+
+      <div class="download-card">
+        <div class="card-header">
+          <div class="card-icon">🎯</div>
+          <h2 class="card-title">มิถุนายน 2025</h2>
+        </div>
+        <p class="card-description">
+          ไฟล์ข้อมูลประจำเดือนมิถุนายน สรุปผลครึ่งปีแรก
+        </p>
+        <button class="download-button" onclick="downloadFile('june')">
+          <span>📥 ดาวน์โหลดไฟล์</span>
+        </button>
+        <div class="file-size">ขนาดไฟล์: ~3.6 MB</div>
+        <div class="progress-container" id="progress-june">
+          <div class="progress-bar"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p class="footer-text">
+        🔒 ข้อมูลเข้ารหัสและปลอดภัย | อัปเดตแบบ Real-time ทุกวัน
+      </p>
+    </div>
   </div>
 
   <script>
-    function downloadFile() {
-      const link = document.createElement('a');
-      link.href = 'https://docs.google.com/spreadsheets/d/1u90Gf_EJTT4G8czHq7OH9St1UOfqKMGVzmq_6ge5YFw/export?format=xlsx';
-      link.download = 'Aircomp.xlsx';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      
-      // เพิ่มเอฟเฟกต์เมื่อคลิก
+    function downloadFile(month) {
       const button = event.target;
+      const progressContainer = document.getElementById(`progress-${month}`);
+      const progressBar = progressContainer.querySelector('.progress-bar');
+      
+      // Show progress bar
+      progressContainer.style.display = 'block';
+      
+      // Simulate download progress
+      let progress = 0;
+      const progressInterval = setInterval(() => {
+        progress += Math.random() * 15;
+        if (progress > 100) progress = 100;
+        
+        progressBar.style.width = progress + '%';
+        
+        if (progress >= 100) {
+          clearInterval(progressInterval);
+          
+          // Start actual download
+          const link = document.createElement('a');
+          link.href = 'https://docs.google.com/spreadsheets/d/1u90Gf_EJTT4G8czHq7OH9St1UOfqKMGVzmq_6ge5YFw/export?format=xlsx';
+          link.download = `Aircomp_${month}_2025.xlsx`;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          
+          // Hide progress bar after download
+          setTimeout(() => {
+            progressContainer.style.display = 'none';
+            progressBar.style.width = '0%';
+          }, 1000);
+        }
+      }, 100);
+      
+      // Button animation
       button.style.transform = 'translateY(-2px) scale(0.95)';
       setTimeout(() => {
         button.style.transform = '';
-      }, 150);
+      }, 200);
     }
+
+    // Add some dynamic particles
+    function createParticle() {
+      const particle = document.createElement('div');
+      particle.className = 'particle';
+      particle.style.left = Math.random() * 100 + '%';
+      particle.style.top = Math.random() * 100 + '%';
+      particle.style.animationDelay = Math.random() * 8 + 's';
+      document.querySelector('.quantum-particles').appendChild(particle);
+      
+      // Remove particle after animation
+      setTimeout(() => {
+        particle.remove();
+      }, 8000);
+    }
+
+    // Create new particles periodically
+    setInterval(createParticle, 2000);
   </script>
 </body>
 </html>
