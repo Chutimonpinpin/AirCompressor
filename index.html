@@ -514,99 +514,8 @@
       </div>
     </div>
 
-    <div class="download-grid">
-      <div class="download-card">
-        <div class="card-header">
-          <div class="card-icon">📊</div>
-          <h2 class="card-title">กรกฎาคม</h2>
-        </div>
-        <p class="card-description">
-          ข้อมูล PD7 อัปเดตประจำวัน<br>
-          พร้อมให้ดาวน์โหลด
-        </p>
-        <button class="download-button" onclick="downloadFile('current')">
-          <span>📥 ดาวน์โหลดไฟล์</span>
-        </button>
-        <div class="file-size">ขนาดไฟล์: ~2.5 MB</div>
-        <div class="progress-container" id="progress-current">
-          <div class="progress-bar"></div>
-        </div>
-      </div>
-
-      <div class="download-card unavailable">
-        <div class="card-header">
-          <div class="card-icon">📈</div>
-          <h2 class="card-title">สิงหาคม</h2>
-        </div>
-        <p class="card-description">
-          -<br>
-          กำลังเตรียมข้อมูล
-        </p>
-        <button class="download-button unavailable" disabled>
-          <span>⏳ ยังไม่พร้อม</span>
-        </button>
-        <div class="coming-soon">เร็วๆ นี้</div>
-      </div>
-
-      <div class="download-card unavailable">
-        <div class="card-header">
-          <div class="card-icon">📋</div>
-          <h2 class="card-title">-</h2>
-        </div>
-        <p class="card-description">
-          -<br>
-          กำลังเตรียมข้อมูล
-        </p>
-        <button class="download-button unavailable" disabled>
-          <span>⏳ ยังไม่พร้อม</span>
-        </button>
-        <div class="coming-soon">เร็วๆ นี้</div>
-      </div>
-
-      <div class="download-card unavailable">
-        <div class="card-header">
-          <div class="card-icon">🔄</div>
-          <h2 class="card-title">-</h2>
-        </div>
-        <p class="card-description">
-          -<br>
-          กำลังเตรียมข้อมูล
-        </p>
-        <button class="download-button unavailable" disabled>
-          <span>⏳ ยังไม่พร้อม</span>
-        </button>
-        <div class="coming-soon">เร็วๆ นี้</div>
-      </div>
-
-      <div class="download-card unavailable">
-        <div class="card-header">
-          <div class="card-icon">⚡</div>
-          <h2 class="card-title">- 2025</h2>
-        </div>
-        <p class="card-description">
-          -<br>
-          กำลังเตรียมข้อมูล
-        </p>
-        <button class="download-button unavailable" disabled>
-          <span>⏳ ยังไม่พร้อม</span>
-        </button>
-        <div class="coming-soon">เร็วๆ นี้</div>
-      </div>
-
-      <div class="download-card unavailable">
-        <div class="card-header">
-          <div class="card-icon">🎯</div>
-          <h2 class="card-title">-</h2>
-        </div>
-        <p class="card-description">
-          -<br>
-          กำลังเตรียมข้อมูล
-        </p>
-        <button class="download-button unavailable" disabled>
-          <span>⏳ ยังไม่พร้อม</span>
-        </button>
-        <div class="coming-soon">เร็วๆ นี้</div>
-      </div>
+    <div class="download-grid" id="downloadGrid">
+      <!-- Cards will be generated dynamically by JavaScript -->
     </div>
 
     <div class="footer">
@@ -617,9 +526,110 @@
   </div>
 
   <script>
+    // Configuration object for months data
+    const monthsData = {
+      'กรกฎาคม': {
+        icon: '📊',
+        description: 'ข้อมูล PD7 อัปเดตประจำวัน<br>พร้อมให้ดาวน์โหลด',
+        fileSize: '~2.5 MB',
+        url: 'https://docs.google.com/spreadsheets/d/1IjrFBHOzfrDirCkn8cf3dukpAH4v7DiU/edit?gid=436301912#gid=436301912',
+        available: true
+      },
+      'สิงหาคม': {
+        icon: '📈',
+        description: 'ข้อมูล PD7 เดือนสิงหาคม<br>พร้อมให้ดาวน์โหลด',
+        fileSize: '~2.8 MB',
+        url: '', // ใส่ลิงค์ตรงนี้เมื่อพร้อม
+        available: false // เปลี่ยนเป็น true เมื่อพร้อม
+      },
+      'กันยาคม': {
+        icon: '📋',
+        description: 'ข้อมูล PD7 เดือนกันยาคม<br>กำลังเตรียมข้อมูล',
+        fileSize: '~3.0 MB',
+        url: '',
+        available: false
+      },
+      'ตุลาคม': {
+        icon: '🔄',
+        description: 'ข้อมูล PD7 เดือนตุลาคม<br>กำลังเตรียมข้อมูล',
+        fileSize: '~2.7 MB',
+        url: '',
+        available: false
+      },
+      'พฤศจิกายน': {
+        icon: '⚡',
+        description: 'ข้อมูล PD7 เดือนพฤศจิกายน<br>กำลังเตรียมข้อมูล',
+        fileSize: '~2.9 MB',
+        url: '',
+        available: false
+      },
+      'ธันวาคม': {
+        icon: '🎯',
+        description: 'ข้อมูล PD7 เดือนธันวาคม<br>กำลังเตรียมข้อมูล',
+        fileSize: '~3.2 MB',
+        url: '',
+        available: false
+      }
+    };
+
+    // Function to generate cards dynamically
+    function generateCards() {
+      const grid = document.getElementById('downloadGrid');
+      grid.innerHTML = '';
+
+      Object.entries(monthsData).forEach(([month, data], index) => {
+        const card = document.createElement('div');
+        card.className = `download-card ${!data.available ? 'unavailable' : ''}`;
+        
+        card.innerHTML = `
+          <div class="card-header">
+            <div class="card-icon">${data.icon}</div>
+            <h2 class="card-title">${month}</h2>
+          </div>
+          <p class="card-description">${data.description}</p>
+          <button class="download-button ${!data.available ? 'unavailable' : ''}" 
+                  ${!data.available ? 'disabled' : ''} 
+                  onclick="downloadFile('${month}')">
+            <span>${data.available ? '📥 ดาวน์โหลดไฟล์' : '⏳ ยังไม่พร้อม'}</span>
+          </button>
+          ${data.available ? 
+            `<div class="file-size">ขนาดไฟล์: ${data.fileSize}</div>` : 
+            '<div class="coming-soon">เร็วๆ นี้</div>'
+          }
+          <div class="progress-container" id="progress-${month}">
+            <div class="progress-bar"></div>
+          </div>
+        `;
+        
+        grid.appendChild(card);
+      });
+    }
+
+    // Function to update month data (for easy management)
+    function updateMonthData(month, newData) {
+      if (monthsData[month]) {
+        monthsData[month] = { ...monthsData[month], ...newData };
+        generateCards(); // Regenerate cards with new data
+        console.log(`Updated ${month} data:`, monthsData[month]);
+      } else {
+        console.error(`Month "${month}" not found`);
+      }
+    }
+
+    // Function to add new month
+    function addNewMonth(month, data) {
+      monthsData[month] = data;
+      generateCards();
+      console.log(`Added new month "${month}":`, data);
+    }
+
+    // Download function
     function downloadFile(month) {
-      if (month !== 'current') {
-        return; // ไม่ให้ดาวน์โหลดถ้าไม่ใช่ไฟล์ปัจจุบัน
+      const data = monthsData[month];
+      
+      if (!data || !data.available || !data.url) {
+        console.log(`${month} is not available for download`);
+        return;
       }
       
       const button = event.target;
@@ -642,8 +652,9 @@
           
           // Start actual download
           const link = document.createElement('a');
-          link.href = 'https://docs.google.com/spreadsheets/d/1IjrFBHOzfrDirCkn8cf3dukpAH4v7DiU/edit?gid=436301912#gid=436301912';
-          link.download = `PowerMeter_PD7_${new Date().toISOString().split('T')[0]}.xlsx`;
+          link.href = data.url;
+          link.download = `PowerMeter_PD7_${month}_${new Date().toISOString().split('T')[0]}.xlsx`;
+          link.target = '_blank'; // Open in new tab for Google Sheets
           document.body.appendChild(link);
           link.click();
           document.body.removeChild(link);
@@ -663,6 +674,50 @@
       }, 200);
     }
 
+    // Helper functions for easy month management
+    window.powerMeterManager = {
+      // Enable a month (make it available for download)
+      enableMonth: function(month, url, fileSize = '~2.5 MB') {
+        updateMonthData(month, {
+          url: url,
+          fileSize: fileSize,
+          available: true,
+          description: `ข้อมูล PD7 เดือน${month}<br>พร้อมให้ดาวน์โหลด`
+        });
+      },
+      
+      // Disable a month
+      disableMonth: function(month) {
+        updateMonthData(month, {
+          url: '',
+          available: false,
+          description: `ข้อมูล PD7 เดือน${month}<br>กำลังเตรียมข้อมูล`
+        });
+      },
+      
+      // Update month URL only
+      updateUrl: function(month, url) {
+        updateMonthData(month, { url: url });
+      },
+      
+      // Get current months data
+      getData: function() {
+        return monthsData;
+      },
+      
+      // Quick enable next month function
+      enableNextMonth: function(url, fileSize = '~2.5 MB') {
+        const months = Object.keys(monthsData);
+        const nextMonth = months.find(month => !monthsData[month].available);
+        if (nextMonth) {
+          this.enableMonth(nextMonth, url, fileSize);
+          console.log(`Enabled ${nextMonth} for download`);
+        } else {
+          console.log('All months are already enabled');
+        }
+      }
+    };
+
     // Add some dynamic particles
     function createParticle() {
       const particle = document.createElement('div');
@@ -678,8 +733,17 @@
       }, 8000);
     }
 
-    // Create new particles periodically
-    setInterval(createParticle, 2000);
+    // Initialize the page
+    document.addEventListener('DOMContentLoaded', function() {
+      generateCards();
+      
+      // Create new particles periodically
+      setInterval(createParticle, 2000);
+      
+      // Log helper message
+      console.log('Power Meter Manager loaded! Use powerMeterManager.enableNextMonth("YOUR_URL") to enable the next month.');
+      console.log('Available functions:', Object.keys(window.powerMeterManager));
+    });
   </script>
 </body>
 </html>
