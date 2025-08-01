@@ -13,6 +13,8 @@
       box-sizing: border-box;
     }
 
+    
+
     body {
       font-family: 'Rajdhani', sans-serif;
       background: linear-gradient(45deg, #0a0a0a, #001133, #002244, #003366, #004488, #0055aa);
@@ -67,13 +69,6 @@
       animation: quantumFloat 8s linear infinite;
       box-shadow: 0 0 20px rgba(0, 170, 255, 0.8);
     }
-
-    .particle:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
-    .particle:nth-child(2) { top: 20%; left: 80%; animation-delay: 2s; }
-    .particle:nth-child(3) { top: 80%; left: 20%; animation-delay: 4s; }
-    .particle:nth-child(4) { top: 60%; left: 90%; animation-delay: 1s; }
-    .particle:nth-child(5) { top: 40%; left: 5%; animation-delay: 3s; }
-    .particle:nth-child(6) { top: 90%; left: 70%; animation-delay: 5s; }
 
     @keyframes quantumFloat {
       0% { 
@@ -193,17 +188,50 @@
       50% { opacity: 0.3; }
     }
 
-    /* Download Cards */
-    .download-grid {
+    /* Navigation */
+    .nav-breadcrumb {
+      margin-bottom: 40px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      font-size: 1.2rem;
+      color: #66ccff;
+    }
+
+    .nav-link {
+      color: #00aaff;
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      background: rgba(0, 170, 255, 0.1);
+      border: 1px solid rgba(0, 170, 255, 0.3);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .nav-link:hover {
+      background: rgba(0, 170, 255, 0.2);
+      border-color: rgba(0, 170, 255, 0.5);
+      transform: translateY(-2px);
+    }
+
+    .nav-separator {
+      color: #66ccff;
+      opacity: 0.6;
+    }
+
+    /* Main Grid */
+    .main-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 40px;
       max-width: 1200px;
       width: 100%;
       margin: 0 auto;
     }
 
-    .download-card {
+    /* Card Styles */
+    .year-card, .month-card {
       background: rgba(0, 170, 255, 0.05);
       border: 2px solid rgba(0, 170, 255, 0.2);
       border-radius: 25px;
@@ -214,15 +242,17 @@
       position: relative;
       overflow: hidden;
       transform: perspective(1000px) rotateX(0deg);
+      cursor: pointer;
     }
 
-    .download-card.unavailable {
+    .year-card.unavailable, .month-card.unavailable {
       background: rgba(100, 100, 100, 0.05);
       border: 2px solid rgba(100, 100, 100, 0.2);
       opacity: 0.6;
+      cursor: default;
     }
 
-    .download-card::before {
+    .year-card::before, .month-card::before {
       content: '';
       position: absolute;
       top: -50%;
@@ -235,7 +265,8 @@
       opacity: 0;
     }
 
-    .download-card:not(.unavailable):hover::before {
+    .year-card:not(.unavailable):hover::before, 
+    .month-card:not(.unavailable):hover::before {
       animation: scanLine 2s linear infinite;
       opacity: 1;
     }
@@ -245,7 +276,8 @@
       100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
     }
 
-    .download-card:not(.unavailable):hover {
+    .year-card:not(.unavailable):hover, 
+    .month-card:not(.unavailable):hover {
       transform: perspective(1000px) rotateX(5deg) translateY(-15px);
       border-color: rgba(0, 170, 255, 0.6);
       box-shadow: 
@@ -261,7 +293,7 @@
     }
 
     .card-icon {
-      font-size: 3rem;
+      font-size: 3.5rem;
       margin-right: 15px;
       animation: iconFloat 3s ease-in-out infinite;
     }
@@ -278,7 +310,7 @@
 
     .card-title {
       font-family: 'Orbitron', monospace;
-      font-size: 1.8rem;
+      font-size: 2rem;
       font-weight: 700;
       color: #00aaff;
       text-shadow: 0 0 15px rgba(0, 170, 255, 0.5);
@@ -292,7 +324,7 @@
     .card-description {
       font-size: 1.3rem;
       color: #66ccff;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
       line-height: 1.6;
       opacity: 0.9;
     }
@@ -302,6 +334,33 @@
       opacity: 0.7;
     }
 
+    .card-stats {
+      display: flex;
+      justify-content: space-around;
+      margin: 20px 0;
+      padding: 15px 0;
+      border-top: 1px solid rgba(0, 170, 255, 0.2);
+      border-bottom: 1px solid rgba(0, 170, 255, 0.2);
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #00aaff;
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: #66ccff;
+      opacity: 0.8;
+    }
+
+    /* Download Button */
     .download-button {
       background: linear-gradient(135deg, #0044aa, #0066cc, #0088ff, #00aaff);
       background-size: 300% 300%;
@@ -322,6 +381,7 @@
       overflow: hidden;
       min-width: 200px;
       border: 2px solid rgba(0, 170, 255, 0.3);
+      margin-top: 10px;
     }
 
     .download-button.unavailable {
@@ -348,35 +408,11 @@
       border-color: rgba(0, 170, 255, 0.6);
     }
 
-    .download-button:not(.unavailable):active {
-      transform: translateY(-2px) scale(1.02);
-    }
-
-    .download-button::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-      transition: left 0.5s ease;
-    }
-
-    .download-button:not(.unavailable):hover::before {
-      left: 100%;
-    }
-
     .file-size {
       font-size: 1.1rem;
       color: #88ddff;
-      margin-top: 15px;
+      margin-top: 10px;
       opacity: 0.8;
-    }
-
-    .unavailable .file-size {
-      color: #888;
-      opacity: 0.5;
     }
 
     .coming-soon {
@@ -406,6 +442,16 @@
       width: 0%;
     }
 
+    /* Hidden/Show Views */
+    .view {
+      display: none;
+      width: 100%;
+    }
+
+    .view.active {
+      display: block;
+    }
+
     /* Footer */
     .footer {
       margin-top: 80px;
@@ -421,6 +467,19 @@
       opacity: 0.8;
     }
 
+    /* Mobile Notice */
+    .mobile-notice {
+      display: none;
+      background: rgba(255, 136, 0, 0.1);
+      border: 2px solid rgba(255, 136, 0, 0.3);
+      border-radius: 15px;
+      padding: 15px;
+      margin: 10px 0;
+      color: #ffaa44;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
     /* Responsive Design */
     @media (max-width: 768px) {
       .main-title {
@@ -432,17 +491,17 @@
         font-size: 1.4rem;
       }
       
-      .download-grid {
+      .main-grid {
         grid-template-columns: 1fr;
         gap: 30px;
       }
       
-      .download-card {
+      .year-card, .month-card {
         padding: 30px 20px;
       }
       
       .card-title {
-        font-size: 1.5rem;
+        font-size: 1.6rem;
       }
       
       .card-description {
@@ -453,6 +512,10 @@
         padding: 16px 30px;
         font-size: 1.2rem;
         min-width: 180px;
+      }
+
+      .mobile-notice {
+        display: block;
       }
     }
 
@@ -471,7 +534,7 @@
         padding: 10px 20px;
       }
       
-      .download-card {
+      .year-card, .month-card {
         padding: 25px 15px;
         margin: 0 10px;
       }
@@ -481,7 +544,7 @@
       }
       
       .card-title {
-        font-size: 1.3rem;
+        font-size: 1.4rem;
       }
       
       .download-button {
@@ -495,13 +558,8 @@
 <body>
   <div class="cyber-grid"></div>
   
-  <div class="quantum-particles">
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
+  <div class="quantum-particles" id="particleContainer">
+    <!-- Particles will be generated dynamically -->
   </div>
 
   <div class="container">
@@ -514,8 +572,23 @@
       </div>
     </div>
 
-    <div class="download-grid" id="downloadGrid">
-      <!-- Cards will be generated dynamically by JavaScript -->
+    <!-- Navigation Breadcrumb -->
+    <div class="nav-breadcrumb" id="breadcrumb">
+      <span class="nav-link" onclick="showYearView()">🏠 หน้าหลัก</span>
+    </div>
+
+    <!-- Year View -->
+    <div class="view active" id="yearView">
+      <div class="main-grid" id="yearGrid">
+        <!-- Year cards will be generated here -->
+      </div>
+    </div>
+
+    <!-- Month View -->
+    <div class="view" id="monthView">
+      <div class="main-grid" id="monthGrid">
+        <!-- Month cards will be generated here -->
+      </div>
     </div>
 
     <div class="footer">
@@ -526,77 +599,191 @@
   </div>
 
   <script>
-    // Configuration object for months data
-    const monthsData = {
-      'กรกฎาคม 2025': {
-        icon: '📊',
-        description: 'ข้อมูล PD7 อัปเดตประจำวัน<br>พร้อมให้ดาวน์โหลด',
-        fileSize: '~2.5 MB',
-        url: 'https://docs.google.com/spreadsheets/d/1IjrFBHOzfrDirCkn8cf3dukpAH4v7DiU/edit?gid=436301912#gid=436301912',
-        available: true
+    // Mobile detection
+    function isMobile() {
+      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    }
+
+    // Data structure organized by year
+    const yearData = {
+      '2025': {
+        icon: '📅',
+        title: '2025',
+        description: 'ข้อมูล Power Meter ปี 2025<br>รวมทุกเดือนในปี',
+        available: true,
+        months: {
+          'กรกฎาคม': {
+            icon: '📊',
+            description: 'ข้อมูล PD7 เดือนกรกฎาคม<br>พร้อมให้ดาวน์โหลด',
+            fileSize: '~2.5 MB',
+            url: 'https://docs.google.com/spreadsheets/d/1IjrFBHOzfrDirCkn8cf3dukpAH4v7DiU/edit?gid=436301912#gid=436301912',
+            exportUrl: 'https://docs.google.com/spreadsheets/d/1IjrFBHOzfrDirCkn8cf3dukpAH4v7DiU/export?format=xlsx&gid=436301912',
+            available: true
+          },
+          'สิงหาคม': {
+            icon: '📈',
+            description: 'ข้อมูล PD7 เดือนสิงหาคม<br>พร้อมให้ดาวน์โหลด',
+            fileSize: '~2.8 MB',
+            url: 'https://docs.google.com/spreadsheets/d/1ciXs4BIgPWDMLWhZ247gOKr6uXNXewgE/edit?usp=sharing&ouid=103243829117381280273&rtpof=true&sd=true',
+            exportUrl: 'https://docs.google.com/spreadsheets/d/1ciXs4BIgPWDMLWhZ247gOKr6uXNXewgE/export?format=xlsx',
+            available: true
+          },
+          'กันยาคม': {
+            icon: '📋',
+            description: 'ข้อมูล PD7 เดือนกันยาคม<br>กำลังเตรียมข้อมูล',
+            fileSize: '~3.0 MB',
+            url: '',
+            exportUrl: '',
+            available: false
+          },
+          'ตุลาคม': {
+            icon: '🔄',
+            description: 'ข้อมูล PD7 เดือนตุลาคม<br>กำลังเตรียมข้อมูล',
+            fileSize: '~2.7 MB',
+            url: '',
+            exportUrl: '',
+            available: false
+          },
+          'พฤศจิกายน': {
+            icon: '⚡',
+            description: 'ข้อมูล PD7 เดือนพฤศจิกายน<br>กำลังเตรียมข้อมูล',
+            fileSize: '~2.9 MB',
+            url: '',
+            exportUrl: '',
+            available: false
+          },
+          'ธันวาคม': {
+            icon: '🎯',
+            description: 'ข้อมูล PD7 เดือนธันวาคม<br>กำลังเตรียมข้อมูล',
+            fileSize: '~3.2 MB',
+            url: '',
+            exportUrl: '',
+            available: false
+          }
+        }
       },
-      'สิงหาคม': {
-        icon: '📈',
-        description: 'ข้อมูล PD7 เดือนสิงหาคม<br>พร้อมให้ดาวน์โหลด',
-        fileSize: '~2.8 MB',
-        url: 'https://docs.google.com/spreadsheets/d/1ciXs4BIgPWDMLWhZ247gOKr6uXNXewgE/edit?usp=sharing&ouid=103243829117381280273&rtpof=true&sd=true', 
-        available: true
+      '2026': {
+        icon: '📅',
+        title: '2026',
+        description: 'ข้อมูล Power Meter ปี 2026<br>กำลังเตรียมข้อมูล',
+        available: false,
+        months: {
+          'มกราคม': { icon: '📊', description: 'ข้อมูล PD7 เดือนมกราคม<br>กำลังเตรียมข้อมูล', fileSize: '~2.5 MB', url: '', exportUrl: '', available: false },
+          'กุมภาพันธ์': { icon: '📈', description: 'ข้อมูล PD7 เดือนกุมภาพันธ์<br>กำลังเตรียมข้อมูล', fileSize: '~2.5 MB', url: '', exportUrl: '', available: false },
+          'มีนาคม': { icon: '📋', description: 'ข้อมูล PD7 เดือนมีนาคม<br>กำลังเตรียมข้อมูล', fileSize: '~2.5 MB', url: '', exportUrl: '', available: false },
+          'เมษายน': { icon: '🔄', description: 'ข้อมูล PD7 เดือนเมษายน<br>กำลังเตรียมข้อมูล', fileSize: '~2.5 MB', url: '', exportUrl: '', available: false },
+          'พฤษภาคม': { icon: '⚡', description: 'ข้อมูล PD7 เดือนพฤษภาคม<br>กำลังเตรียมข้อมูล', fileSize: '~2.5 MB', url: '', exportUrl: '', available: false },
+          'มิถุนายน': { icon: '🎯', description: 'ข้อมูล PD7 เดือนมิถุนายน<br>กำลังเตรียมข้อมูล', fileSize: '~2.5 MB', url: '', exportUrl: '', available: false },
+          'กรกฎาคม': { icon: '📊', description: 'ข้อมูล PD7 เดือนกรกฎาคม<br>กำลังเตรียมข้อมูล', fileSize: '~2.5 MB', url: '', exportUrl: '', available: false },
+          'สิงหาคม': { icon: '📈', description: 'ข้อมูล PD7 เดือนสิงหาคม<br>กำลังเตรียมข้อมูล', fileSize: '~2.5 MB', url: '', exportUrl: '', available: false },
+          'กันยาคม': { icon: '📋', description: 'ข้อมูล PD7 เดือนกันยาคม<br>กำลังเตรียมข้อมูล', fileSize: '~2.5 MB', url: '', exportUrl: '', available: false },
+          'ตุลาคม': { icon: '🔄', description: 'ข้อมูล PD7 เดือนตุลาคม<br>กำลังเตรียมข้อมูล', fileSize: '~2.5 MB', url: '', exportUrl: '', available: false },
+          'พฤศจิกายน': { icon: '⚡', description: 'ข้อมูล PD7 เดือนพฤศจิกายน<br>กำลังเตรียมข้อมูล', fileSize: '~2.5 MB', url: '', exportUrl: '', available: false },
+          'ธันวาคม': { icon: '🎯', description: 'ข้อมูล PD7 เดือนธันวาคม<br>กำลังเตรียมข้อมูล', fileSize: '~2.5 MB', url: '', exportUrl: '', available: false }
+        }
       },
-      'กันยาคม': {
-        icon: '📋',
-        description: 'ข้อมูล PD7 เดือนกันยาคม<br>กำลังเตรียมข้อมูล',
-        fileSize: '~3.0 MB',
-        url: '',
-        available: false
-      },
-      'ตุลาคม': {
-        icon: '🔄',
-        description: 'ข้อมูล PD7 เดือนตุลาคม<br>กำลังเตรียมข้อมูล',
-        fileSize: '~2.7 MB',
-        url: '',
-        available: false
-      },
-      'พฤศจิกายน': {
-        icon: '⚡',
-        description: 'ข้อมูล PD7 เดือนพฤศจิกายน<br>กำลังเตรียมข้อมูล',
-        fileSize: '~2.9 MB',
-        url: '',
-        available: false
-      },
-      'ธันวาคม': {
-        icon: '🎯',
-        description: 'ข้อมูล PD7 เดือนธันวาคม<br>กำลังเตรียมข้อมูล',
-        fileSize: '~3.2 MB',
-        url: '',
-        available: false
+      '2027': {
+        icon: '📅',
+        title: '2027',
+        description: 'ข้อมูล Power Meter ปี 2027<br>กำลังเตรียมข้อมูล',
+        available: false,
+        months: {
+          'มกราคม': { icon: '📊', description: 'ข้อมูล PD7 เดือนมกราคม<br>กำลังเตรียมข้อมูล', fileSize: '~2.5 MB', url: '', exportUrl: '', available: false },
+          'กุมภาพันธ์': { icon: '📈', description: 'ข้อมูล PD7 เดือนกุมภาพันธ์<br>กำลังเตรียมข้อมูล', fileSize: '~2.5 MB', url: '', exportUrl: '', available: false },
+          'มีนาคม': { icon: '📋', description: 'ข้อมูล PD7 เดือนมีนาคม<br>กำลังเตรียมข้อมูล', fileSize: '~2.5 MB', url: '', exportUrl: '', available: false },
+          'เมษายน': { icon: '🔄', description: 'ข้อมูล PD7 เดือนเมษายน<br>กำลังเตรียมข้อมูล', fileSize: '~2.5 MB', url: '', exportUrl: '', available: false },
+          'พฤษภาคม': { icon: '⚡', description: 'ข้อมูล PD7 เดือนพฤษภาคม<br>กำลังเตรียมข้อมูล', fileSize: '~2.5 MB', url: '', exportUrl: '', available: false },
+          'มิถุนายน': { icon: '🎯', description: 'ข้อมูล PD7 เดือนมิถุนายน<br>กำลังเตรียมข้อมูล', fileSize: '~2.5 MB', url: '', exportUrl: '', available: false },
+          'กรกฎาคม': { icon: '📊', description: 'ข้อมูล PD7 เดือนกรกฎาคม<br>กำลังเตรียมข้อมูล', fileSize: '~2.5 MB', url: '', exportUrl: '', available: false },
+          'สิงหาคม': { icon: '📈', description: 'ข้อมูล PD7 เดือนสิงหาคม<br>กำลังเตรียมข้อมูล', fileSize: '~2.5 MB', url: '', exportUrl: '', available: false },
+          'กันยาคม': { icon: '📋', description: 'ข้อมูล PD7 เดือนกันยาคม<br>กำลังเตรียมข้อมูล', fileSize: '~2.5 MB', url: '', exportUrl: '', available: false },
+          'ตุลาคม': { icon: '🔄', description: 'ข้อมูล PD7 เดือนตุลาคม<br>กำลังเตรียมข้อมูล', fileSize: '~2.5 MB', url: '', exportUrl: '', available: false },
+          'พฤศจิกายน': { icon: '⚡', description: 'ข้อมูล PD7 เดือนพฤศจิกายน<br>กำลังเตรียมข้อมูล', fileSize: '~2.5 MB', url: '', exportUrl: '', available: false },
+          'ธันวาคม': { icon: '🎯', description: 'ข้อมูล PD7 เดือนธันวาคม<br>กำลังเตรียมข้อมูล', fileSize: '~2.5 MB', url: '', exportUrl: '', available: false }
+        }
       }
+      
     };
 
-    // Function to generate cards dynamically
-    function generateCards() {
-      const grid = document.getElementById('downloadGrid');
+    // Current view state
+    let currentView = 'year';
+    let currentYear = null;
+
+    // Generate year cards
+    function generateYearCards() {
+      const grid = document.getElementById('yearGrid');
       grid.innerHTML = '';
 
-      Object.entries(monthsData).forEach(([month, data], index) => {
+      Object.entries(yearData).forEach(([year, data]) => {
+        const availableMonths = Object.values(data.months).filter(month => month.available).length;
+        const totalMonths = Object.keys(data.months).length;
+        
         const card = document.createElement('div');
-        card.className = `download-card ${!data.available ? 'unavailable' : ''}`;
+        card.className = `year-card ${!data.available ? 'unavailable' : ''}`;
+        card.onclick = () => showMonthView(year);
         
         card.innerHTML = `
           <div class="card-header">
             <div class="card-icon">${data.icon}</div>
-            <h2 class="card-title">${month}</h2>
+            <h2 class="card-title">${data.title}</h2>
           </div>
           <p class="card-description">${data.description}</p>
+          <div class="card-stats">
+            <div class="stat-item">
+              <span class="stat-number">${availableMonths}</span>
+              <span class="stat-label">พร้อม</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">${totalMonths - availableMonths}</span>
+              <span class="stat-label">รอ</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">${totalMonths}</span>
+              <span class="stat-label">รวม</span>
+            </div>
+          </div>
+          ${data.available ? 
+            '<div class="file-size">📁 คลิกเพื่อดูรายเดือน</div>' : 
+            '<div class="coming-soon">เร็วๆ นี้</div>'
+          }
+        `;
+        
+        grid.appendChild(card);
+      });
+    }
+
+    // Generate month cards for specific year
+    function generateMonthCards(year) {
+      const grid = document.getElementById('monthGrid');
+      grid.innerHTML = '';
+
+      const yearInfo = yearData[year];
+      if (!yearInfo) return;
+
+      Object.entries(yearInfo.months).forEach(([month, data]) => {
+        const card = document.createElement('div');
+        card.className = `month-card ${!data.available ? 'unavailable' : ''}`;
+        
+        const mobileNotice = data.available && isMobile() ? 
+          '<div class="mobile-notice">📱 มือถือ: กดเพื่อเปิดใน Google Sheets</div>' : '';
+        
+        card.innerHTML = `
+          <div class="card-header">
+            <div class="card-icon">${data.icon}</div>
+            <h2 class="card-title">${month} ${year}</h2>
+          </div>
+          <p class="card-description">${data.description}</p>
+          ${mobileNotice}
           <button class="download-button ${!data.available ? 'unavailable' : ''}" 
                   ${!data.available ? 'disabled' : ''} 
-                  onclick="downloadFile('${month}')">
+                  onclick="downloadFile('${year}', '${month}')">
             <span>${data.available ? '📥 ดาวน์โหลดไฟล์' : '⏳ ยังไม่พร้อม'}</span>
           </button>
           ${data.available ? 
             `<div class="file-size">ขนาดไฟล์: ${data.fileSize}</div>` : 
             '<div class="coming-soon">เร็วๆ นี้</div>'
           }
-          <div class="progress-container" id="progress-${month}">
+          <div class="progress-container" id="progress-${year}-${month}">
             <div class="progress-bar"></div>
           </div>
         `;
@@ -605,44 +792,71 @@
       });
     }
 
-    // Function to update month data (for easy management)
-    function updateMonthData(month, newData) {
-      if (monthsData[month]) {
-        monthsData[month] = { ...monthsData[month], ...newData };
-        generateCards(); // Regenerate cards with new data
-        console.log(`Updated ${month} data:`, monthsData[month]);
-      } else {
-        console.error(`Month "${month}" not found`);
-      }
-    }
-
-    // Function to add new month
-    function addNewMonth(month, data) {
-      monthsData[month] = data;
-      generateCards();
-      console.log(`Added new month "${month}":`, data);
-    }
-
-    // Download function
-    function downloadFile(month) {
-      const data = monthsData[month];
+    // Show year view
+    function showYearView() {
+      currentView = 'year';
+      currentYear = null;
       
-      if (!data || !data.available || !data.url) {
-        console.log(`${month} is not available for download`);
+      document.getElementById('yearView').classList.add('active');
+      document.getElementById('monthView').classList.remove('active');
+      
+      // Update breadcrumb
+      document.getElementById('breadcrumb').innerHTML = `
+        <span class="nav-link" onclick="showYearView()">🏠 หน้าหลัก</span>
+      `;
+      
+      generateYearCards();
+    }
+
+    // Show month view for specific year
+    function showMonthView(year) {
+      if (!yearData[year] || !yearData[year].available) {
+        console.log(`Year ${year} is not available`);
         return;
       }
       
-      const button = event.target;
-      const progressContainer = document.getElementById(`progress-${month}`);
+      currentView = 'month';
+      currentYear = year;
+      
+      document.getElementById('yearView').classList.remove('active');
+      document.getElementById('monthView').classList.add('active');
+      
+      // Update breadcrumb
+      document.getElementById('breadcrumb').innerHTML = `
+        <span class="nav-link" onclick="showYearView()">🏠 หน้าหลัก</span>
+        <span class="nav-separator">›</span>
+        <span class="nav-link">${year}</span>
+      `;
+      
+      generateMonthCards(year);
+    }
+
+    // Download function
+    function downloadFile(year, month) {
+      const data = yearData[year]?.months[month];
+      
+      if (!data || !data.available || !data.url) {
+        console.log(`${month} ${year} is not available for download`);
+        return;
+      }
+      
+      const progressContainer = document.getElementById(`progress-${year}-${month}`);
       const progressBar = progressContainer.querySelector('.progress-bar');
+      const mobile = isMobile();
       
       // Show progress bar
       progressContainer.style.display = 'block';
       
+      // Button animation
+      event.target.style.transform = 'translateY(-2px) scale(0.95)';
+      setTimeout(() => {
+        event.target.style.transform = '';
+      }, 200);
+      
       // Simulate download progress
       let progress = 0;
       const progressInterval = setInterval(() => {
-        progress += Math.random() * 15;
+        progress += Math.random() * 20;
         if (progress > 100) progress = 100;
         
         progressBar.style.width = progress + '%';
@@ -650,82 +864,185 @@
         if (progress >= 100) {
           clearInterval(progressInterval);
           
-          // Start actual download
+          // Choose URL based on device type
+          let targetUrl;
+          if (mobile && data.exportUrl) {
+            targetUrl = data.exportUrl;
+          } else {
+            targetUrl = data.url;
+          }
+          
+          // Create and trigger download/open
           const link = document.createElement('a');
-          link.href = data.url;
-          link.download = `PowerMeter_PD7_${month}_${new Date().toISOString().split('T')[0]}.xlsx`;
-          link.target = '_blank'; // Open in new tab for Google Sheets
+          link.href = targetUrl;
+          
+          if (mobile) {
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+          } else {
+            link.download = `PowerMeter_PD7_${month}_${year}_${new Date().toISOString().split('T')[0]}.xlsx`;
+            link.target = '_blank';
+          }
+          
           document.body.appendChild(link);
           link.click();
           document.body.removeChild(link);
+          
+          // For mobile: also try alternative method
+          if (mobile) {
+            setTimeout(() => {
+              window.open(targetUrl, '_blank', 'noopener,noreferrer');
+            }, 500);
+          }
           
           // Hide progress bar after download
           setTimeout(() => {
             progressContainer.style.display = 'none';
             progressBar.style.width = '0%';
-          }, 1000);
+          }, 1500);
         }
-      }, 100);
-      
-      // Button animation
-      button.style.transform = 'translateY(-2px) scale(0.95)';
-      setTimeout(() => {
-        button.style.transform = '';
-      }, 200);
+      }, 80);
     }
 
-    // Helper functions for easy month management
+    // Management functions
     window.powerMeterManager = {
       // Enable a month (make it available for download)
-      enableMonth: function(month, url, fileSize = '~2.5 MB') {
-        updateMonthData(month, {
+      enableMonth: function(year, month, url, exportUrl = '', fileSize = '~2.5 MB') {
+        if (!yearData[year] || !yearData[year].months[month]) {
+          console.error(`Month ${month} in year ${year} not found`);
+          return;
+        }
+        
+        // Auto-generate export URL if not provided
+        if (!exportUrl && url.includes('docs.google.com/spreadsheets/d/')) {
+          const docId = url.match(/\/d\/([a-zA-Z0-9-_]+)/);
+          const gidMatch = url.match(/gid=([0-9]+)/);
+          if (docId) {
+            exportUrl = `https://docs.google.com/spreadsheets/d/${docId[1]}/export?format=xlsx`;
+            if (gidMatch) {
+              exportUrl += `&gid=${gidMatch[1]}`;
+            }
+          }
+        }
+        
+        yearData[year].months[month] = {
+          ...yearData[year].months[month],
           url: url,
+          exportUrl: exportUrl,
           fileSize: fileSize,
           available: true,
           description: `ข้อมูล PD7 เดือน${month}<br>พร้อมให้ดาวน์โหลด`
-        });
+        };
+        
+        // Enable year if it has at least one available month
+        const hasAvailableMonth = Object.values(yearData[year].months).some(m => m.available);
+        if (hasAvailableMonth) {
+          yearData[year].available = true;
+        }
+        
+        // Refresh current view
+        if (currentView === 'year') {
+          generateYearCards();
+        } else if (currentView === 'month' && currentYear === year) {
+          generateMonthCards(year);
+        }
+        
+        console.log(`Enabled ${month} ${year} for download`);
       },
       
       // Disable a month
-      disableMonth: function(month) {
-        updateMonthData(month, {
+      disableMonth: function(year, month) {
+        if (!yearData[year] || !yearData[year].months[month]) {
+          console.error(`Month ${month} in year ${year} not found`);
+          return;
+        }
+        
+        yearData[year].months[month] = {
+          ...yearData[year].months[month],
           url: '',
+          exportUrl: '',
           available: false,
           description: `ข้อมูล PD7 เดือน${month}<br>กำลังเตรียมข้อมูล`
-        });
+        };
+        
+        // Check if year should be disabled
+        const hasAvailableMonth = Object.values(yearData[year].months).some(m => m.available);
+        if (!hasAvailableMonth) {
+          yearData[year].available = false;
+        }
+        
+        // Refresh current view
+        if (currentView === 'year') {
+          generateYearCards();
+        } else if (currentView === 'month' && currentYear === year) {
+          generateMonthCards(year);
+        }
+        
+        console.log(`Disabled ${month} ${year}`);
       },
       
-      // Update month URL only
-      updateUrl: function(month, url) {
-        updateMonthData(month, { url: url });
+      // Enable a full year
+      enableYear: function(year) {
+        if (!yearData[year]) {
+          console.error(`Year ${year} not found`);
+          return;
+        }
+        
+        yearData[year].available = true;
+        yearData[year].description = `ข้อมูล Power Meter ปี ${year}<br>รวมทุกเดือนในปี`;
+        
+        // Refresh year view if active
+        if (currentView === 'year') {
+          generateYearCards();
+        }
+        
+        console.log(`Enabled year ${year}`);
       },
       
-      // Get current months data
+      // Get current data
       getData: function() {
-        return monthsData;
+        return yearData;
+      },
+      
+      // Get available months for a year
+      getAvailableMonths: function(year) {
+        if (!yearData[year]) return [];
+        return Object.entries(yearData[year].months)
+          .filter(([month, data]) => data.available)
+          .map(([month, data]) => month);
       },
       
       // Quick enable next month function
-      enableNextMonth: function(url, fileSize = '~2.5 MB') {
-        const months = Object.keys(monthsData);
-        const nextMonth = months.find(month => !monthsData[month].available);
-        if (nextMonth) {
-          this.enableMonth(nextMonth, url, fileSize);
-          console.log(`Enabled ${nextMonth} for download`);
-        } else {
-          console.log('All months are already enabled');
+      enableNextMonth: function(url, exportUrl = '', fileSize = '~2.5 MB') {
+        // Find the first unavailable month in the earliest available year
+        for (const [year, yearInfo] of Object.entries(yearData)) {
+          const months = Object.entries(yearInfo.months);
+          const nextMonth = months.find(([month, data]) => !data.available);
+          if (nextMonth) {
+            this.enableMonth(year, nextMonth[0], url, exportUrl, fileSize);
+            console.log(`Enabled ${nextMonth[0]} ${year} for download`);
+            return;
+          }
         }
-      }
+        console.log('All months are already enabled');
+      },
+      
+      // Check if running on mobile
+      isMobile: isMobile,
+      
+      // Navigation helpers
+      showYear: showYearView,
+      showMonth: showMonthView
     };
 
-    // Add some dynamic particles
+    // Dynamic particle creation
     function createParticle() {
       const particle = document.createElement('div');
       particle.className = 'particle';
       particle.style.left = Math.random() * 100 + '%';
       particle.style.top = Math.random() * 100 + '%';
       particle.style.animationDelay = Math.random() * 8 + 's';
-      document.querySelector('.quantum-particles').appendChild(particle);
+      document.getElementById('particleContainer').appendChild(particle);
       
       // Remove particle after animation
       setTimeout(() => {
@@ -733,17 +1050,25 @@
       }, 8000);
     }
 
-    // Initialize the page
-    document.addEventListener('DOMContentLoaded', function() {
-      generateCards();
+    // Initialize particle system
+    function initParticles() {
+      // Create initial particles
+      for (let i = 0; i < 6; i++) {
+        createParticle();
+      }
       
       // Create new particles periodically
       setInterval(createParticle, 2000);
+    }
+
+    // Initialize the page
+    document.addEventListener('DOMContentLoaded', function() {
+      showYearView();
+      initParticles();
       
       // Log helper message
-      console.log('Power Meter Manager loaded! Use powerMeterManager.enableNextMonth("YOUR_URL") to enable the next month.');
+      console.log('Power Meter Manager loaded!');
       console.log('Available functions:', Object.keys(window.powerMeterManager));
+      console.log('Example: powerMeterManager.enableMonth("2025", "กันยาคม", "YOUR_URL")');
     });
   </script>
-</body>
-</html>
