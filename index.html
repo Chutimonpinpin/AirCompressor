@@ -203,31 +203,7 @@
             top: -100%;
             font-family: 'Courier New', monospace;
             font-size: 14px;
-            color: var(--neon-blue);
-            opacity: 0.8;
-            animation: matrixFall linear infinite;
-        }
-
-        @keyframes matrixFall {
-            to { transform: translateY(100vh); }
-        }
-        /* Matrix Rain Effect */
-        .matrix-rain {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        .matrix-column {
-            position: absolute;
-            top: -100%;
-            font-family: 'Courier New', monospace;
-            font-size: 14px;
-            color: var(--neon-green);
+            color: #00ff00;
             opacity: 0.8;
             animation: matrixFall linear infinite;
         }
@@ -647,6 +623,10 @@
       </p>
     </div>
   </div>
+  // Initialize Matrix Rain Effect on page load
+  document.addEventListener('DOMContentLoaded', function() {
+    createMatrixRain(); // Call to generate the matrix rain when the page loads
+    });
 
   <script>
     
@@ -1143,6 +1123,7 @@
       console.log('Example: powerMeterManager.enableMonth("2025", "กันยาคม", "YOUR_URL")');
     });
   </script>
+
 
 
 
