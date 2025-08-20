@@ -170,11 +170,7 @@
       .download-button { padding: 14px 25px; font-size: 1.1rem; min-width: 160px; }
     }
 
-    /* ไฮไลต์การ์ดเดือนปัจจุบัน */
-    .month-card.current-month {
-      border-color: rgba(0, 255, 136, 0.6) !important;
-      box-shadow: 0 0 25px rgba(0, 255, 136, 0.25) !important;
-    }
+
   </style>
 </head>
 <body>
@@ -213,7 +209,7 @@
     // Matrix Rain
     function createMatrixRain() {
       const matrix = document.getElementById('matrix');
-      const characters = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+      const characters = '01';
       for (let i = 0; i < 50; i++) {
         const column = document.createElement('div');
         column.className = 'matrix-column';
@@ -611,3 +607,4 @@
   </script>
 </body>
 </html>
+
