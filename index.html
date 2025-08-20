@@ -3,22 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>⚡POWER METER⚡⚡</title>
+  <meta name="theme-color" content="#001133">
+  <title>⚡POWER METER⚡</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
-    
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
+    html, body { height: 100%; }
     body {
       font-family: 'Rajdhani', sans-serif;
-      background: linear-gradient(45deg, #0a0a0a, #001133, #002244, #003366, #004488, #0055aa);
-      background-size: 600% 600%;
-      animation: quantumFlow 12s ease infinite;
+      /* ให้สี fallback คงที่บนมือถือ */
+      background-color: #001133;
       min-height: 100vh;
+      min-height: 100svh; /* มือถือสมัยใหม่ */
       overflow-x: hidden;
       position: relative;
     }
+    @supports (min-height: 100dvh) {
+      body { min-height: 100dvh; }
+    }
 
+    /* เลเยอร์พื้นหลังแบบแอนิเมชัน (ใช้แทนการใส่บน body เพื่อให้มือถือแสดงเหมือนเว็บ) */
+    .bg-animated {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: -3;
+      background: linear-gradient(45deg, #0a0a0a, #001133, #002244, #003366, #004488, #0055aa);
+      background-size: 600% 600%;
+      animation: quantumFlow 12s ease infinite;
+      transform: translateZ(0); /* ช่วยป้องกัน jitter บนมือถือ */
+    }
+    @supports (height: 100dvh) {
+      .bg-animated { height: 100dvh; }
+    }
     @keyframes quantumFlow {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
@@ -27,11 +48,13 @@
 
     .cyber-grid {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background-image: 
+      background-image:
         linear-gradient(rgba(0, 170, 255, 0.1) 1px, transparent 1px),
         linear-gradient(90deg, rgba(0, 170, 255, 0.1) 1px, transparent 1px);
       background-size: 50px 50px;
-      animation: gridPulse 4s ease-in-out infinite; z-index: 0;
+      animation: gridPulse 4s ease-in-out infinite;
+      z-index: -2;
+      pointer-events: none;
     }
     @keyframes gridPulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.6; } }
 
@@ -51,7 +74,10 @@
       100% { transform: translate(0, 0) scale(0.8); opacity: 0; }
     }
 
-    .container { position: relative; z-index: 2; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 40px 20px; }
+    .container { position: relative; z-index: 2; min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; align-items: center; padding: 40px 20px; }
+    @supports (min-height: 100dvh) {
+      .container { min-height: 100dvh; }
+    }
 
     .header { text-align: center; margin-bottom: 60px; padding: 40px 0; }
     .main-title {
@@ -74,7 +100,14 @@
     @keyframes dotBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
     .matrix-rain { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; }
-    .matrix-column { position: absolute; top: -100%; font-family: 'Courier New', monospace; font-size: 14px; color: #00c0ff; text-shadow: 0 0 8px rgba(0,170,255,0.8); opacity: 0.8; animation: matrixFall linear infinite; }
+    .matrix-column {
+      position: absolute; top: -100%;
+      font-family: 'Courier New', monospace; font-size: 14px;
+      color: #00c0ff;                 /* สีฟ้า */
+      text-shadow: 0 0 8px rgba(0,170,255,0.8);
+      opacity: 0.85;
+      animation: matrixFall linear infinite;
+    }
     @keyframes matrixFall { to { transform: translateY(100vh); } }
 
     .nav-breadcrumb { margin-bottom: 40px; display: flex; align-items: center; gap: 15px; font-size: 1.2rem; color: #66ccff; }
@@ -169,11 +202,12 @@
       .card-title { font-size: 1.4rem; }
       .download-button { padding: 14px 25px; font-size: 1.1rem; min-width: 160px; }
     }
-
-
   </style>
 </head>
 <body>
+  <!-- เลเยอร์พื้นหลังแอนิเมชัน -->
+  <div class="bg-animated"></div>
+
   <div class="matrix-rain" id="matrix"></div>
   <div class="cyber-grid"></div>
   <div class="quantum-particles" id="particleContainer"></div>
@@ -206,7 +240,7 @@
   </div>
 
   <script>
-    // Matrix Rain
+    // Matrix Rain (blue)
     function createMatrixRain() {
       const matrix = document.getElementById('matrix');
       const characters = '01';
@@ -317,7 +351,7 @@
     const TH_TO_IDX = {
       'มกราคม':0, 'กุมภาพันธ์':1, 'มีนาคม':2, 'เมษายน':3, 'พฤษภาคม':4, 'มิถุนายน':5,
       'กรกฎาคม':6, 'สิงหาคม':7, 'กันยายน':8, 'ตุลาคม':9, 'พฤศจิกายน':10, 'ธันวาคม':11,
-      'กันยาคม':8 // รองรับสะกดนี้ใน yearData
+      'กันยาคม':8
     };
     const IDX_TO_TH = ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
 
@@ -419,11 +453,10 @@
       if (!yearInfo) return;
 
       Object.entries(yearInfo.months).forEach(([month, data]) => {
-        const isNow = isCurrentMonth(year, month);
         const btnDisabled = (!data.available || !data.url);
 
         const card = document.createElement('div');
-        card.className = `month-card ${!data.available ? 'unavailable' : ''} ${isNow ? 'current-month' : ''}`;
+        card.className = `month-card ${!data.available ? 'unavailable' : ''}`;
 
         const mobileNotice = data.available && isMobile() ? 
           '<div class="mobile-notice">📱 มือถือ: กดเพื่อเปิดใน Google Sheets</div>' : '';
@@ -475,16 +508,29 @@
       generateMonthCards(year);
     }
 
-    // Download
+    // Download (แก้สำหรับมือถือ: เปิดแท็บเปล่าทันทีในจังหวะคลิก)
     function downloadFile(ev, year, month) {
       const data = yearData[year]?.months[month];
       if (!data || !data.available || !data.url) return;
 
+      const mobile = isMobile();
+      const targetUrl = mobile && data.exportUrl ? data.exportUrl : data.url;
+
+      // เปิดแท็บเปล่า (หรือเตรียมเปลี่ยนหน้า) ทันทีใน user gesture เพื่อเลี่ยง popup blocker
+      let newTab = null;
+      if (mobile) {
+        newTab = window.open('about:blank', '_blank');
+        // ถ้าเปิดแท็บไม่ได้ (ผู้ใช้บล็อกไว้) ให้ fallback ไปที่หน้าเดิม
+        if (!newTab) {
+          window.location.href = targetUrl;
+          return;
+        }
+      }
+
       const progressContainer = document.getElementById(`progress-${year}-${month}`);
       const progressBar = progressContainer.querySelector('.progress-bar');
-      const mobile = isMobile();
-
       progressContainer.style.display = 'block';
+
       if (ev && ev.target) {
         ev.target.style.transform = 'translateY(-2px) scale(0.95)';
         setTimeout(() => { ev.target.style.transform = ''; }, 200);
@@ -498,27 +544,25 @@
 
         if (progress >= 100) {
           clearInterval(progressInterval);
-          const targetUrl = mobile && data.exportUrl ? data.exportUrl : data.url;
 
-          const link = document.createElement('a');
-          link.href = targetUrl;
-          if (mobile) {
-            link.target = '_blank'; link.rel = 'noopener noreferrer';
+          if (mobile && newTab) {
+            // เปลี่ยน URL ของแท็บที่เปิดไว้
+            newTab.location.href = targetUrl;
           } else {
+            // เดสก์ท็อป: ใช้ลิงก์ปกติ
+            const link = document.createElement('a');
+            link.href = targetUrl;
             link.target = '_blank';
-          }
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-
-          if (mobile) {
-            setTimeout(() => { window.open(targetUrl, '_blank', 'noopener,noreferrer'); }, 500);
+            link.rel = 'noopener noreferrer';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
           }
 
           setTimeout(() => {
             progressContainer.style.display = 'none';
             progressBar.style.width = '0%';
-          }, 1500);
+          }, 1200);
         }
       }, 80);
     }
@@ -607,5 +651,3 @@
   </script>
 </body>
 </html>
-
-
