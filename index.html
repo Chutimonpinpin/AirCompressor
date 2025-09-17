@@ -257,7 +257,7 @@
         <div class="data-card" onclick="selectDataType('powermeter')">
           <div class="card-header">
             <div class="card-icon">⚡</div>
-            <h2 class="card-title">ONLINE DATA</h2>
+            <h2 class="card-title">Power meter</h2>
           </div>
           <p class="card-description">ข้อมูลการใช้พลังงานไฟฟ้า</p>
           <div class="card-stats">
@@ -332,38 +332,122 @@
             fileSize: '~2.5 MB', 
             url: 'https://docs.google.com/spreadsheets/d/1AWaCQSfeHMD8RHs92xB2Yzd80e4Tznpi/edit?usp=sharing&ouid=103243829117381280273&rtpof=true&sd=true', 
             exportUrl: 'https://docs.google.com/spreadsheets/d/1AWaCQSfeHMD8RHs92xB2Yzd80e4Tznpi/export?format=xlsx', 
-            available: true },
-          'สิงหาคม': { icon: '📈', description: 'ข้อมูลเดือนสิงหาคม<br>พร้อมให้ดาวน์โหลด', fileSize: '~2.8 MB', url: 'https://docs.google.com/spreadsheets/d/1hjCWANmybYZ2wK8iVuhkjtzkadxG2bS1/edit?usp=sharing&ouid=103243829117381280273&rtpof=true&sd=true', exportUrl: 'https://docs.google.com/spreadsheets/d/1hjCWANmybYZ2wK8iVuhkjtzkadxG2bS1/export?format=xlsx', available: true },
-          'กันยายน': { icon: '📋', description: 'ข้อมูลเดือนกันยายน<br>กำลังเตรียมข้อมูล', fileSize: '~3.0 MB', url: 'https://docs.google.com/spreadsheets/d/18wiVtVuzcxFHqubTRxNFJGiPhIoRik2l/edit?usp=sharing&ouid=103243829117381280273&rtpof=true&sd=true', exportUrl: 'https://docs.google.com/spreadsheets/d/18wiVtVuzcxFHqubTRxNFJGiPhIoRik2l/export?format=xlsx', available: false },
-          'ตุลาคม': { icon: '🔄', description: 'ข้อมูลเดือนตุลาคม<br>กำลังเตรียมข้อมูล', fileSize: '~2.7 MB', url: 'https://docs.google.com/spreadsheets/d/1_pmk5RonwUyCHD6N_NYxMSZDTOFR83xy/edit?usp=sharing&ouid=103243829117381280273&rtpof=true&sd=true', exportUrl: 'https://docs.google.com/spreadsheets/d/1_pmk5RonwUyCHD6N_NYxMSZDTOFR83xy/export?format=xlsx', available: false },
-          'พฤศจิกายน': { icon: '⚡', description: 'ข้อมูลเดือนพฤศจิกายน<br>กำลังเตรียมข้อมูล', fileSize: '~2.9 MB', url: '', exportUrl: '', available: false },
-          'ธันวาคม': { icon: '🎯', description: 'ข้อมูลเดือนธันวาคม<br>กำลังเตรียมข้อมูล', fileSize: '~3.2 MB', url: '', exportUrl: '', available: false }
-        }
-      },
-      '2026': { icon: '📅', title: '2024', description: 'ข้อมูล Power Meter ปี 2024<br>กำลังเตรียมข้อมูล', available: false, months: {} },
-      '2027': { icon: '📅', title: '2026', description: 'ข้อมูล Power Meter ปี 2026<br>กำลังเตรียมข้อมูล', available: false, months: {} }
-    };
-
-    // Data Structure for Scrap
-    const scrapData = {
-      '2025': {
-        icon: '♻️', title: '2025', description: 'ข้อมูล Scrap ปี 2025<br>รวมข้อมูลการรีไซเคิล', available: true,
-        months: {
-          
+            available: true 
+          },
+          'สิงหาคม': { 
+            icon: '📈', 
+            description: 'ข้อมูลเดือนสิงหาคม<br>พร้อมให้ดาวน์โหลด', 
+            fileSize: '~2.8 MB', 
+            url: 'https://docs.google.com/spreadsheets/d/1hjCWANmybYZ2wK8iVuhkjtzkadxG2bS1/edit?usp=sharing&ouid=103243829117381280273&rtpof=true&sd=true', 
+            exportUrl: 'https://docs.google.com/spreadsheets/d/1hjCWANmybYZ2wK8iVuhkjtzkadxG2bS1/export?format=xlsx', 
+            available: true 
+          },
           'กันยายน': { 
             icon: '📋', 
-            description: 'ข้อมูล Scrap เดือนกันยายน<br>กำลังเตรียมข้อมูล', 
+            description: 'ข้อมูลเดือนกันยายน<br>พร้อมให้ดาวน์โหลด', 
+            fileSize: '~3.0 MB', 
+            url: 'https://docs.google.com/spreadsheets/d/18wiVtVuzcxFHqubTRxNFJGiPhIoRik2l/edit?usp=sharing&ouid=103243829117381280273&rtpof=true&sd=true', 
+            exportUrl: 'https://docs.google.com/spreadsheets/d/18wiVtVuzcxFHqubTRxNFJGiPhIoRik2l/export?format=xlsx', 
+            available: true 
+          },
+          'ตุลาคม': { 
+            icon: '🔄', 
+            description: 'ข้อมูลเดือนตุลาคม<br>กำลังเตรียมข้อมูล', 
+            fileSize: '~2.7 MB', 
+            url: 'https://docs.google.com/spreadsheets/d/1_pmk5RonwUyCHD6N_NYxMSZDTOFR83xy/edit?usp=sharing&ouid=103243829117381280273&rtpof=true&sd=true', 
+            exportUrl: 'https://docs.google.com/spreadsheets/d/1_pmk5RonwUyCHD6N_NYxMSZDTOFR83xy/export?format=xlsx', 
+            available: false 
+          },
+          'พฤศจิกายน': { 
+            icon: '⚡', 
+            description: 'ข้อมูลเดือนพฤศจิกายน<br>กำลังเตรียมข้อมูล', 
+            fileSize: '~2.9 MB', 
+            url: '', 
+            exportUrl: '', 
+            available: false 
+          },
+          'ธันวาคม': { 
+            icon: '🎯', 
+            description: 'ข้อมูลเดือนธันวาคม<br>กำลังเตรียมข้อมูล', 
+            fileSize: '~3.2 MB', 
+            url: '', 
+            exportUrl: '', 
+            available: false 
+          }
+        }
+      },
+      '2024': { 
+        icon: '📅', 
+        title: '2024', 
+        description: 'ข้อมูล Power Meter ปี 2024<br>กำลังเตรียมข้อมูล', 
+        available: false, 
+        months: {} 
+      },
+      '2026': { 
+        icon: '📅', 
+        title: '2026', 
+        description: 'ข้อมูล Power Meter ปี 2026<br>กำลังเตรียมข้อมูล', 
+        available: false, 
+        months: {} 
+      }
+    };
+
+    // Data Structure for Scrap - แก้ไขแล้ว
+    const scrapData = {
+      '2025': {
+        icon: '♻️', 
+        title: '2025', 
+        description: 'ข้อมูล Scrap ปี 2025<br>รวมข้อมูลการรีไซเคิล', 
+        available: true,
+        months: {
+          'กันยายน': { 
+            icon: '📋', 
+            description: 'ข้อมูล Scrap เดือนกันยายน<br>พร้อมให้ดาวน์โหลด', 
             fileSize: '~1.9 MB', 
             url: 'https://docs.google.com/spreadsheets/d/1iBF-qwf1jSs-2WUko4OkdidzD0xDCGvK/edit?usp=sharing&ouid=103243829117381280273&rtpof=true&sd=true', 
             exportUrl: 'https://docs.google.com/spreadsheets/d/1iBF-qwf1jSs-2WUko4OkdidzD0xDCGvK/export?format=xlsx', 
-            available: true },
-          'ตุลาคม': { icon: '🔄', description: 'ข้อมูล Scrap เดือนตุลาคม<br>กำลังเตรียมข้อมูล', fileSize: '~2.0 MB', url: '', exportUrl: '', available: false }
-          'พฤศจิกายน': { icon: '♻️', description: 'ข้อมูล Scrap เดือนพฤศจิกายน<br>พร้อมให้ดาวน์โหลด', fileSize: '~1.8 MB', url: '#', exportUrl: '#', available: true },
-          'ธันวาคม': { icon: '📊', description: 'ข้อมูล Scrap เดือนธันวาคม<br>พร้อมให้ดาวน์โหลด', fileSize: '~2.1 MB', url: '#', exportUrl: '#', available: true },
+            available: true 
+          },
+          'ตุลาคม': { 
+            icon: '🔄', 
+            description: 'ข้อมูล Scrap เดือนตุลาคม<br>กำลังเตรียมข้อมูล', 
+            fileSize: '~2.0 MB', 
+            url: '', 
+            exportUrl: '', 
+            available: false 
+          },
+          'พฤศจิกายน': { 
+            icon: '♻️', 
+            description: 'ข้อมูล Scrap เดือนพฤศจิกายน<br>พร้อมให้ดาวน์โหลด', 
+            fileSize: '~1.8 MB', 
+            url: '#', 
+            exportUrl: '#', 
+            available: true 
+          },
+          'ธันวาคม': { 
+            icon: '📊', 
+            description: 'ข้อมูล Scrap เดือนธันวาคม<br>พร้อมให้ดาวน์โหลด', 
+            fileSize: '~2.1 MB', 
+            url: '#', 
+            exportUrl: '#', 
+            available: true 
+          }
         }
       },
-      '2026': { icon: '♻️', title: '2024', description: 'ข้อมูล Scrap ปี 2024<br>กำลังเตรียมข้อมูล', available: false, months: {} },
-      '2027': { icon: '♻️', title: '2026', description: 'ข้อมูล Scrap ปี 2026<br>กำลังเตรียมข้อมูล', available: false, months: {} }
+      '2024': { 
+        icon: '♻️', 
+        title: '2024', 
+        description: 'ข้อมูล Scrap ปี 2024<br>กำลังเตรียมข้อมูล', 
+        available: false, 
+        months: {} 
+      },
+      '2026': { 
+        icon: '♻️', 
+        title: '2026', 
+        description: 'ข้อมูล Scrap ปี 2026<br>กำลังเตรียมข้อมูล', 
+        available: false, 
+        months: {} 
+      }
     };
 
     // Auto-enable current month
@@ -707,4 +791,3 @@
   </script>
 </body>
 </html>
-
