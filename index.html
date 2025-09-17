@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#001133">
-  <title>⚡POWER METER⚡</title>
+  <title>⚡ONLINE DATA⚡</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
 
@@ -133,7 +133,7 @@
     .data-card.scrap:hover { border-color: rgba(255, 165, 0, 0.6); box-shadow: 0 25px 50px rgba(255, 165, 0, 0.2), 0 0 50px rgba(255, 165, 0, 0.1); }
     .data-card.scrap .card-title { color: #ffa500; text-shadow: 0 0 15px rgba(255, 165, 0, 0.5); }
     .data-card.scrap .card-description, .data-card.scrap .stat-number { color: #ffcc66; }
-    .data-card.scrap .download-button { background: linear-gradient(135deg, #ff8c00, #ffa500, #ffb84d, #ffd700); }
+    .data-card.scrap .access-button { background: linear-gradient(135deg, #ff8c00, #ffa500, #ffb84d, #ffd700); }
 
     .data-card::before, .year-card::before, .month-card::before {
       content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
@@ -236,13 +236,13 @@
   <div class="container">
     <div class="header">
       <h1 class="main-title">⚡ POWER METER ⚡</h1>
-      <p class="subtitle">ระบบรายงานการใช้พลังงานไฟฟ้าและข้อมูล Scrap</p>
+      <p class="subtitle" id="mainSubtitle">ระบบรายงานการใช้พลังงานไฟฟ้าและข้อมูล Scrap</p>
       <div class="status-indicator">
-        <span class="status-dot"></span> ONLINE SYSTEM
+        <span class="status-dot"></span> <span id="statusText">ONLINE SYSTEM</span>
       </div>
     </div>
 
-    <div class="nav-breadcrumb">
+    <div class="nav-breadcrumb" id="breadcrumb">
       <button class="back-button" onclick="goBack()" id="backButton" style="display: none;">← กลับ</button>
       <a class="nav-link active" onclick="navigateTo('homeView')" id="homeNav">หน้าแรก</a>
       <span class="nav-separator" id="sep1" style="display: none;">›</span>
@@ -257,7 +257,7 @@
         <div class="data-card" onclick="selectDataType('powermeter')">
           <div class="card-header">
             <div class="card-icon">⚡</div>
-            <h2 class="card-title">Power Meter</h2>
+            <h2 class="card-title">ONLINE DATA</h2>
           </div>
           <p class="card-description">ข้อมูลการใช้พลังงานไฟฟ้า</p>
           <div class="card-stats">
@@ -296,72 +296,109 @@
 
     <!-- เลือกปี -->
     <div id="yearlyView" class="view">
-      <div class="main-grid">
-        <div class="year-card" onclick="selectYear('2023')">
-          <div class="card-header">
-            <div class="card-icon">📊</div>
-            <h2 class="card-title">รายงานประจำปี 2023</h2>
-          </div>
-          <p class="card-description" id="yearDesc2023">รวมสถิติการใช้พลังงานตลอดทั้งปี</p>
-          <div class="card-stats">
-            <div class="stat-item">
-              <span class="stat-number">12</span>
-              <span class="stat-label">เดือน</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-number">365</span>
-              <span class="stat-label">วัน</span>
-            </div>
-          </div>
-          <button class="access-button">📅 เลือกเดือน</button>
-          <div class="file-size">ขนาดไฟล์: 2.5 MB</div>
-        </div>
-
-        <div class="year-card" onclick="selectYear('2024')">
-          <div class="card-header">
-            <div class="card-icon">📊</div>
-            <h2 class="card-title">รายงานประจำปี 2024</h2>
-          </div>
-          <p class="card-description" id="yearDesc2024">รวมสถิติการใช้พลังงานตลอดทั้งปี</p>
-          <div class="card-stats">
-            <div class="stat-item">
-              <span class="stat-number">12</span>
-              <span class="stat-label">เดือน</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-number">366</span>
-              <span class="stat-label">วัน</span>
-            </div>
-          </div>
-          <button class="access-button">📅 เลือกเดือน</button>
-          <div class="file-size">ข้อมูลล่าสุด</div>
-        </div>
-      </div>
+      <div class="main-grid" id="yearGrid"></div>
     </div>
 
     <!-- เลือกเดือน -->
     <div id="monthlyView" class="view">
-      <div class="mobile-notice">* หมายเหตุ: ไฟล์รายเดือนอาจมีขนาดใหญ่ โปรดใช้ Wi-Fi ในการดาวน์โหลด</div>
-      <div class="main-grid" id="monthGrid">
-        <!-- เดือนจะถูกสร้างด้วย JavaScript -->
-      </div>
+      <div class="mobile-notice">หมายเหตุ: ไฟล์รายเดือนอาจมีขนาดใหญ่ โปรดใช้ Wi-Fi ในการดาวน์โหลด</div>
+      <div class="main-grid" id="monthGrid"></div>
     </div>
 
     <div class="footer">
-      <p class="footer-text">⚡ Power Meter & Scrap Data System © 2024 ⚡</p>
+      <p class="footer-text">⚡ Power Meter & Scrap Data System © 2025 ⚡</p>
     </div>
   </div>
 
   <script>
+    // Global Variables
     let currentDataType = '';
-    let currentYear = '';
+    let currentYear = null;
     let navigationHistory = ['homeView'];
 
-    const months = [
-      'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน',
-      'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'
-    ];
+    // Mobile detection
+    function isMobile() {
+      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    }
 
+    // Data Structure for Power Meter
+    const powerMeterData = {
+      '2025': {
+        icon: '📅', title: '2025', description: 'ข้อมูล Power Meter ปี 2025<br>รวมทุกเดือนในปี', available: true,
+        months: {
+          'กรกฎาคม': { 
+            icon: '📊', 
+            description: 'ข้อมูลเดือนกรกฎาคม<br>พร้อมให้ดาวน์โหลด', 
+            fileSize: '~2.5 MB', 
+            url: 'https://docs.google.com/spreadsheets/d/1AWaCQSfeHMD8RHs92xB2Yzd80e4Tznpi/edit?usp=sharing&ouid=103243829117381280273&rtpof=true&sd=true', 
+            exportUrl: 'https://docs.google.com/spreadsheets/d/1AWaCQSfeHMD8RHs92xB2Yzd80e4Tznpi/export?format=xlsx', 
+            available: true },
+          'สิงหาคม': { icon: '📈', description: 'ข้อมูลเดือนสิงหาคม<br>พร้อมให้ดาวน์โหลด', fileSize: '~2.8 MB', url: 'https://docs.google.com/spreadsheets/d/1hjCWANmybYZ2wK8iVuhkjtzkadxG2bS1/edit?usp=sharing&ouid=103243829117381280273&rtpof=true&sd=true', exportUrl: 'https://docs.google.com/spreadsheets/d/1hjCWANmybYZ2wK8iVuhkjtzkadxG2bS1/export?format=xlsx', available: true },
+          'กันยายน': { icon: '📋', description: 'ข้อมูลเดือนกันยายน<br>กำลังเตรียมข้อมูล', fileSize: '~3.0 MB', url: 'https://docs.google.com/spreadsheets/d/18wiVtVuzcxFHqubTRxNFJGiPhIoRik2l/edit?usp=sharing&ouid=103243829117381280273&rtpof=true&sd=true', exportUrl: 'https://docs.google.com/spreadsheets/d/18wiVtVuzcxFHqubTRxNFJGiPhIoRik2l/export?format=xlsx', available: false },
+          'ตุลาคม': { icon: '🔄', description: 'ข้อมูลเดือนตุลาคม<br>กำลังเตรียมข้อมูล', fileSize: '~2.7 MB', url: 'https://docs.google.com/spreadsheets/d/1_pmk5RonwUyCHD6N_NYxMSZDTOFR83xy/edit?usp=sharing&ouid=103243829117381280273&rtpof=true&sd=true', exportUrl: 'https://docs.google.com/spreadsheets/d/1_pmk5RonwUyCHD6N_NYxMSZDTOFR83xy/export?format=xlsx', available: false },
+          'พฤศจิกายน': { icon: '⚡', description: 'ข้อมูลเดือนพฤศจิกายน<br>กำลังเตรียมข้อมูล', fileSize: '~2.9 MB', url: '', exportUrl: '', available: false },
+          'ธันวาคม': { icon: '🎯', description: 'ข้อมูลเดือนธันวาคม<br>กำลังเตรียมข้อมูล', fileSize: '~3.2 MB', url: '', exportUrl: '', available: false }
+        }
+      },
+      '2026': { icon: '📅', title: '2024', description: 'ข้อมูล Power Meter ปี 2024<br>กำลังเตรียมข้อมูล', available: false, months: {} },
+      '2027': { icon: '📅', title: '2026', description: 'ข้อมูล Power Meter ปี 2026<br>กำลังเตรียมข้อมูล', available: false, months: {} }
+    };
+
+    // Data Structure for Scrap
+    const scrapData = {
+      '2025': {
+        icon: '♻️', title: '2025', description: 'ข้อมูล Scrap ปี 2025<br>รวมข้อมูลการรีไซเคิล', available: true,
+        months: {
+          
+          'กันยายน': { 
+            icon: '📋', 
+            description: 'ข้อมูล Scrap เดือนกันยายน<br>กำลังเตรียมข้อมูล', 
+            fileSize: '~1.9 MB', 
+            url: 'https://docs.google.com/spreadsheets/d/1iBF-qwf1jSs-2WUko4OkdidzD0xDCGvK/edit?usp=sharing&ouid=103243829117381280273&rtpof=true&sd=true', 
+            exportUrl: 'https://docs.google.com/spreadsheets/d/1iBF-qwf1jSs-2WUko4OkdidzD0xDCGvK/export?format=xlsx', 
+            available: true },
+          'ตุลาคม': { icon: '🔄', description: 'ข้อมูล Scrap เดือนตุลาคม<br>กำลังเตรียมข้อมูล', fileSize: '~2.0 MB', url: '', exportUrl: '', available: false }
+          'พฤศจิกายน': { icon: '♻️', description: 'ข้อมูล Scrap เดือนพฤศจิกายน<br>พร้อมให้ดาวน์โหลด', fileSize: '~1.8 MB', url: '#', exportUrl: '#', available: true },
+          'ธันวาคม': { icon: '📊', description: 'ข้อมูล Scrap เดือนธันวาคม<br>พร้อมให้ดาวน์โหลด', fileSize: '~2.1 MB', url: '#', exportUrl: '#', available: true },
+        }
+      },
+      '2026': { icon: '♻️', title: '2024', description: 'ข้อมูล Scrap ปี 2024<br>กำลังเตรียมข้อมูล', available: false, months: {} },
+      '2027': { icon: '♻️', title: '2026', description: 'ข้อมูล Scrap ปี 2026<br>กำลังเตรียมข้อมูล', available: false, months: {} }
+    };
+
+    // Auto-enable current month
+    const TH_TO_IDX = {
+      'มกราคม':0, 'กุมภาพันธ์':1, 'มีนาคม':2, 'เมษายน':3, 'พฤษภาคม':4, 'มิถุนายน':5,
+      'กรกฎาคม':6, 'สิงหาคม':7, 'กันยายน':8, 'ตุลาคม':9, 'พฤศจิกายน':10, 'ธันวาคม':11, 'กันยาคม':8
+    };
+    const IDX_TO_TH = ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+
+    function autoEnableCurrentMonth() {
+      const now = new Date();
+      const y = String(now.getFullYear());
+      const mIdx = now.getMonth();
+      const stdName = IDX_TO_TH[mIdx];
+      
+      // Enable current month for Power Meter
+      if (powerMeterData[y] && powerMeterData[y].months[stdName]) {
+        powerMeterData[y].months[stdName].available = true;
+        powerMeterData[y].months[stdName].description = `ข้อมูลเดือน${stdName}<br>พร้อมให้ดาวน์โหลด`;
+        powerMeterData[y].available = Object.values(powerMeterData[y].months).some(m => m.available);
+      }
+      
+      // Enable current month for Scrap
+      if (scrapData[y] && scrapData[y].months[stdName]) {
+        scrapData[y].months[stdName].available = true;
+        scrapData[y].months[stdName].description = `ข้อมูล Scrap เดือน${stdName}<br>พร้อมให้ดาวน์โหลด`;
+        scrapData[y].available = Object.values(scrapData[y].months).some(m => m.available);
+      }
+    }
+
+    function getCurrentData() {
+      return currentDataType === 'scrap' ? scrapData : powerMeterData;
+    }
+
+    // Navigation Functions
     function navigateTo(viewId) {
       document.querySelectorAll('.view').forEach(view => view.classList.remove('active'));
       document.getElementById(viewId).classList.add('active');
@@ -381,7 +418,6 @@
       const sep1 = document.getElementById('sep1');
       const sep2 = document.getElementById('sep2');
 
-      // Reset all nav styles
       document.querySelectorAll('.nav-link').forEach(nav => nav.classList.remove('active'));
 
       if (currentView === 'homeView') {
@@ -421,130 +457,248 @@
     function selectDataType(type) {
       currentDataType = type;
       
-      // อัปเดตคำอธิบายตามประเภทข้อมูล
+      // Update UI based on data type
+      const subtitle = document.getElementById('mainSubtitle');
+      const statusText = document.getElementById('statusText');
+      
       if (type === 'powermeter') {
-        document.getElementById('yearDesc2023').textContent = 'รวมสถิติการใช้พลังงานตลอดทั้งปี';
-        document.getElementById('yearDesc2024').textContent = 'รวมสถิติการใช้พลังงานตลอดทั้งปี';
+        subtitle.textContent = 'ดาวน์โหลดข้อมูล POWER METER';
+        statusText.textContent = 'DATA ONLINE';
       } else if (type === 'scrap') {
-        document.getElementById('yearDesc2023').textContent = 'รวมข้อมูล Scrap และการรีไซเคิลตลอดทั้งปี';
-        document.getElementById('yearDesc2024').textContent = 'รวมข้อมูล Scrap และการรีไซเคิลตลอดทั้งปี';
+        subtitle.textContent = 'ดาวน์โหลดข้อมูล SCRAP DATA';
+        statusText.textContent = 'SCRAP ONLINE';
       }
       
       navigateTo('yearlyView');
+      generateYearCards();
     }
 
-    function selectYear(year) {
-      currentYear = year;
-      generateMonthCards();
-      navigateTo('monthlyView');
-    }
+    // Year Cards Generation
+    function generateYearCards() {
+      const grid = document.getElementById('yearGrid');
+      grid.innerHTML = '';
+      const data = getCurrentData();
 
-    function generateMonthCards() {
-      const monthGrid = document.getElementById('monthGrid');
-      monthGrid.innerHTML = '';
-
-      months.forEach((month, index) => {
-        const monthNumber = index + 1;
-        const isAvailable = (currentYear === '2023' && monthNumber <= 6) || (currentYear === '2024' && monthNumber <= 9);
+      Object.entries(data).forEach(([year, yearInfo]) => {
+        const availableMonths = Object.values(yearInfo.months).filter(month => month.available).length;
+        const totalMonths = Object.keys(yearInfo.months).length;
         
-        const monthCard = document.createElement('div');
-        monthCard.className = `month-card ${!isAvailable ? 'unavailable' : ''}`;
+        const card = document.createElement('div');
+        card.className = `year-card ${!yearInfo.available ? 'unavailable' : ''}`;
+        card.onclick = () => showMonthView(year);
         
-        const iconType = currentDataType === 'scrap' ? '♻️' : '📅';
-        const titleColor = currentDataType === 'scrap' ? '#ffa500' : '#00aaff';
-        
-        monthCard.innerHTML = `
+        card.innerHTML = `
           <div class="card-header">
-            <div class="card-icon">${iconType}</div>
-            <h2 class="card-title" style="color: ${isAvailable ? titleColor : '#888'}">${month} ${currentYear}</h2>
+            <div class="card-icon">${yearInfo.icon}</div>
+            <h2 class="card-title">${yearInfo.title}</h2>
           </div>
-          <p class="card-description">${getMonthDescription()}</p>
+          <p class="card-description">${yearInfo.description}</p>
           <div class="card-stats">
             <div class="stat-item">
-              <span class="stat-number">${getDaysInMonth(monthNumber, parseInt(currentYear))}</span>
-              <span class="stat-label">วัน</span>
+              <span class="stat-number">${availableMonths}</span>
+              <span class="stat-label">พร้อม</span>
             </div>
             <div class="stat-item">
-              <span class="stat-number">${getDaysInMonth(monthNumber, parseInt(currentYear)) * 24}</span>
-              <span class="stat-label">ชั่วโมง</span>
+              <span class="stat-number">${totalMonths - availableMonths}</span>
+              <span class="stat-label">รอ</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">${totalMonths}</span>
+              <span class="stat-label">รวม</span>
             </div>
           </div>
-          ${isAvailable ? 
-            `<button class="download-button" onclick="simulateDownload(this)">⬇ ดาวน์โหลด</button>
-             <div class="file-size">ขนาดไฟล์: ${(Math.random() * 2 + 0.5).toFixed(1)} MB</div>` :
-            `<button class="download-button unavailable" disabled>🚫 ไม่พร้อมใช้งาน</button>
-             <div class="coming-soon">Coming Soon</div>`
+          ${yearInfo.available ? 
+            '<div class="file-size">📁 คลิกเพื่อดูรายเดือน</div>' : 
+            '<div class="coming-soon">เร็วๆ นี้</div>'
           }
-          <div class="progress-container">
-            <div class="progress-bar"></div>
-          </div>
         `;
-
-        if (isAvailable) {
-          monthCard.addEventListener('click', () => simulateDownload(monthCard.querySelector('.download-button')));
-        }
-
-        monthGrid.appendChild(monthCard);
+        
+        grid.appendChild(card);
       });
     }
 
-    function getMonthDescription() {
-      if (currentDataType === 'scrap') {
-        return 'ข้อมูลวัสดุเหลือใช้และการรีไซเคิลประจำเดือน';
-      } else {
-        return 'สรุปการใช้พลังงานประจำเดือน';
+    // Month Cards Generation
+    function generateMonthCards(year) {
+      const grid = document.getElementById('monthGrid');
+      grid.innerHTML = '';
+      const data = getCurrentData();
+      const yearInfo = data[year];
+      
+      if (!yearInfo) return;
+
+      Object.entries(yearInfo.months).forEach(([month, monthData]) => {
+        const btnDisabled = (!monthData.available || !monthData.url);
+        const card = document.createElement('div');
+        card.className = `month-card ${!monthData.available ? 'unavailable' : ''}`;
+        
+        const mobileNotice = monthData.available && isMobile() ? 
+          '<div class="mobile-notice">📱 มือถือ: กดเพื่อเปิดใน Google Sheets</div>' : '';
+        
+        card.innerHTML = `
+          <div class="card-header">
+            <div class="card-icon">${monthData.icon}</div>
+            <h2 class="card-title">${month} ${year}</h2>
+          </div>
+          <p class="card-description">${monthData.description}</p>
+          ${mobileNotice}
+          <button class="download-button ${btnDisabled ? 'unavailable' : ''}" 
+                  ${btnDisabled ? 'disabled' : ''} 
+                  onclick="downloadFile(event, '${year}', '${month}')">
+            <span>${!btnDisabled ? '📥 ดาวน์โหลดไฟล์' : '⏳ ยังไม่พร้อม'}</span>
+          </button>
+          ${monthData.available ? 
+            `<div class="file-size">ขนาดไฟล์: ${monthData.fileSize}</div>` : 
+            '<div class="coming-soon">เร็วๆ นี้</div>'
+          }
+          <div class="progress-container" id="progress-${year}-${month}">
+            <div class="progress-bar"></div>
+          </div>
+        `;
+        
+        grid.appendChild(card);
+      });
+    }
+
+    function showMonthView(year) {
+      const data = getCurrentData();
+      if (!data[year] || !data[year].available) return;
+      
+      currentYear = year;
+      navigateTo('monthlyView');
+      generateMonthCards(year);
+    }
+
+    // Download Function
+    function downloadFile(ev, year, month) {
+      const data = getCurrentData();
+      const monthData = data[year]?.months[month];
+      if (!monthData || !monthData.available || !monthData.url) return;
+
+      const mobile = isMobile();
+      const targetUrl = mobile && monthData.exportUrl ? monthData.exportUrl : monthData.url;
+
+      let newTab = null;
+      if (mobile && targetUrl !== '#') {
+        newTab = window.open('about:blank', '_blank');
+        if (!newTab) {
+          window.location.href = targetUrl;
+          return;
+        }
       }
-    }
 
-    function getDaysInMonth(month, year) {
-      return new Date(year, month, 0).getDate();
-    }
-
-    function simulateDownload(button) {
-      const card = button.closest('.year-card, .month-card');
-      const progressContainer = card.querySelector('.progress-container');
-      const progressBar = card.querySelector('.progress-bar');
-
-      button.disabled = true;
+      const progressContainer = document.getElementById(`progress-${year}-${month}`);
+      const progressBar = progressContainer.querySelector('.progress-bar');
       progressContainer.style.display = 'block';
-      let progress = 0;
 
-      const interval = setInterval(() => {
-        progress += 10;
+      if (ev && ev.target) {
+        ev.target.style.transform = 'translateY(-2px) scale(0.95)';
+        setTimeout(() => {
+          ev.target.style.transform = '';
+        }, 200);
+      }
+
+      let progress = 0;
+      const progressInterval = setInterval(() => {
+        progress += Math.random() * 20;
+        if (progress > 100) progress = 100;
         progressBar.style.width = progress + '%';
 
         if (progress >= 100) {
-          clearInterval(interval);
+          clearInterval(progressInterval);
+          
+          if (targetUrl === '#') {
+            alert(`✅ ดาวน์โหลดข้อมูล ${currentDataType === 'scrap' ? 'Scrap' : 'Power Meter'} เสร็จสิ้น`);
+          } else if (mobile && newTab) {
+            newTab.location.href = targetUrl;
+          } else {
+            const link = document.createElement('a');
+            link.href = targetUrl;
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+          }
+
           setTimeout(() => {
-            button.disabled = false;
             progressContainer.style.display = 'none';
             progressBar.style.width = '0%';
-            const dataTypeText = currentDataType === 'scrap' ? 'Scrap' : 'Power Meter';
-            alert(`✅ ดาวน์โหลดข้อมูล ${dataTypeText} เสร็จสิ้น`);
-          }, 500);
+          }, 1200);
         }
-      }, 300);
+      }, 80);
     }
 
-    function createParticles() {
-      const container = document.getElementById('particleContainer');
-      const particles = 30;
-
-      for (let i = 0; i < particles; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-        particle.style.left = Math.random() * 100 + 'vw';
-        particle.style.top = Math.random() * 100 + 'vh';
-        particle.style.animationDuration = (6 + Math.random() * 4) + 's';
-        particle.style.animationDelay = Math.random() * 5 + 's';
-        container.appendChild(particle);
-      }
+    // Particles System
+    function createParticle() {
+      const particle = document.createElement('div');
+      particle.className = 'particle';
+      particle.style.left = Math.random() * 100 + '%';
+      particle.style.top = Math.random() * 100 + '%';
+      particle.style.animationDelay = Math.random() * 8 + 's';
+      document.getElementById('particleContainer').appendChild(particle);
+      setTimeout(() => particle.remove(), 8000);
     }
 
-    // Initialize particles on page load
-    createParticles();
+    function initParticles() {
+      for (let i = 0; i < 6; i++) createParticle();
+      setInterval(createParticle, 2000);
+    }
 
-    // Add keyboard navigation
+    // Management API
+    window.powerMeterManager = {
+      enableMonth: function(year, month, url, exportUrl = '', fileSize = '~2.5 MB') {
+        const data = getCurrentData();
+        if (!data[year] || !data[year].months[month]) return;
+        
+        if (!exportUrl && url && url.includes('docs.google.com/spreadsheets/d/')) {
+          const docId = url.match(/\/d\/([a-zA-Z0-9-_]+)/);
+          const gidMatch = url.match(/gid=([0-9]+)/);
+          if (docId) {
+            exportUrl = `https://docs.google.com/spreadsheets/d/${docId[1]}/export?format=xlsx`;
+            if (gidMatch) exportUrl += `&gid=${gidMatch[1]}`;
+          }
+        }
+        
+        data[year].months[month] = {
+          ...data[year].months[month],
+          url, exportUrl, fileSize, available: true,
+          description: `ข้อมูลเดือน${month}<br>พร้อมให้ดาวน์โหลด`
+        };
+        data[year].available = Object.values(data[year].months).some(m => m.available);
+        
+        generateYearCards();
+        if (currentYear === year) generateMonthCards(year);
+      },
+      
+      disableMonth: function(year, month) {
+        const data = getCurrentData();
+        if (!data[year] || !data[year].months[month]) return;
+        
+        data[year].months[month] = {
+          ...data[year].months[month],
+          url: '', exportUrl: '', available: false,
+          description: `ข้อมูลเดือน${month}<br>กำลังเตรียมข้อมูล`
+        };
+        data[year].available = Object.values(data[year].months).some(m => m.available);
+        
+        generateYearCards();
+        if (currentYear === year) generateMonthCards(year);
+      },
+      
+      getCurrentData: () => getCurrentData(),
+      isMobile,
+      selectDataType,
+      navigateTo
+    };
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      autoEnableCurrentMonth();
+      initParticles();
+      console.log('Power Meter & Scrap Manager loaded!');
+    });
+
+    // Keyboard navigation
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') {
         goBack();
