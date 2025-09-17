@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#001133">
-  <title>⚡POWER METER⚡</title>
+  <title>⚡Online Data⚡</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
 
@@ -13,10 +13,9 @@
     html, body { height: 100%; }
     body {
       font-family: 'Rajdhani', sans-serif;
-      /* ให้สี fallback คงที่บนมือถือ */
       background-color: #001133;
       min-height: 100vh;
-      min-height: 100svh; /* มือถือสมัยใหม่ */
+      min-height: 100svh;
       overflow-x: hidden;
       position: relative;
     }
@@ -24,7 +23,6 @@
       body { min-height: 100dvh; }
     }
 
-    /* เลเยอร์พื้นหลังแบบแอนิเมชัน (ใช้แทนการใส่บน body เพื่อให้มือถือแสดงเหมือนเว็บ) */
     .bg-animated {
       position: fixed;
       inset: 0;
@@ -35,7 +33,7 @@
       background: linear-gradient(45deg, #0a0a0a, #001133, #002244, #003366, #004488, #0055aa);
       background-size: 600% 600%;
       animation: quantumFlow 12s ease infinite;
-      transform: translateZ(0); /* ช่วยป้องกัน jitter บนมือถือ */
+      transform: translateZ(0);
     }
     @supports (height: 100dvh) {
       .bg-animated { height: 100dvh; }
@@ -74,7 +72,7 @@
       100% { transform: translate(0, 0) scale(0.8); opacity: 0; }
     }
 
-    .container { position: relative; z-index: 2; min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; align-items: center; padding: 40px 20px; }
+    .container { position: relative; z-index: 2; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 40px 20px; }
     @supports (min-height: 100dvh) {
       .container { min-height: 100dvh; }
     }
@@ -99,45 +97,62 @@
     .status-dot { width: 12px; height: 12px; background: #00ff88; border-radius: 50%; margin-right: 10px; animation: dotBlink 1.5s ease-in-out infinite; box-shadow: 0 0 15px rgba(0, 255, 136, 0.8); }
     @keyframes dotBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
-    .matrix-rain { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; }
-    .matrix-column {
-      position: absolute; top: -100%;
-      font-family: 'Courier New', monospace; font-size: 14px;
-      color: #00c0ff;                 /* สีฟ้า */
-      text-shadow: 0 0 8px rgba(0,170,255,0.8);
-      opacity: 0.85;
-      animation: matrixFall linear infinite;
+    .nav-breadcrumb { 
+      margin-bottom: 40px; display: flex; align-items: center; gap: 15px; font-size: 1.2rem; color: #66ccff;
+      flex-wrap: wrap; justify-content: center;
     }
-    @keyframes matrixFall { to { transform: translateY(100vh); } }
-
-    .nav-breadcrumb { margin-bottom: 40px; display: flex; align-items: center; gap: 15px; font-size: 1.2rem; color: #66ccff; }
-    .nav-link { color: #00aaff; text-decoration: none; padding: 8px 16px; border-radius: 20px; background: rgba(0, 170, 255, 0.1); border: 1px solid rgba(0, 170, 255, 0.3); transition: all 0.3s ease; cursor: pointer; }
+    .nav-link { 
+      color: #00aaff; text-decoration: none; padding: 8px 16px; border-radius: 20px; 
+      background: rgba(0, 170, 255, 0.1); border: 1px solid rgba(0, 170, 255, 0.3); 
+      transition: all 0.3s ease; cursor: pointer; white-space: nowrap;
+    }
     .nav-link:hover { background: rgba(0, 170, 255, 0.2); border-color: rgba(0, 170, 255, 0.5); transform: translateY(-2px); }
+    .nav-link.active { background: rgba(0, 170, 255, 0.3); border-color: rgba(0, 170, 255, 0.6); }
     .nav-separator { color: #66ccff; opacity: 0.6; }
+    .back-button {
+      background: linear-gradient(135deg, #ff6b35, #f7931e);
+      color: white; border: none; padding: 10px 20px; border-radius: 25px;
+      cursor: pointer; font-size: 1rem; margin-right: 20px;
+      transition: all 0.3s ease; box-shadow: 0 10px 20px rgba(255, 107, 53, 0.3);
+    }
+    .back-button:hover { transform: translateY(-2px); box-shadow: 0 15px 30px rgba(255, 107, 53, 0.4); }
 
     .main-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; max-width: 1200px; width: 100%; margin: 0 auto; }
 
-    .year-card, .month-card {
+    .data-card, .year-card, .month-card {
       background: rgba(0, 170, 255, 0.05); border: 2px solid rgba(0, 170, 255, 0.2); border-radius: 25px;
       padding: 40px 30px; text-align: center; backdrop-filter: blur(20px); transition: all 0.4s ease; position: relative; overflow: hidden;
       transform: perspective(1000px) rotateX(0deg); cursor: pointer;
     }
-    .year-card.unavailable, .month-card.unavailable { background: rgba(100, 100, 100, 0.05); border: 2px solid rgba(100, 100, 100, 0.2); opacity: 0.6; cursor: default; }
+    .data-card.unavailable, .year-card.unavailable, .month-card.unavailable { 
+      background: rgba(100, 100, 100, 0.05); border: 2px solid rgba(100, 100, 100, 0.2); opacity: 0.6; cursor: default; 
+    }
 
-    .year-card::before, .month-card::before {
+    /* Scrap card styling */
+    .data-card.scrap { border-color: rgba(255, 165, 0, 0.2); background: rgba(255, 165, 0, 0.05); }
+    .data-card.scrap:hover { border-color: rgba(255, 165, 0, 0.6); box-shadow: 0 25px 50px rgba(255, 165, 0, 0.2), 0 0 50px rgba(255, 165, 0, 0.1); }
+    .data-card.scrap .card-title { color: #ffa500; text-shadow: 0 0 15px rgba(255, 165, 0, 0.5); }
+    .data-card.scrap .card-description, .data-card.scrap .stat-number { color: #ffcc66; }
+    .data-card.scrap .download-button { background: linear-gradient(135deg, #ff8c00, #ffa500, #ffb84d, #ffd700); }
+
+    .data-card::before, .year-card::before, .month-card::before {
       content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
       background: linear-gradient(45deg, transparent, rgba(0, 170, 255, 0.1), transparent);
       transform: rotate(45deg); transition: all 0.6s ease; opacity: 0;
     }
-    .year-card:not(.unavailable):hover::before, .month-card:not(.unavailable):hover::before { animation: scanLine 2s linear infinite; opacity: 1; }
+    .data-card.scrap::before {
+      background: linear-gradient(45deg, transparent, rgba(255, 165, 0, 0.1), transparent);
+    }
+    .data-card:not(.unavailable):hover::before, .year-card:not(.unavailable):hover::before, .month-card:not(.unavailable):hover::before { 
+      animation: scanLine 2s linear infinite; opacity: 1; 
+    }
     @keyframes scanLine { 0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); } 100% { transform: translateX(100%) translateY(100%) rotate(45deg); } }
-    .year-card:not(.unavailable):hover, .month-card:not(.unavailable):hover {
+    .data-card:not(.unavailable):hover, .year-card:not(.unavailable):hover, .month-card:not(.unavailable):hover {
       transform: perspective(1000px) rotateX(5deg) translateY(-15px);
-      border-color: rgba(0, 170, 255, 0.6);
       box-shadow: 0 25px 50px rgba(0, 170, 255, 0.2), 0 0 50px rgba(0, 170, 255, 0.1);
     }
 
-    .card-header { display: flex; align-items: center; justify-content: center; margin-bottom: 25px; }
+    .card-header { display: flex; align-items: center; justify-content: center; margin-bottom: 25px; flex-wrap: wrap; }
     .card-icon { font-size: 3.5rem; margin-right: 15px; animation: iconFloat 3s ease-in-out infinite; }
     .unavailable .card-icon { animation: none; opacity: 0.5; }
     @keyframes iconFloat { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
@@ -148,12 +163,12 @@
     .card-description { font-size: 1.3rem; color: #66ccff; margin-bottom: 20px; line-height: 1.6; opacity: 0.9; }
     .unavailable .card-description { color: #888; opacity: 0.7; }
 
-    .card-stats { display: flex; justify-content: space-around; margin: 20px 0; padding: 15px 0; border-top: 1px solid rgba(0, 170, 255, 0.2); border-bottom: 1px solid rgba(0, 170, 255, 0.2); }
-    .stat-item { text-align: center; }
+    .card-stats { display: flex; justify-content: space-around; margin: 20px 0; padding: 15px 0; border-top: 1px solid rgba(0, 170, 255, 0.2); border-bottom: 1px solid rgba(0, 170, 255, 0.2); flex-wrap: wrap; gap: 10px; }
+    .stat-item { text-align: center; min-width: 80px; }
     .stat-number { font-size: 1.8rem; font-weight: 700; color: #00aaff; display: block; }
     .stat-label { font-size: 0.9rem; color: #66ccff; opacity: 0.8; }
 
-    .download-button {
+    .access-button, .download-button {
       background: linear-gradient(135deg, #0044aa, #0066cc, #0088ff, #00aaff); background-size: 300% 300%;
       animation: buttonFlow 4s ease infinite;
       color: white; border: none; padding: 18px 40px; font-size: 1.4rem; font-weight: 600; border-radius: 50px; cursor: pointer;
@@ -161,11 +176,15 @@
       font-family: 'Rajdhani', sans-serif; position: relative; overflow: hidden; min-width: 200px;
       border: 2px solid rgba(0, 170, 255, 0.3); margin-top: 10px;
     }
-    .download-button.unavailable { background: linear-gradient(135deg, #444, #666, #888); animation: none; cursor: not-allowed;
-      box-shadow: 0 15px 30px rgba(100, 100, 100, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1); border: 2px solid rgba(100, 100, 100, 0.3); }
+    .access-button.unavailable, .download-button.unavailable { 
+      background: linear-gradient(135deg, #444, #666, #888); animation: none; cursor: not-allowed;
+      box-shadow: 0 15px 30px rgba(100, 100, 100, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1); border: 2px solid rgba(100, 100, 100, 0.3); 
+    }
     @keyframes buttonFlow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-    .download-button:not(.unavailable):hover { transform: translateY(-5px) scale(1.05);
-      box-shadow: 0 25px 50px rgba(0, 170, 255, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3); border-color: rgba(0, 170, 255, 0.6); }
+    .access-button:not(.unavailable):hover, .download-button:not(.unavailable):hover { 
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 25px 50px rgba(0, 170, 255, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3); border-color: rgba(0, 170, 255, 0.6); 
+    }
 
     .file-size { font-size: 1.1rem; color: #88ddff; margin-top: 10px; opacity: 0.8; }
     .coming-soon { font-size: 1.1rem; color: #ff8888; margin-top: 15px; opacity: 0.8; font-weight: 600; }
@@ -179,488 +198,358 @@
     .footer { margin-top: 80px; text-align: center; padding: 30px 0; border-top: 1px solid rgba(0, 170, 255, 0.2); width: 100%; }
     .footer-text { color: #66ccff; font-size: 1.2rem; opacity: 0.8; }
 
-    .mobile-notice { display: none; background: rgba(255, 136, 0, 0.1); border: 2px solid rgba(255, 136, 0, 0.3); border-radius: 15px;
-      padding: 15px; margin: 10px 0; color: #ffaa44; font-size: 0.9rem; text-align: center; }
+    .mobile-notice { 
+      display: none; background: rgba(255, 136, 0, 0.1); border: 2px solid rgba(255, 136, 0, 0.3); border-radius: 15px;
+      padding: 15px; margin: 10px 0; color: #ffaa44; font-size: 0.9rem; text-align: center; 
+    }
 
     @media (max-width: 768px) {
       .main-title { font-size: 2.5rem; letter-spacing: 2px; }
       .subtitle { font-size: 1.4rem; }
       .main-grid { grid-template-columns: 1fr; gap: 30px; }
-      .year-card, .month-card { padding: 30px 20px; }
+      .data-card, .year-card, .month-card { padding: 30px 20px; }
       .card-title { font-size: 1.6rem; }
       .card-description { font-size: 1.1rem; }
-      .download-button { padding: 16px 30px; font-size: 1.2rem; min-width: 180px; }
+      .access-button, .download-button { padding: 16px 30px; font-size: 1.2rem; min-width: 180px; }
       .mobile-notice { display: block; }
+      .nav-breadcrumb { flex-direction: column; gap: 10px; }
     }
 
     @media (max-width: 480px) {
       .main-title { font-size: 2rem; letter-spacing: 1px; }
       .subtitle { font-size: 1.2rem; }
       .status-indicator { font-size: 1rem; padding: 10px 20px; }
-      .year-card, .month-card { padding: 25px 15px; margin: 0 10px; }
-      .card-icon { font-size: 2.5rem; }
+      .data-card, .year-card, .month-card { padding: 25px 15px; margin: 0 10px; }
+      .card-icon { font-size: 2.5rem; margin-right: 10px; }
       .card-title { font-size: 1.4rem; }
-      .download-button { padding: 14px 25px; font-size: 1.1rem; min-width: 160px; }
+      .access-button, .download-button { padding: 14px 25px; font-size: 1.1rem; min-width: 160px; }
+      .card-stats { flex-direction: column; gap: 15px; }
+      .stat-item { min-width: auto; }
     }
   </style>
 </head>
 <body>
-  <!-- เลเยอร์พื้นหลังแอนิเมชัน -->
   <div class="bg-animated"></div>
-
-  <div class="matrix-rain" id="matrix"></div>
   <div class="cyber-grid"></div>
   <div class="quantum-particles" id="particleContainer"></div>
 
   <div class="container">
     <div class="header">
-      <h1 class="main-title">⚡POWER METER</h1>
-      <p class="subtitle">ดาวน์โหลดข้อมูล POWER METER</p>
+      <h1 class="main-title">⚡ ONLINE DATA ⚡</h1>
+      <p class="subtitle">ระบบรายงานการใช้พลังงานไฟฟ้าและข้อมูล Scrap</p>
       <div class="status-indicator">
-        <div class="status-dot"></div>
-        <span>DATA ONLINE</span>
+        <span class="status-dot"></span> ONLINE SYSTEM
       </div>
     </div>
 
-    <div class="nav-breadcrumb" id="breadcrumb">
-      <span class="nav-link" onclick="showYearView()">🏠 หน้าหลัก</span>
+    <div class="nav-breadcrumb">
+      <button class="back-button" onclick="goBack()" id="backButton" style="display: none;">← กลับ</button>
+      <a class="nav-link active" onclick="navigateTo('homeView')" id="homeNav">หน้าแรก</a>
+      <span class="nav-separator" id="sep1" style="display: none;">›</span>
+      <a class="nav-link" onclick="navigateTo('yearlyView')" id="yearNav" style="display: none;">เลือกปี</a>
+      <span class="nav-separator" id="sep2" style="display: none;">›</span>
+      <a class="nav-link" onclick="navigateTo('monthlyView')" id="monthNav" style="display: none;">เลือกเดือน</a>
     </div>
 
-    <div class="view active" id="yearView">
-      <div class="main-grid" id="yearGrid"></div>
+    <!-- หน้าแรก - เลือกประเภทข้อมูล -->
+    <div id="homeView" class="view active">
+      <div class="main-grid">
+        <div class="data-card" onclick="selectDataType('powermeter')">
+          <div class="card-header">
+            <div class="card-icon">⚡</div>
+            <h2 class="card-title">Power Meter</h2>
+          </div>
+          <p class="card-description">ข้อมูลการใช้พลังงานไฟฟ้า</p>
+          <div class="card-stats">
+            <div class="stat-item">
+              <span class="stat-number">24/7</span>
+              <span class="stat-label">ติดตาม</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">Real-time</span>
+              <span class="stat-label">ข้อมูล</span>
+            </div>
+          </div>
+          <button class="access-button">📊 เข้าดูข้อมูล</button>
+        </div>
+
+        <div class="data-card scrap" onclick="selectDataType('scrap')">
+          <div class="card-header">
+            <div class="card-icon">♻️</div>
+            <h2 class="card-title">Scrap Data</h2>
+          </div>
+          <p class="card-description">ข้อมูลวัสดุเหลือใช้และการรีไซเคิล</p>
+          <div class="card-stats">
+            <div class="stat-item">
+              <span class="stat-number">100%</span>
+              <span class="stat-label">ติดตาม</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">Daily</span>
+              <span class="stat-label">อัพเดท</span>
+            </div>
+          </div>
+          <button class="access-button">📋 เข้าดูข้อมูล</button>
+        </div>
+      </div>
     </div>
 
-    <div class="view" id="monthView">
-      <div class="main-grid" id="monthGrid"></div>
+    <!-- เลือกปี -->
+    <div id="yearlyView" class="view">
+      <div class="main-grid">
+        <div class="year-card" onclick="selectYear('2023')">
+          <div class="card-header">
+            <div class="card-icon">📊</div>
+            <h2 class="card-title">รายงานประจำปี 2023</h2>
+          </div>
+          <p class="card-description" id="yearDesc2023">รวมสถิติการใช้พลังงานตลอดทั้งปี</p>
+          <div class="card-stats">
+            <div class="stat-item">
+              <span class="stat-number">12</span>
+              <span class="stat-label">เดือน</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">365</span>
+              <span class="stat-label">วัน</span>
+            </div>
+          </div>
+          <button class="access-button">📅 เลือกเดือน</button>
+          <div class="file-size">ข้อมูลครบถ้วน</div>
+        </div>
+
+        <div class="year-card" onclick="selectYear('2024')">
+          <div class="card-header">
+            <div class="card-icon">📊</div>
+            <h2 class="card-title">รายงานประจำปี 2024</h2>
+          </div>
+          <p class="card-description" id="yearDesc2024">รวมสถิติการใช้พลังงานตลอดทั้งปี</p>
+          <div class="card-stats">
+            <div class="stat-item">
+              <span class="stat-number">12</span>
+              <span class="stat-label">เดือน</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">366</span>
+              <span class="stat-label">วัน</span>
+            </div>
+          </div>
+          <button class="access-button">📅 เลือกเดือน</button>
+          <div class="file-size">ข้อมูลล่าสุด</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- เลือกเดือน -->
+    <div id="monthlyView" class="view">
+      <div class="mobile-notice">* หมายเหตุ: ไฟล์รายเดือนอาจมีขนาดใหญ่ โปรดใช้ Wi-Fi ในการดาวน์โหลด</div>
+      <div class="main-grid" id="monthGrid">
+        <!-- เดือนจะถูกสร้างด้วย JavaScript -->
+      </div>
     </div>
 
     <div class="footer">
-      <p class="footer-text">🔒 ข้อมูลเข้ารหัสและปลอดภัย | อัปเดตแบบ Real-time ทุกวัน</p>
+      <p class="footer-text">⚡ Power Meter & Scrap Data System © 2024 ⚡</p>
     </div>
   </div>
 
   <script>
-    // Matrix Rain (blue)
-    function createMatrixRain() {
-      const matrix = document.getElementById('matrix');
-      const characters = '01';
-      for (let i = 0; i < 50; i++) {
-        const column = document.createElement('div');
-        column.className = 'matrix-column';
-        column.style.left = Math.random() * 100 + 'vw';
-        column.style.animationDuration = (Math.random() * 3 + 2) + 's';
-        column.style.animationDelay = Math.random() * 2 + 's';
-        let text = '';
-        for (let j = 0; j < 20; j++) {
-          text += characters.charAt(Math.floor(Math.random() * characters.length)) + '<br>';
-        }
-        column.innerHTML = text;
-        matrix.appendChild(column);
+    let currentDataType = '';
+    let currentYear = '';
+    let navigationHistory = ['homeView'];
+
+    const months = [
+      'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน',
+      'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'
+    ];
+
+    function navigateTo(viewId) {
+      document.querySelectorAll('.view').forEach(view => view.classList.remove('active'));
+      document.getElementById(viewId).classList.add('active');
+      
+      if (!navigationHistory.includes(viewId)) {
+        navigationHistory.push(viewId);
+      }
+      
+      updateBreadcrumb(viewId);
+    }
+
+    function updateBreadcrumb(currentView) {
+      const backButton = document.getElementById('backButton');
+      const homeNav = document.getElementById('homeNav');
+      const yearNav = document.getElementById('yearNav');
+      const monthNav = document.getElementById('monthNav');
+      const sep1 = document.getElementById('sep1');
+      const sep2 = document.getElementById('sep2');
+
+      // Reset all nav styles
+      document.querySelectorAll('.nav-link').forEach(nav => nav.classList.remove('active'));
+
+      if (currentView === 'homeView') {
+        backButton.style.display = 'none';
+        homeNav.classList.add('active');
+        yearNav.style.display = 'none';
+        monthNav.style.display = 'none';
+        sep1.style.display = 'none';
+        sep2.style.display = 'none';
+      } else if (currentView === 'yearlyView') {
+        backButton.style.display = 'inline-block';
+        homeNav.classList.remove('active');
+        yearNav.style.display = 'inline-block';
+        yearNav.classList.add('active');
+        monthNav.style.display = 'none';
+        sep1.style.display = 'inline';
+        sep2.style.display = 'none';
+      } else if (currentView === 'monthlyView') {
+        backButton.style.display = 'inline-block';
+        homeNav.classList.remove('active');
+        yearNav.style.display = 'inline-block';
+        monthNav.style.display = 'inline-block';
+        monthNav.classList.add('active');
+        sep1.style.display = 'inline';
+        sep2.style.display = 'inline';
       }
     }
 
-    // Mobile detection
-    function isMobile() {
-      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    }
-
-    // ----- Data by Year -----
-    const yearData = {
-      '2025': {
-        icon: '📅',
-        title: '2025',
-        description: 'ข้อมูล Power Meter ปี 2025<br>รวมทุกเดือนในปี',
-        available: true,
-        months: {
-          'กรกฎาคม': {
-            icon: '📊',
-            description: 'ข้อมูลเดือนกรกฎาคม<br>พร้อมให้ดาวน์โหลด',
-            fileSize: '~2.5 MB',
-            url: 'https://docs.google.com/spreadsheets/d/1AWaCQSfeHMD8RHs92xB2Yzd80e4Tznpi/edit?usp=sharing&ouid=103243829117381280273&rtpof=true&sd=true',
-            exportUrl: 'https://docs.google.com/spreadsheets/d/1AWaCQSfeHMD8RHs92xB2Yzd80e4Tznpi/export?format=xlsx',
-            available: true
-          },
-          'สิงหาคม': {
-            icon: '📈',
-            description: 'ข้อมูลเดือนสิงหาคม<br>พร้อมให้ดาวน์โหลด',
-            fileSize: '~2.8 MB',
-            url: 'https://docs.google.com/spreadsheets/d/1hjCWANmybYZ2wK8iVuhkjtzkadxG2bS1/edit?usp=sharing&ouid=103243829117381280273&rtpof=true&sd=true',
-            exportUrl: 'https://docs.google.com/spreadsheets/d/1hjCWANmybYZ2wK8iVuhkjtzkadxG2bS1/export?format=xlsx',
-            available: true
-          },
-          'กันยายน': {
-            icon: '📋',
-            description: 'ข้อมูลเดือนกันยาคม<br>กำลังเตรียมข้อมูล',
-            fileSize: '~3.0 MB',
-            url: 'https://docs.google.com/spreadsheets/d/18wiVtVuzcxFHqubTRxNFJGiPhIoRik2l/edit?usp=sharing&ouid=103243829117381280273&rtpof=true&sd=true',
-            exportUrl: 'https://docs.google.com/spreadsheets/d/18wiVtVuzcxFHqubTRxNFJGiPhIoRik2l/export?format=xlsx',
-            available: false
-          },
-          'ตุลาคม': { 
-            icon: '🔄', 
-            description: 'ข้อมูลเดือนตุลาคม<br>กำลังเตรียมข้อมูล', 
-            fileSize: '~2.7 MB', 
-            url: 'https://docs.google.com/spreadsheets/d/1_pmk5RonwUyCHD6N_NYxMSZDTOFR83xy/edit?usp=sharing&ouid=103243829117381280273&rtpof=true&sd=true', 
-            exportUrl: 'https://docs.google.com/spreadsheets/d/1_pmk5RonwUyCHD6N_NYxMSZDTOFR83xy/export?format=xlsx', 
-            available: false 
-          },
-          'พฤศจิกายน': { icon: '⚡', description: 'ข้อมูล PD7 เดือนพฤศจิกายน<br>กำลังเตรียมข้อมูล', fileSize: '~2.9 MB', url: '', exportUrl: '', available: false },
-          'ธันวาคม': { icon: '🎯', description: 'ข้อมูล PD7 เดือนธันวาคม<br>กำลังเตรียมข้อมูล', fileSize: '~3.2 MB', url: '', exportUrl: '', available: false }
-        }
-      },
-      '2026': {
-        icon: '📅',
-        title: '2026',
-        description: 'ข้อมูล Power Meter ปี 2026<br>กำลังเตรียมข้อมูล',
-        available: false,
-        months: {
-          'มกราคม': { icon: '📊', description: 'ข้อมูล PD7 เดือนมกราคม<br>กำลังเตรียมข้อมูล', fileSize: '~2.5 MB', url: '', exportUrl: '', available: false },
-          'กุมภาพันธ์': { icon: '📈', description: 'ข้อมูล PD7 เดือนกุมภาพันธ์<br>กำลังเตรียมข้อมูล', fileSize: '~2.5 MB', url: '', exportUrl: '', available: false },
-          'มีนาคม': { icon: '📋', description: 'ข้อมูล PD7 เดือนมีนาคม<br>กำลังเตรียมข้อมูล', fileSize: '~2.5 MB', url: '', exportUrl: '', available: false },
-          'เมษายน': { icon: '🔄', description: 'ข้อมูล PD7 เดือนเมษายน<br>กำลังเตรียมข้อมูล', fileSize: '~2.5 MB', url: '', exportUrl: '', available: false },
-          'พฤษภาคม': { icon: '⚡', description: 'ข้อมูล PD7 เดือนพฤษภาคม<br>กำลังเตรียมข้อมูล', fileSize: '~2.5 MB', url: '', exportUrl: '', available: false },
-          'มิถุนายน': { icon: '🎯', description: 'ข้อมูล PD7 เดือนมิถุนายน<br>กำลังเตรียมข้อมูล', fileSize: '~2.5 MB', url: '', exportUrl: '', available: false },
-          'กรกฎาคม': { icon: '📊', description: 'ข้อมูล PD7 เดือนกรกฎาคม<br>กำลังเตรียมข้อมูล', fileSize: '~2.5 MB', url: '', exportUrl: '', available: false },
-          'สิงหาคม': { icon: '📈', description: 'ข้อมูล PD7 เดือนสิงหาคม<br>กำลังเตรียมข้อมูล', fileSize: '~2.5 MB', url: '', exportUrl: '', available: false },
-          'กันยายน': { icon: '📋', description: 'ข้อมูล PD7 เดือนกันยายน<br>กำลังเตรียมข้อมูล', fileSize: '~2.5 MB', url: '', exportUrl: '', available: false },
-          'ตุลาคม': { icon: '🔄', description: 'ข้อมูล PD7 เดือนตุลาคม<br>กำลังเตรียมข้อมูล', fileSize: '~2.5 MB', url: '', exportUrl: '', available: false },
-          'พฤศจิกายน': { icon: '⚡', description: 'ข้อมูล PD7 เดือนพฤศจิกายน<br>กำลังเตรียมข้อมูล', fileSize: '~2.5 MB', url: '', exportUrl: '', available: false },
-          'ธันวาคม': { icon: '🎯', description: 'ข้อมูล PD7 เดือนธันวาคม<br>กำลังเตรียมข้อมูล', fileSize: '~2.5 MB', url: '', exportUrl: '', available: false }
-        }
-      },
-      '2027': {
-        icon: '📅',
-        title: '2027',
-        description: 'ข้อมูล Power Meter ปี 2027<br>กำลังเตรียมข้อมูล',
-        available: false,
-        months: {
-          'มกราคม': { icon: '📊', description: 'ข้อมูล PD7 เดือนมกราคม<br>กำลังเตรียมข้อมูล', fileSize: '~2.5 MB', url: '', exportUrl: '', available: false },
-          'กุมภาพันธ์': { icon: '📈', description: 'ข้อมูล PD7 เดือนกุมภาพันธ์<br>กำลังเตรียมข้อมูล', fileSize: '~2.5 MB', url: '', exportUrl: '', available: false },
-          'มีนาคม': { icon: '📋', description: 'ข้อมูล PD7 เดือนมีนาคม<br>กำลังเตรียมข้อมูล', fileSize: '~2.5 MB', url: '', exportUrl: '', available: false },
-          'เมษายน': { icon: '🔄', description: 'ข้อมูล PD7 เดือนเมษายน<br>กำลังเตรียมข้อมูล', fileSize: '~2.5 MB', url: '', exportUrl: '', available: false },
-          'พฤษภาคม': { icon: '⚡', description: 'ข้อมูล PD7 เดือนพฤษภาคม<br>กำลังเตรียมข้อมูล', fileSize: '~2.5 MB', url: '', exportUrl: '', available: false },
-          'มิถุนายน': { icon: '🎯', description: 'ข้อมูล PD7 เดือนมิถุนายน<br>กำลังเตรียมข้อมูล', fileSize: '~2.5 MB', url: '', exportUrl: '', available: false },
-          'กรกฎาคม': { icon: '📊', description: 'ข้อมูล PD7 เดือนกรกฎาคม<br>กำลังเตรียมข้อมูล', fileSize: '~2.5 MB', url: '', exportUrl: '', available: false },
-          'สิงหาคม': { icon: '📈', description: 'ข้อมูล PD7 เดือนสิงหาคม<br>กำลังเตรียมข้อมูล', fileSize: '~2.5 MB', url: '', exportUrl: '', available: false },
-          'กันยาคม': { icon: '📋', description: 'ข้อมูล PD7 เดือนกันยาคม<br>กำลังเตรียมข้อมูล', fileSize: '~2.5 MB', url: '', exportUrl: '', available: false },
-          'ตุลาคม': { icon: '🔄', description: 'ข้อมูล PD7 เดือนตุลาคม<br>กำลังเตรียมข้อมูล', fileSize: '~2.5 MB', url: '', exportUrl: '', available: false },
-          'พฤศจิกายน': { icon: '⚡', description: 'ข้อมูล PD7 เดือนพฤศจิกายน<br>กำลังเตรียมข้อมูล', fileSize: '~2.5 MB', url: '', exportUrl: '', available: false },
-          'ธันวาคม': { icon: '🎯', description: 'ข้อมูล PD7 เดือนธันวาคม<br>กำลังเตรียมข้อมูล', fileSize: '~2.5 MB', url: '', exportUrl: '', available: false }
-        }
+    function goBack() {
+      if (navigationHistory.length > 1) {
+        navigationHistory.pop();
+        const previousView = navigationHistory[navigationHistory.length - 1];
+        navigateTo(previousView);
       }
-    };
-
-    // View State
-    let currentView = 'year';
-    let currentYear = null;
-
-    // ===== Auto-enable เดือน/ปีตามเวลาจริง (ไม่แก้ URL) =====
-    const TH_TO_IDX = {
-      'มกราคม':0, 'กุมภาพันธ์':1, 'มีนาคม':2, 'เมษายน':3, 'พฤษภาคม':4, 'มิถุนายน':5,
-      'กรกฎาคม':6, 'สิงหาคม':7, 'กันยายน':8, 'ตุลาคม':9, 'พฤศจิกายน':10, 'ธันวาคม':11,
-      'กันยาคม':8
-    };
-    const IDX_TO_TH = ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
-
-    function ensureYear(year) {
-      if (yearData[year]) return;
-      const months = {};
-      IDX_TO_TH.forEach(name => {
-        months[name] = {
-          icon: '📊',
-          description: `ข้อมูล PD7 เดือน${name}<br>กำลังเตรียมข้อมูล`,
-          fileSize: '~2.5 MB',
-          url: '',
-          exportUrl: '',
-          available: false
-        };
-      });
-      yearData[year] = {
-        icon: '📅',
-        title: String(year),
-        description: `ข้อมูล Power Meter ปี ${year}<br>กำลังเตรียมข้อมูล`,
-        available: false,
-        months
-      };
     }
 
-    function isCurrentMonth(year, thMonth){
-      const now = new Date();
-      return Number(year) === now.getFullYear() && TH_TO_IDX[thMonth] === now.getMonth();
-    }
-
-    function autoEnableCurrentMonth(){
-      const now = new Date();
-      const y = String(now.getFullYear());
-      const mIdx = now.getMonth();
-
-      ensureYear(y);
-
-      const stdName = IDX_TO_TH[mIdx];
-      const candidates = (stdName === 'กันยายน') ? ['กันยายน','กันยาคม'] : [stdName];
-
-      for (const name of candidates){
-        if (yearData[y].months[name]){
-          yearData[y].months[name].available = true;
-          yearData[y].months[name].description = `ข้อมูล PD7 เดือน${name}<br>พร้อมให้ดาวน์โหลด`;
-          break;
-        }
+    function selectDataType(type) {
+      currentDataType = type;
+      
+      // อัปเดตคำอธิบายตามประเภทข้อมูล
+      if (type === 'powermeter') {
+        document.getElementById('yearDesc2023').textContent = 'รวมสถิติการใช้พลังงานตลอดทั้งปี';
+        document.getElementById('yearDesc2024').textContent = 'รวมสถิติการใช้พลังงานตลอดทั้งปี';
+      } else if (type === 'scrap') {
+        document.getElementById('yearDesc2023').textContent = 'รวมข้อมูล Scrap และการรีไซเคิลตลอดทั้งปี';
+        document.getElementById('yearDesc2024').textContent = 'รวมข้อมูล Scrap และการรีไซเคิลตลอดทั้งปี';
       }
-      yearData[y].available = Object.values(yearData[y].months).some(m => m.available);
+      
+      navigateTo('yearlyView');
     }
 
-    // Year Cards
-    function generateYearCards() {
-      const grid = document.getElementById('yearGrid');
-      grid.innerHTML = '';
+    function selectYear(year) {
+      currentYear = year;
+      generateMonthCards();
+      navigateTo('monthlyView');
+    }
 
-      Object.entries(yearData).forEach(([year, data]) => {
-        const availableMonths = Object.values(data.months).filter(month => month.available).length;
-        const totalMonths = Object.keys(data.months).length;
+    function generateMonthCards() {
+      const monthGrid = document.getElementById('monthGrid');
+      monthGrid.innerHTML = '';
 
-        const card = document.createElement('div');
-        card.className = `year-card ${!data.available ? 'unavailable' : ''}`;
-        card.onclick = () => showMonthView(year);
-
-        card.innerHTML = `
+      months.forEach((month, index) => {
+        const monthNumber = index + 1;
+        const isAvailable = (currentYear === '2023' && monthNumber <= 6) || (currentYear === '2024' && monthNumber <= 9);
+        
+        const monthCard = document.createElement('div');
+        monthCard.className = `month-card ${!isAvailable ? 'unavailable' : ''}`;
+        
+        const iconType = currentDataType === 'scrap' ? '♻️' : '📅';
+        const titleColor = currentDataType === 'scrap' ? '#ffa500' : '#00aaff';
+        
+        monthCard.innerHTML = `
           <div class="card-header">
-            <div class="card-icon">${data.icon}</div>
-            <h2 class="card-title">${data.title}</h2>
+            <div class="card-icon">${iconType}</div>
+            <h2 class="card-title" style="color: ${isAvailable ? titleColor : '#888'}">${month} ${currentYear}</h2>
           </div>
-          <p class="card-description">${data.description}</p>
+          <p class="card-description">${getMonthDescription()}</p>
           <div class="card-stats">
             <div class="stat-item">
-              <span class="stat-number">${availableMonths}</span>
-              <span class="stat-label">พร้อม</span>
+              <span class="stat-number">${getDaysInMonth(monthNumber, parseInt(currentYear))}</span>
+              <span class="stat-label">วัน</span>
             </div>
             <div class="stat-item">
-              <span class="stat-number">${totalMonths - availableMonths}</span>
-              <span class="stat-label">รอ</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-number">${totalMonths}</span>
-              <span class="stat-label">รวม</span>
+              <span class="stat-number">${getDaysInMonth(monthNumber, parseInt(currentYear)) * 24}</span>
+              <span class="stat-label">ชั่วโมง</span>
             </div>
           </div>
-          ${data.available ? 
-            '<div class="file-size">📁 คลิกเพื่อดูรายเดือน</div>' : 
-            '<div class="coming-soon">เร็วๆ นี้</div>'
+          ${isAvailable ? 
+            `<button class="download-button" onclick="simulateDownload(this)">⬇ ดาวน์โหลด</button>
+             <div class="file-size">ขนาดไฟล์: ${(Math.random() * 2 + 0.5).toFixed(1)} MB</div>` :
+            `<button class="download-button unavailable" disabled>🚫 ไม่พร้อมใช้งาน</button>
+             <div class="coming-soon">Coming Soon</div>`
           }
-        `;
-        grid.appendChild(card);
-      });
-    }
-
-    // Month Cards
-    function generateMonthCards(year) {
-      const grid = document.getElementById('monthGrid');
-      grid.innerHTML = '';
-
-      const yearInfo = yearData[year];
-      if (!yearInfo) return;
-
-      Object.entries(yearInfo.months).forEach(([month, data]) => {
-        const btnDisabled = (!data.available || !data.url);
-
-        const card = document.createElement('div');
-        card.className = `month-card ${!data.available ? 'unavailable' : ''}`;
-
-        const mobileNotice = data.available && isMobile() ? 
-          '<div class="mobile-notice">📱 มือถือ: กดเพื่อเปิดใน Google Sheets</div>' : '';
-
-        card.innerHTML = `
-          <div class="card-header">
-            <div class="card-icon">${data.icon}</div>
-            <h2 class="card-title">${month} ${year}</h2>
-          </div>
-          <p class="card-description">${data.description}</p>
-          ${mobileNotice}
-          <button class="download-button ${btnDisabled ? 'unavailable' : ''}" 
-                  ${btnDisabled ? 'disabled' : ''} 
-                  onclick="downloadFile(event, '${year}', '${month}')">
-            <span>${!btnDisabled ? '📥 ดาวน์โหลดไฟล์' : '⏳ ยังไม่พร้อม'}</span>
-          </button>
-          ${data.available ? 
-            `<div class="file-size">ขนาดไฟล์: ${data.fileSize}</div>` : 
-            '<div class="coming-soon">เร็วๆ นี้</div>'
-          }
-          <div class="progress-container" id="progress-${year}-${month}">
+          <div class="progress-container">
             <div class="progress-bar"></div>
           </div>
         `;
-        grid.appendChild(card);
+
+        if (isAvailable) {
+          monthCard.addEventListener('click', () => simulateDownload(monthCard.querySelector('.download-button')));
+        }
+
+        monthGrid.appendChild(monthCard);
       });
     }
 
-    function showYearView() {
-      currentView = 'year';
-      currentYear = null;
-      document.getElementById('yearView').classList.add('active');
-      document.getElementById('monthView').classList.remove('active');
-      document.getElementById('breadcrumb').innerHTML = `<span class="nav-link" onclick="showYearView()">🏠 หน้าหลัก</span>`;
-      generateYearCards();
-    }
-
-    function showMonthView(year) {
-      if (!yearData[year] || !yearData[year].available) return;
-      currentView = 'month';
-      currentYear = year;
-      document.getElementById('yearView').classList.remove('active');
-      document.getElementById('monthView').classList.add('active');
-      document.getElementById('breadcrumb').innerHTML = `
-        <span class="nav-link" onclick="showYearView()">🏠 หน้าหลัก</span>
-        <span class="nav-separator">›</span>
-        <span class="nav-link">${year}</span>
-      `;
-      generateMonthCards(year);
-    }
-
-    // Download (แก้สำหรับมือถือ: เปิดแท็บเปล่าทันทีในจังหวะคลิก)
-    function downloadFile(ev, year, month) {
-      const data = yearData[year]?.months[month];
-      if (!data || !data.available || !data.url) return;
-
-      const mobile = isMobile();
-      const targetUrl = mobile && data.exportUrl ? data.exportUrl : data.url;
-
-      // เปิดแท็บเปล่า (หรือเตรียมเปลี่ยนหน้า) ทันทีใน user gesture เพื่อเลี่ยง popup blocker
-      let newTab = null;
-      if (mobile) {
-        newTab = window.open('about:blank', '_blank');
-        // ถ้าเปิดแท็บไม่ได้ (ผู้ใช้บล็อกไว้) ให้ fallback ไปที่หน้าเดิม
-        if (!newTab) {
-          window.location.href = targetUrl;
-          return;
-        }
+    function getMonthDescription() {
+      if (currentDataType === 'scrap') {
+        return 'ข้อมูลวัสดุเหลือใช้และการรีไซเคิลประจำเดือน';
+      } else {
+        return 'สรุปการใช้พลังงานประจำเดือน';
       }
+    }
 
-      const progressContainer = document.getElementById(`progress-${year}-${month}`);
-      const progressBar = progressContainer.querySelector('.progress-bar');
+    function getDaysInMonth(month, year) {
+      return new Date(year, month, 0).getDate();
+    }
+
+    function simulateDownload(button) {
+      const card = button.closest('.year-card, .month-card');
+      const progressContainer = card.querySelector('.progress-container');
+      const progressBar = card.querySelector('.progress-bar');
+
+      button.disabled = true;
       progressContainer.style.display = 'block';
-
-      if (ev && ev.target) {
-        ev.target.style.transform = 'translateY(-2px) scale(0.95)';
-        setTimeout(() => { ev.target.style.transform = ''; }, 200);
-      }
-
       let progress = 0;
-      const progressInterval = setInterval(() => {
-        progress += Math.random() * 20;
-        if (progress > 100) progress = 100;
+
+      const interval = setInterval(() => {
+        progress += 10;
         progressBar.style.width = progress + '%';
 
         if (progress >= 100) {
-          clearInterval(progressInterval);
-
-          if (mobile && newTab) {
-            // เปลี่ยน URL ของแท็บที่เปิดไว้
-            newTab.location.href = targetUrl;
-          } else {
-            // เดสก์ท็อป: ใช้ลิงก์ปกติ
-            const link = document.createElement('a');
-            link.href = targetUrl;
-            link.target = '_blank';
-            link.rel = 'noopener noreferrer';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-          }
-
+          clearInterval(interval);
           setTimeout(() => {
+            button.disabled = false;
             progressContainer.style.display = 'none';
             progressBar.style.width = '0%';
-          }, 1200);
+            const dataTypeText = currentDataType === 'scrap' ? 'Scrap' : 'Power Meter';
+            alert(`✅ ดาวน์โหลดข้อมูล ${dataTypeText} เสร็จสิ้น`);
+          }, 500);
         }
-      }, 80);
+      }, 300);
     }
 
-    // Management API
-    window.powerMeterManager = {
-      enableMonth: function(year, month, url, exportUrl = '', fileSize = '~2.5 MB') {
-        if (!yearData[year] || !yearData[year].months[month]) return;
-        if (!exportUrl && url && url.includes('docs.google.com/spreadsheets/d/')) {
-          const docId = url.match(/\/d\/([a-zA-Z0-9-_]+)/);
-          const gidMatch = url.match(/gid=([0-9]+)/);
-          if (docId) {
-            exportUrl = `https://docs.google.com/spreadsheets/d/${docId[1]}/export?format=xlsx`;
-            if (gidMatch) exportUrl += `&gid=${gidMatch[1]}`;
-          }
-        }
-        yearData[year].months[month] = {
-          ...yearData[year].months[month],
-          url, exportUrl, fileSize, available: true,
-          description: `ข้อมูล PD7 เดือน${month}<br>พร้อมให้ดาวน์โหลด`
-        };
-        yearData[year].available = Object.values(yearData[year].months).some(m => m.available);
-        if (currentView === 'year') generateYearCards();
-        else if (currentView === 'month' && currentYear === year) generateMonthCards(year);
-      },
-      disableMonth: function(year, month) {
-        if (!yearData[year] || !yearData[year].months[month]) return;
-        yearData[year].months[month] = {
-          ...yearData[year].months[month],
-          url: '', exportUrl: '', available: false,
-          description: `ข้อมูล PD7 เดือน${month}<br>กำลังเตรียมข้อมูล`
-        };
-        yearData[year].available = Object.values(yearData[year].months).some(m => m.available);
-        if (currentView === 'year') generateYearCards();
-        else if (currentView === 'month' && currentYear === year) generateMonthCards(year);
-      },
-      enableYear: function(year) {
-        if (!yearData[year]) return;
-        yearData[year].available = true;
-        yearData[year].description = `ข้อมูล Power Meter ปี ${year}<br>รวมทุกเดือนในปี`;
-        if (currentView === 'year') generateYearCards();
-      },
-      getData: () => yearData,
-      getAvailableMonths: function(year) {
-        if (!yearData[year]) return [];
-        return Object.entries(yearData[year].months).filter(([_, d]) => d.available).map(([m]) => m);
-      },
-      enableNextMonth: function(url, exportUrl = '', fileSize = '~2.5 MB') {
-        for (const [year, yearInfo] of Object.entries(yearData)) {
-          const months = Object.entries(yearInfo.months);
-          const nextMonth = months.find(([_, d]) => !d.available);
-          if (nextMonth) {
-            this.enableMonth(year, nextMonth[0], url, exportUrl, fileSize);
-            return;
-          }
-        }
-      },
-      isMobile, showYear: showYearView, showMonth: showMonthView
-    };
+    function createParticles() {
+      const container = document.getElementById('particleContainer');
+      const particles = 30;
 
-    // Particles
-    function createParticle() {
-      const particle = document.createElement('div');
-      particle.className = 'particle';
-      particle.style.left = Math.random() * 100 + '%';
-      particle.style.top = Math.random() * 100 + '%';
-      particle.style.animationDelay = Math.random() * 8 + 's';
-      document.getElementById('particleContainer').appendChild(particle);
-      setTimeout(() => particle.remove(), 8000);
-    }
-    function initParticles() {
-      for (let i = 0; i < 6; i++) createParticle();
-      setInterval(createParticle, 2000);
+      for (let i = 0; i < particles; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + 'vw';
+        particle.style.top = Math.random() * 100 + 'vh';
+        particle.style.animationDuration = (6 + Math.random() * 4) + 's';
+        particle.style.animationDelay = Math.random() * 5 + 's';
+        container.appendChild(particle);
+      }
     }
 
-    // Init
-    document.addEventListener('DOMContentLoaded', function() {
-      autoEnableCurrentMonth();   // ปลดล็อกเดือน/ปีปัจจุบันอัตโนมัติ (ไม่แก้ URL)
-      createMatrixRain();
-      showYearView();
-      initParticles();
+    // Initialize particles on page load
+    createParticles();
 
-      console.log('Power Meter Manager loaded!');
-      console.log('Example:', 'powerMeterManager.enableMonth("2025","กันยาคม","YOUR_URL")');
+    // Add keyboard navigation
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        goBack();
+      }
     });
   </script>
 </body>
 </html>
-
-
-
-
-
-
