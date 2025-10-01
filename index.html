@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#001133">
-  <title>⚡ONLINE DATA⚡⚡</title>
+  <title>⚡ONLINE DATA⚡</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
 
@@ -354,8 +354,8 @@
             icon: '🔄', 
             description: 'ข้อมูลเดือนตุลาคม<br>กำลังเตรียมข้อมูล', 
             fileSize: '~2.7 MB', 
-            url: 'https://docs.google.com/spreadsheets/d/1oOz6D-AwXKWKslJPzCJdP8xZ0RwJQYe_/edit?usp=sharing&ouid=103243829117381280273&rtpof=true&sd=true', 
-            exportUrl: 'https://docs.google.com/spreadsheets/d/1oOz6D-AwXKWKslJPzCJdP8xZ0RwJQYe_/export?format=xlsx', 
+            url: 'https://docs.google.com/spreadsheets/d/1_pmk5RonwUyCHD6N_NYxMSZDTOFR83xy/edit?usp=sharing&ouid=103243829117381280273&rtpof=true&sd=true', 
+            exportUrl: 'https://docs.google.com/spreadsheets/d/1_pmk5RonwUyCHD6N_NYxMSZDTOFR83xy/export?format=xlsx', 
             available: false 
           },
           'พฤศจิกายน': { 
@@ -379,8 +379,8 @@
       '2026': { 
         icon: '📅', 
         title: '2026', 
-        description: 'ข้อมูล Power Meter ปี 2026<br>พร้อมให้บริการ', 
-        available: true,
+        description: 'ข้อมูล Power Meter ปี 2026<br>กำลังเตรียมข้อมูล', 
+        available: false,
         months: {
           'มกราคม': { 
             icon: '🎊', 
@@ -534,8 +534,8 @@
       '2026': { 
         icon: '♻️', 
         title: '2026', 
-        description: 'ข้อมูล Scrap ปี 2026<br>พร้อมให้บริการ', 
-        available: true,
+        description: 'ข้อมูล Scrap ปี 2026<br>กำลังเตรียมข้อมูล', 
+        available: false,
         months: {
           'มกราคม': { 
             icon: '🎊', 
@@ -659,6 +659,16 @@
       
       console.log(`🔄 Auto-enable check: Year ${y}, Month ${stdName} (Index: ${mIdx})`);
       
+      // Enable current year first
+      if (powerMeterData[y]) {
+        powerMeterData[y].available = true;
+        powerMeterData[y].description = `ข้อมูล Power Meter ปี ${y}<br>พร้อมให้บริการ`;
+      }
+      if (scrapData[y]) {
+        scrapData[y].available = true;
+        scrapData[y].description = `ข้อมูล Scrap ปี ${y}<br>พร้อมให้บริการ`;
+      }
+      
       // Enable current month for Power Meter
       if (powerMeterData[y] && powerMeterData[y].months[stdName]) {
         if (!powerMeterData[y].months[stdName].url) {
@@ -667,7 +677,6 @@
         }
         powerMeterData[y].months[stdName].available = true;
         powerMeterData[y].months[stdName].description = `ข้อมูลเดือน${stdName}<br>พร้อมให้ดาวน์โหลด`;
-        powerMeterData[y].available = true;
         console.log(`✅ Power Meter: ${stdName} ${y} enabled`);
       } else {
         console.log(`❌ Power Meter: ${stdName} ${y} not found in data structure`);
@@ -681,7 +690,6 @@
         }
         scrapData[y].months[stdName].available = true;
         scrapData[y].months[stdName].description = `ข้อมูล Scrap เดือน${stdName}<br>พร้อมให้ดาวน์โหลด`;
-        scrapData[y].available = true;
         console.log(`✅ Scrap Data: ${stdName} ${y} enabled`);
       } else {
         console.log(`❌ Scrap Data: ${stdName} ${y} not found in data structure`);
