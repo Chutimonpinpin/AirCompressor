@@ -246,7 +246,7 @@
   <div class="container">
     <div class="header">
       <h1 class="main-title">⚡ ONLINE DATA ⚡</h1>
-      <p class="subtitle" id="mainSubtitle">ระบบรายงานข้อมูลโรงงาน - Power Meter • Scrap • Air Compressor</p>
+      <p class="subtitle" id="mainSubtitle">ระบบรายงานข้อมูล - Power Meter • Scrap • Air Compressor</p>
       <div class="status-indicator">
         <span class="status-dot"></span> <span id="statusText">ONLINE SYSTEM</span>
       </div>
@@ -280,7 +280,7 @@
               <span class="stat-label">ข้อมูล</span>
             </div>
           </div>
-          <button class="access-button">📊 เข้าดูข้อมูล</button>
+          <button class="access-button">📋 เข้าดูข้อมูล</button>
         </div>
 
         <div class="data-card scrap" onclick="selectDataType('scrap')">
@@ -318,7 +318,7 @@
               <span class="stat-label">สถานะ</span>
             </div>
           </div>
-          <button class="access-button">🌀 เข้าดูข้อมูล</button>
+          <button class="access-button">📋 เข้าดูข้อมูล</button>
         </div>
       </div>
     </div>
@@ -350,14 +350,822 @@
       return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     }
 
-    // Data Structure for Power Meter
+        // Data Structure for Power Meter
     const powerMeterData = {
       '2025': {
         icon: '📅', title: '2025', description: 'ข้อมูล Power Meter ปี 2025<br>รวมทุกเดือนในปี', available: true,
         months: {
-          'กรกฎาคม': { icon: '📊', description: 'ข้อมูลเดือนกรกฎาคม<br>พร้อมให้ดาวน์โหลด', fileSize: '~2.5 MB', url: 'https://docs.google.com/spreadsheets/d/1AWaCQSfeHMD8RHs92xB2Yzd80e4Tznpi/edit?usp=sharing&ouid=103243829117381280273&rtpof=true&sd=true', exportUrl: 'https://docs.google.com/spreadsheets/d/1AWaCQSfeHMD8RHs92xB2Yzd80e4Tznpi/export?format=xlsx', available: true },
-          'สิงหาคม': { icon: '📈', description: 'ข้อมูลเดือนสิงหาคม<br>พร้อมให้ดาวน์โหลด', fileSize: '~2.8 MB', url: 'https://docs.google.com/spreadsheets/d/1hjCWANmybYZ2wK8iVuhkjtzkadxG2bS1/edit?usp=sharing&ouid=103243829117381280273&rtpof=true&sd=true', exportUrl: 'https://docs.google.com/spreadsheets/d/1hjCWANmybYZ2wK8iVuhkjtzkadxG2bS1/export?format=xlsx', available: true },
-          'กันยายน': { icon: '📋', description: 'ข้อมูลเดือนกันยายน<br>พร้อมให้ดาวน์โหลด', fileSize: '~3.0 MB', url: 'https://docs.google.com/spreadsheets/d/18wiVtVuzcxFHqubTRxNFJGiPhIoRik2l/edit?usp=sharing&ouid=103243829117381280273&rtpof=true&sd=true', exportUrl: 'https://docs.google.com/spreadsheets/d/18wiVtVuzcxFHqubTRxNFJGiPhIoRik2l/export?format=xlsx', available: true },
-          'ตุลาคม': { icon: '🔄', description: 'ข้อมูลเดือนตุลาคม<br>พร้อมให้ดาวน์โหลด', fileSize: '~2.7 MB', url: 'https://docs.google.com/spreadsheets/d/1hdExwUgQI_CMWUnJahoVqYMYRx28qMAS/edit?usp=sharing&ouid=109062324482265916071&rtpof=true&sd=true', exportUrl: 'https://docs.google.com/spreadsheets/d/1hdExwUgQI_CMWUnJahoVqYMYRx28qMAS/export?format=xlsx', available: true },
-          'พฤศจิกายน': { icon: '⚡', description: 'ข้อมูลเดือนพฤศจิกายน<br>พร้อมให้ดาวน์โหลด', fileSize: '~2.9 MB', url: 'https://docs.google.com/spreadsheets/d/1lBOHU
+          'กรกฎาคม': { 
+            icon: '📊', 
+            description: 'ข้อมูลเดือนกรกฎาคม<br>พร้อมให้ดาวน์โหลด', 
+            fileSize: '~2.5 MB', 
+            url: 'https://docs.google.com/spreadsheets/d/1AWaCQSfeHMD8RHs92xB2Yzd80e4Tznpi/edit?usp=sharing&ouid=103243829117381280273&rtpof=true&sd=true', 
+            exportUrl: 'https://docs.google.com/spreadsheets/d/1AWaCQSfeHMD8RHs92xB2Yzd80e4Tznpi/export?format=xlsx', 
+            available: true 
+          },
+          'สิงหาคม': { 
+            icon: '📈', 
+            description: 'ข้อมูลเดือนสิงหาคม<br>พร้อมให้ดาวน์โหลด', 
+            fileSize: '~2.8 MB', 
+            url: 'https://docs.google.com/spreadsheets/d/1hjCWANmybYZ2wK8iVuhkjtzkadxG2bS1/edit?usp=sharing&ouid=103243829117381280273&rtpof=true&sd=true', 
+            exportUrl: 'https://docs.google.com/spreadsheets/d/1hjCWANmybYZ2wK8iVuhkjtzkadxG2bS1/export?format=xlsx', 
+            available: true 
+          },
+          'กันยายน': { 
+            icon: '📋', 
+            description: 'ข้อมูลเดือนกันยายน<br>พร้อมให้ดาวน์โหลด', 
+            fileSize: '~3.0 MB', 
+            url: 'https://docs.google.com/spreadsheets/d/18wiVtVuzcxFHqubTRxNFJGiPhIoRik2l/edit?usp=sharing&ouid=103243829117381280273&rtpof=true&sd=true', 
+            exportUrl: 'https://docs.google.com/spreadsheets/d/18wiVtVuzcxFHqubTRxNFJGiPhIoRik2l/export?format=xlsx', 
+            available: true 
+          },
+          'ตุลาคม': { 
+            icon: '🔄', 
+            description: 'ข้อมูลเดือนตุลาคม<br>กำลังเตรียมข้อมูล', 
+            fileSize: '~2.7 MB', 
+            url: 'https://docs.google.com/spreadsheets/d/1hdExwUgQI_CMWUnJahoVqYMYRx28qMAS/edit?usp=sharing&ouid=109062324482265916071&rtpof=true&sd=true', 
+            exportUrl: 'https://docs.google.com/spreadsheets/d/1hdExwUgQI_CMWUnJahoVqYMYRx28qMAS/export?format=xlsx', 
+            available: true  
+          },
+          'พฤศจิกายน': { 
+            icon: '⚡', 
+            description: 'ข้อมูลเดือนพฤศจิกายน<br>กำลังเตรียมข้อมูล', 
+            fileSize: '~2.9 MB', 
+            url: 'https://docs.google.com/spreadsheets/d/1lBOHUdxLLj25cVCb3yPwys7ZCGBk18V-/edit?usp=sharing&ouid=103243829117381280273&rtpof=true&sd=true', 
+            exportUrl: 'https://docs.google.com/spreadsheets/d/1lBOHUdxLLj25cVCb3yPwys7ZCGBk18V-/export?format=xlsx', 
+            available: true 
+          },
+          'ธันวาคม': { 
+            icon: '🎯', 
+            description: 'ข้อมูลเดือนธันวาคม<br>กำลังเตรียมข้อมูล', 
+            fileSize: '~3.2 MB', 
+            url: '', 
+            exportUrl: '', 
+            available: true  
+          }
+        }
+      },
+      '2026': { 
+        icon: '📅', 
+        title: '2026', 
+        description: 'ข้อมูล Power Meter ปี 2026<br>กำลังเตรียมข้อมูล', 
+        available: false,
+        months: {
+          'มกราคม': { 
+            icon: '🎊', 
+            description: 'ข้อมูลเดือนมกราคม<br>กำลังเตรียมข้อมูล', 
+            fileSize: '~2.5 MB', 
+            url: '', 
+            exportUrl: '', 
+            available: false 
+          },
+          'กุมภาพันธ์': { 
+            icon: '💝', 
+            description: 'ข้อมูลเดือนกุมภาพันธ์<br>กำลังเตรียมข้อมูล', 
+            fileSize: '~2.3 MB', 
+            url: '', 
+            exportUrl: '', 
+            available: false 
+          },
+          'มีนาคม': { 
+            icon: '🌸', 
+            description: 'ข้อมูลเดือนมีนาคม<br>กำลังเตรียมข้อมูล', 
+            fileSize: '~2.6 MB', 
+            url: '', 
+            exportUrl: '', 
+            available: false 
+          },
+          'เมษายน': { 
+            icon: '💦', 
+            description: 'ข้อมูลเดือนเมษายน<br>กำลังเตรียมข้อมูล', 
+            fileSize: '~2.7 MB', 
+            url: '', 
+            exportUrl: '', 
+            available: false 
+          },
+          'พฤษภาคม': { 
+            icon: '🌾', 
+            description: 'ข้อมูลเดือนพฤษภาคม<br>กำลังเตรียมข้อมูล', 
+            fileSize: '~2.8 MB', 
+            url: '', 
+            exportUrl: '', 
+            available: false 
+          },
+          'มิถุนายน': { 
+            icon: '☀️', 
+            description: 'ข้อมูลเดือนมิถุนายน<br>กำลังเตรียมข้อมูล', 
+            fileSize: '~2.9 MB', 
+            url: '', 
+            exportUrl: '', 
+            available: false 
+          },
+          'กรกฎาคม': { 
+            icon: '📊', 
+            description: 'ข้อมูลเดือนกรกฎาคม<br>กำลังเตรียมข้อมูล', 
+            fileSize: '~2.5 MB', 
+            url: '', 
+            exportUrl: '', 
+            available: false 
+          },
+          'สิงหาคม': { 
+            icon: '📈', 
+            description: 'ข้อมูลเดือนสิงหาคม<br>กำลังเตรียมข้อมูล', 
+            fileSize: '~2.8 MB', 
+            url: '', 
+            exportUrl: '', 
+            available: false 
+          },
+          'กันยายน': { 
+            icon: '📋', 
+            description: 'ข้อมูลเดือนกันยายน<br>กำลังเตรียมข้อมูล', 
+            fileSize: '~3.0 MB', 
+            url: '', 
+            exportUrl: '', 
+            available: false 
+          },
+          'ตุลาคม': { 
+            icon: '🔄', 
+            description: 'ข้อมูลเดือนตุลาคม<br>กำลังเตรียมข้อมูล', 
+            fileSize: '~2.7 MB', 
+            url: '', 
+            exportUrl: '', 
+            available: false 
+          },
+          'พฤศจิกายน': { 
+            icon: '⚡', 
+            description: 'ข้อมูลเดือนพฤศจิกายน<br>กำลังเตรียมข้อมูล', 
+            fileSize: '~2.9 MB', 
+            url: '', 
+            exportUrl: '', 
+            available: false 
+          },
+          'ธันวาคม': { 
+            icon: '🎯', 
+            description: 'ข้อมูลเดือนธันวาคม<br>กำลังเตรียมข้อมูล', 
+            fileSize: '~3.2 MB', 
+            url: '', 
+            exportUrl: '', 
+            available: false 
+          }
+        }
+      },
+      '2027': { 
+        icon: '📅', 
+        title: '2027', 
+        description: 'ข้อมูล Power Meter ปี 2027<br>กำลังเตรียมข้อมูล', 
+        available: false, 
+        months: {} 
+      }
+    };
+
+    // Data Structure for Scrap
+    const scrapData = {
+      '2025': {
+        icon: '♻️', 
+        title: '2025', 
+        description: 'ข้อมูล Scrap ปี 2025<br>รวมข้อมูลการรีไซเคิล', 
+        available: true,
+        months: {
+          'กันยายน': { 
+            icon: '📋', 
+            description: 'ข้อมูล Scrap เดือนกันยายน<br>พร้อมให้ดาวน์โหลด', 
+            fileSize: '~1.9 MB', 
+            url: 'https://docs.google.com/spreadsheets/d/1mL_yB-t6TXwW1ckdm4XbqyjvFpUo1Fq3/edit?usp=sharing&ouid=103243829117381280273&rtpof=true&sd=true', 
+            exportUrl: 'https://docs.google.com/spreadsheets/d/1mL_yB-t6TXwW1ckdm4XbqyjvFpUo1Fq3/export?format=xlsx', 
+            available: true 
+          },
+          'ตุลาคม': { 
+            icon: '🔄', 
+            description: 'ข้อมูล Scrap เดือนตุลาคม<br>กำลังเตรียมข้อมูล', 
+            fileSize: '~2.0 MB', 
+            url: 'https://docs.google.com/spreadsheets/d/1oldYP1WJ2rzWUK7pQQJ2wie05c37nTq5/edit?usp=sharing&ouid=103243829117381280273&rtpof=true&sd=true', 
+            exportUrl: 'https://docs.google.com/spreadsheets/d/1oldYP1WJ2rzWUK7pQQJ2wie05c37nTq5/export?format=xlsx', 
+            available: true 
+          },
+          'พฤศจิกายน': { 
+            icon: '♻️', 
+            description: 'ข้อมูล Scrap เดือนพฤศจิกายน<br>กำลังเตรียมข้อมูล', 
+            fileSize: '~1.8 MB', 
+            url: 'https://docs.google.com/spreadsheets/d/190eiTm20yb48reEeXuui17ntvL3zg5fb/edit?usp=sharing&ouid=103243829117381280273&rtpof=true&sd=true', 
+            exportUrl: 'https://docs.google.com/spreadsheets/d/190eiTm20yb48reEeXuui17ntvL3zg5fb/export?format=xlsx', 
+            available: true  
+          },
+          'ธันวาคม': { 
+            icon: '📊', 
+            description: 'ข้อมูล Scrap เดือนธันวาคม<br>กำลังเตรียมข้อมูล', 
+            fileSize: '~2.1 MB', 
+            url: '', 
+            exportUrl: '', 
+            available: false  
+          }
+        }
+      },
+      '2026': { 
+        icon: '♻️', 
+        title: '2026', 
+        description: 'ข้อมูล Scrap ปี 2026<br>กำลังเตรียมข้อมูล', 
+        available: false,
+        months: {
+          'มกราคม': { 
+            icon: '🎊', 
+            description: 'ข้อมูล Scrap เดือนมกราคม<br>กำลังเตรียมข้อมูล', 
+            fileSize: '~1.8 MB', 
+            url: '', 
+            exportUrl: '', 
+            available: false 
+          },
+          'กุมภาพันธ์': { 
+            icon: '💝', 
+            description: 'ข้อมูล Scrap เดือนกุมภาพันธ์<br>กำลังเตรียมข้อมูล', 
+            fileSize: '~1.6 MB', 
+            url: '', 
+            exportUrl: '', 
+            available: false 
+          },
+          'มีนาคม': { 
+            icon: '🌸', 
+            description: 'ข้อมูล Scrap เดือนมีนาคม<br>กำลังเตรียมข้อมูล', 
+            fileSize: '~1.9 MB', 
+            url: '', 
+            exportUrl: '', 
+            available: false 
+          },
+          'เมษายน': { 
+            icon: '💦', 
+            description: 'ข้อมูล Scrap เดือนเมษายน<br>กำลังเตรียมข้อมูล', 
+            fileSize: '~2.0 MB', 
+            url: '', 
+            exportUrl: '', 
+            available: false 
+          },
+          'พฤษภาคม': { 
+            icon: '🌾', 
+            description: 'ข้อมูล Scrap เดือนพฤษภาคม<br>กำลังเตรียมข้อมูล', 
+            fileSize: '~1.7 MB', 
+            url: '', 
+            exportUrl: '', 
+            available: false 
+          },
+          'มิถุนายน': { 
+            icon: '☀️', 
+            description: 'ข้อมูล Scrap เดือนมิถุนายน<br>กำลังเตรียมข้อมูล', 
+            fileSize: '~1.9 MB', 
+            url: '', 
+            exportUrl: '', 
+            available: false 
+          },
+          'กรกฎาคม': { 
+            icon: '📋', 
+            description: 'ข้อมูล Scrap เดือนกรกฎาคม<br>กำลังเตรียมข้อมูล', 
+            fileSize: '~1.8 MB', 
+            url: '', 
+            exportUrl: '', 
+            available: false 
+          },
+          'สิงหาคม': { 
+            icon: '♻️', 
+            description: 'ข้อมูล Scrap เดือนสิงหาคม<br>กำลังเตรียมข้อมูล', 
+            fileSize: '~2.0 MB', 
+            url: '', 
+            exportUrl: '', 
+            available: false 
+          },
+          'กันยายน': { 
+            icon: '📊', 
+            description: 'ข้อมูล Scrap เดือนกันยายน<br>กำลังเตรียมข้อมูล', 
+            fileSize: '~1.9 MB', 
+            url: '', 
+            exportUrl: '', 
+            available: false 
+          },
+          'ตุลาคม': { 
+            icon: '🔄', 
+            description: 'ข้อมูล Scrap เดือนตุลาคม<br>กำลังเตรียมข้อมูล', 
+            fileSize: '~2.0 MB', 
+            url: '', 
+            exportUrl: '', 
+            available: false 
+          },
+          'พฤศจิกายน': { 
+            icon: '♻️', 
+            description: 'ข้อมูล Scrap เดือนพฤศจิกายน<br>กำลังเตรียมข้อมูล', 
+            fileSize: '~1.8 MB', 
+            url: '', 
+            exportUrl: '', 
+            available: false 
+          },
+          'ธันวาคม': { 
+            icon: '🎯', 
+            description: 'ข้อมูล Scrap เดือนธันวาคม<br>กำลังเตรียมข้อมูล', 
+            fileSize: '~2.1 MB', 
+            url: '', 
+            exportUrl: '', 
+            available: false 
+          }
+        }
+      },
+      '2027': { 
+        icon: '♻️', 
+        title: '2027', 
+        description: 'ข้อมูล Scrap ปี 2027<br>กำลังเตรียมข้อมูล', 
+        available: false, 
+        months: {} 
+      }
+    };
+    // Data Structure for Air Compressor
+const airCompData = {
+  '2025': {
+    icon: '💨',
+    title: '2025',
+    description: 'ข้อมูล Air Compressor ปี 2025<br>รวมข้อมูล Flow & Pressure',
+    available: true,
+    months: {
+      'กรกฎาคม': { 
+        icon: '💨',
+        description: 'ข้อมูล Air เดือนกรกฎาคม<br>กำลังเตรียมข้อมูล',
+        fileSize: '~2.1 MB',
+        url: 'https://docs.google.com/spreadsheets/d/15dJC9rK9SEqsLEqNXBoi-IroPv8-i43J/edit?usp=sharing&ouid=103243829117381280273&rtpof=true&sd=true',
+        exportUrl: 'https://docs.google.com/spreadsheets/d/15dJC9rK9SEqsLEqNXBoi-IroPv8-i43J/export?format=xlsx',
+        available: false
+      },
+      'สิงหาคม': { 
+        icon: '💨',
+        description: 'ข้อมูล Air เดือนสิงหาคม<br>กำลังเตรียมข้อมูล',
+        fileSize: '~2.0 MB',
+        url: 'https://docs.google.com/spreadsheets/d/1M1GoQJ2mJ6-PlK01dcHNRZjFdK83M70m/edit?usp=sharing&ouid=103243829117381280273&rtpof=true&sd=true',
+        exportUrl: 'https://docs.google.com/spreadsheets/d/1M1GoQJ2mJ6-PlK01dcHNRZjFdK83M70m/export?format=xlsx',
+        available: false
+      },
+      'กันยายน': { 
+        icon: '💨',
+        description: 'ข้อมูล Air เดือนกันยายน<br>กำลังเตรียมข้อมูล',
+        fileSize: '~1.9 MB',
+        url: 'https://docs.google.com/spreadsheets/d/1EDpHkkY3-HTbVJZCmp88AthyNUP5pPLI/edit?usp=sharing&ouid=103243829117381280273&rtpof=true&sd=true',
+        exportUrl: 'https://docs.google.com/spreadsheets/d/1EDpHkkY3-HTbVJZCmp88AthyNUP5pPLI/export?format=xlsx',
+        available: false
+      },
+      'ตุลาคม': { 
+        icon: '💨',
+        description: 'ข้อมูล Air เดือนตุลาคม<br>กำลังเตรียมข้อมูล',
+        fileSize: '~2.0 MB',
+        url: 'https://docs.google.com/spreadsheets/d/1gKcIjsIUZANTrOkgTHPl3WourZan-kDg/edit?usp=sharing&ouid=103243829117381280273&rtpof=true&sd=true',
+        exportUrl: 'https://docs.google.com/spreadsheets/d/1gKcIjsIUZANTrOkgTHPl3WourZan-kDg/export?format=xlsx',
+        available: false
+      },
+      'พฤศจิกายน': { 
+        icon: '💨',
+        description: 'ข้อมูล Air เดือนพฤศจิกายน<br>กำลังเตรียมข้อมูล',
+        fileSize: '~2.0 MB',
+        url: 'https://docs.google.com/spreadsheets/d/1k2j5Fwm2TXkVQ0iQpRYqHI59vDx03AI9/edit?usp=sharing&ouid=103243829117381280273&rtpof=true&sd=true',
+        exportUrl: 'https://docs.google.com/spreadsheets/d/1k2j5Fwm2TXkVQ0iQpRYqHI59vDx03AI9/export?format=xlsx',
+        available: false
+      },
+      'ธันวาคม': { 
+        icon: '💨',
+        description: 'ข้อมูล Air เดือนธันวาคม<br>กำลังเตรียมข้อมูล',
+        fileSize: '~2.1 MB',
+        url: '',
+        exportUrl: '',
+        available: false
+      }
+    }
+  },
+  '2026': {
+    icon: '💨',
+    title: '2026',
+    description: 'ข้อมูล Air Compressor ปี 2026<br>กำลังเตรียมข้อมูล',
+    available: false,
+    months: {
+      'มกราคม': { icon: '💨', description: 'ข้อมูล Air เดือนมกราคม<br>กำลังเตรียมข้อมูล', fileSize: '~1.8 MB', url: '', exportUrl: '', available: false },
+      'กุมภาพันธ์': { icon: '💨', description: 'ข้อมูล Air เดือนกุมภาพันธ์<br>กำลังเตรียมข้อมูล', fileSize: '~1.7 MB', url: '', exportUrl: '', available: false },
+      'มีนาคม': { icon: '💨', description: 'ข้อมูล Air เดือนมีนาคม<br>กำลังเตรียมข้อมูล', fileSize: '~1.9 MB', url: '', exportUrl: '', available: false },
+      'เมษายน': { icon: '💨', description: 'ข้อมูล Air เดือนเมษายน<br>กำลังเตรียมข้อมูล', fileSize: '~2.0 MB', url: '', exportUrl: '', available: false },
+      'พฤษภาคม': { icon: '💨', description: 'ข้อมูล Air เดือนพฤษภาคม<br>กำลังเตรียมข้อมูล', fileSize: '~1.9 MB', url: '', exportUrl: '', available: false },
+      'มิถุนายน': { icon: '💨', description: 'ข้อมูล Air เดือนมิถุนายน<br>กำลังเตรียมข้อมูล', fileSize: '~2.0 MB', url: '', exportUrl: '', available: false },
+      'กรกฎาคม': { icon: '💨', description: 'ข้อมูล Air เดือนกรกฎาคม<br>กำลังเตรียมข้อมูล', fileSize: '~2.1 MB', url: '', exportUrl: '', available: false },
+      'สิงหาคม': { icon: '💨', description: 'ข้อมูล Air เดือนสิงหาคม<br>กำลังเตรียมข้อมูล', fileSize: '~2.0 MB', url: '', exportUrl: '', available: false },
+      'กันยายน': { icon: '💨', description: 'ข้อมูล Air เดือนกันยายน<br>กำลังเตรียมข้อมูล', fileSize: '~1.9 MB', url: '', exportUrl: '', available: false },
+      'ตุลาคม': { icon: '💨', description: 'ข้อมูล Air เดือนตุลาคม<br>กำลังเตรียมข้อมูล', fileSize: '~2.0 MB', url: '', exportUrl: '', available: false },
+      'พฤศจิกายน': { icon: '💨', description: 'ข้อมูล Air เดือนพฤศจิกายน<br>กำลังเตรียมข้อมูล', fileSize: '~2.0 MB', url: '', exportUrl: '', available: false },
+      'ธันวาคม': { icon: '💨', description: 'ข้อมูล Air เดือนธันวาคม<br>กำลังเตรียมข้อมูล', fileSize: '~2.1 MB', url: '', exportUrl: '', available: false }
+    }
+  },
+  '2027': {
+    icon: '💨',
+    title: '2027',
+    description: 'ข้อมูล Air Compressor ปี 2027<br>กำลังเตรียมข้อมูล',
+    available: false,
+    months: {}
+  }
+};
+
+
+    // Auto-enable current month
+    const TH_TO_IDX = {
+      'มกราคม':0, 'กุมภาพันธ์':1, 'มีนาคม':2, 'เมษายน':3, 'พฤษภาคม':4, 'มิถุนายน':5,
+      'กรกฎาคม':6, 'สิงหาคม':7, 'กันยายน':8, 'ตุลาคม':9, 'พฤศจิกายน':10, 'ธันวาคม':11
+    };
+    const IDX_TO_TH = ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+
+    function autoEnableCurrentMonth() {
+      const now = new Date();
+      const y = String(now.getFullYear());
+      const mIdx = now.getMonth();
+      const stdName = IDX_TO_TH[mIdx];
+      
+      console.log(`🔄 Auto-enable check: Year ${y}, Month ${stdName} (Index: ${mIdx})`);
+      
+      // Enable current year first
+if (powerMeterData[y]) {
+  powerMeterData[y].available = true;
+  powerMeterData[y].description = `ข้อมูล Power Meter ปี ${y}<br>พร้อมให้บริการ`;
+}
+if (scrapData[y]) {
+  scrapData[y].available = true;
+  scrapData[y].description = `ข้อมูล Scrap ปี ${y}<br>พร้อมให้บริการ`;
+}
+if (airCompData[y]) {
+  airCompData[y].available = true;
+  airCompData[y].description = `ข้อมูล Air Compressor ปี ${y}<br>พร้อมให้บริการ`;
+}
+
+      // Enable current month for Power Meter
+      if (powerMeterData[y] && powerMeterData[y].months[stdName]) {
+        if (!powerMeterData[y].months[stdName].url) {
+          powerMeterData[y].months[stdName].url = '#';
+          powerMeterData[y].months[stdName].exportUrl = '#';
+        }
+        powerMeterData[y].months[stdName].available = true;
+        powerMeterData[y].months[stdName].description = `ข้อมูลเดือน${stdName}<br>พร้อมให้ดาวน์โหลด`;
+        console.log(`✅ Power Meter: ${stdName} ${y} enabled`);
+      } else {
+        console.log(`❌ Power Meter: ${stdName} ${y} not found in data structure`);
+      }
+      
+      // Enable current month for Scrap
+      if (scrapData[y] && scrapData[y].months[stdName]) {
+        if (!scrapData[y].months[stdName].url) {
+          scrapData[y].months[stdName].url = '#';
+          scrapData[y].months[stdName].exportUrl = '#';
+        }
+        scrapData[y].months[stdName].available = true;
+        scrapData[y].months[stdName].description = `ข้อมูล Scrap เดือน${stdName}<br>พร้อมให้ดาวน์โหลด`;
+        console.log(`✅ Scrap Data: ${stdName} ${y} enabled`);
+      } else {
+        console.log(`❌ Scrap Data: ${stdName} ${y} not found in data structure`);
+      }
+     // Enable current month for Air Compressor
+if (airCompData[y] && airCompData[y].months[stdName]) {
+  if (!airCompData[y].months[stdName].url) {
+    airCompData[y].months[stdName].url = '#';
+    airCompData[y].months[stdName].exportUrl = '#';
+  }
+  airCompData[y].months[stdName].available = true;
+  airCompData[y].months[stdName].description = `ข้อมูล Air เดือน${stdName}<br>พร้อมให้ดาวน์โหลด`;
+  console.log(`✅ Air Compressor: ${stdName} ${y} enabled`);
+} else {
+  console.log(`❌ Air Compressor: ${stdName} ${y} not found in data structure`);
+}
+
+    }
+    function getCurrentData() {
+  if (currentDataType === 'scrap') return scrapData;
+  if (currentDataType === 'aircompressor') return airCompData;
+  return powerMeterData; // ค่า default = Power Meter
+}
+
+    // Navigation Functions
+    function navigateTo(viewId) {
+      document.querySelectorAll('.view').forEach(view => view.classList.remove('active'));
+      document.getElementById(viewId).classList.add('active');
+      
+      if (!navigationHistory.includes(viewId)) {
+        navigationHistory.push(viewId);
+      }
+      
+      updateBreadcrumb(viewId);
+    }
+
+    function updateBreadcrumb(currentView) {
+      const backButton = document.getElementById('backButton');
+      const homeNav = document.getElementById('homeNav');
+      const yearNav = document.getElementById('yearNav');
+      const monthNav = document.getElementById('monthNav');
+      const sep1 = document.getElementById('sep1');
+      const sep2 = document.getElementById('sep2');
+
+      document.querySelectorAll('.nav-link').forEach(nav => nav.classList.remove('active'));
+
+      if (currentView === 'homeView') {
+        backButton.style.display = 'none';
+        homeNav.classList.add('active');
+        yearNav.style.display = 'none';
+        monthNav.style.display = 'none';
+        sep1.style.display = 'none';
+        sep2.style.display = 'none';
+      } else if (currentView === 'yearlyView') {
+        backButton.style.display = 'inline-block';
+        homeNav.classList.remove('active');
+        yearNav.style.display = 'inline-block';
+        yearNav.classList.add('active');
+        monthNav.style.display = 'none';
+        sep1.style.display = 'inline';
+        sep2.style.display = 'none';
+      } else if (currentView === 'monthlyView') {
+        backButton.style.display = 'inline-block';
+        homeNav.classList.remove('active');
+        yearNav.style.display = 'inline-block';
+        monthNav.style.display = 'inline-block';
+        monthNav.classList.add('active');
+        sep1.style.display = 'inline';
+        sep2.style.display = 'inline';
+      }
+    }
+
+    function goBack() {
+      if (navigationHistory.length > 1) {
+        navigationHistory.pop();
+        const previousView = navigationHistory[navigationHistory.length - 1];
+        navigateTo(previousView);
+      }
+    }
+
+function selectDataType(type) {
+  currentDataType = type;
+  
+  const subtitle = document.getElementById('mainSubtitle');
+  const statusText = document.getElementById('statusText');
+  
+  if (type === 'powermeter') {
+    subtitle.textContent = 'ดาวน์โหลดข้อมูล POWER METER';
+    statusText.textContent = 'DATA ONLINE';
+  } else if (type === 'scrap') {
+    subtitle.textContent = 'ดาวน์โหลดข้อมูล SCRAP DATA';
+    statusText.textContent = 'SCRAP ONLINE';
+  } else if (type === 'aircompressor') {
+    subtitle.textContent = 'ดาวน์โหลดข้อมูล AIR COMPRESSOR';
+    statusText.textContent = 'AIR SYSTEM ONLINE';
+  }
+  
+  navigateTo('yearlyView');
+  generateYearCards();
+}
+
+
+    // Year Cards Generation
+    function generateYearCards() {
+      const grid = document.getElementById('yearGrid');
+      grid.innerHTML = '';
+      const data = getCurrentData();
+
+      Object.entries(data).forEach(([year, yearInfo]) => {
+        const availableMonths = Object.values(yearInfo.months).filter(month => month.available).length;
+        const totalMonths = Object.keys(yearInfo.months).length;
+        
+        const card = document.createElement('div');
+        card.className = `year-card ${!yearInfo.available ? 'unavailable' : ''}`;
+        card.onclick = () => showMonthView(year);
+        
+        card.innerHTML = `
+          <div class="card-header">
+            <div class="card-icon">${yearInfo.icon}</div>
+            <h2 class="card-title">${yearInfo.title}</h2>
+          </div>
+          <p class="card-description">${yearInfo.description}</p>
+          <div class="card-stats">
+            <div class="stat-item">
+              <span class="stat-number">${availableMonths}</span>
+              <span class="stat-label">พร้อม</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">${totalMonths - availableMonths}</span>
+              <span class="stat-label">รอ</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">${totalMonths}</span>
+              <span class="stat-label">รวม</span>
+            </div>
+          </div>
+          ${yearInfo.available ? 
+            '<div class="file-size">📁 คลิกเพื่อดูรายเดือน</div>' : 
+            '<div class="coming-soon">เร็วๆ นี้</div>'
+          }
+        `;
+        
+        grid.appendChild(card);
+      });
+    }
+
+    // Month Cards Generation
+    function generateMonthCards(year) {
+      const grid = document.getElementById('monthGrid');
+      grid.innerHTML = '';
+      const data = getCurrentData();
+      const yearInfo = data[year];
+      
+      if (!yearInfo) return;
+
+      Object.entries(yearInfo.months).forEach(([month, monthData]) => {
+        const btnDisabled = (!monthData.available || !monthData.url);
+        const card = document.createElement('div');
+        card.className = `month-card ${!monthData.available ? 'unavailable' : ''}`;
+        
+        const mobileNotice = monthData.available && isMobile() ? 
+          '<div class="mobile-notice">📱 มือถือ: กดเพื่อเปิดใน Google Sheets</div>' : '';
+        
+        card.innerHTML = `
+          <div class="card-header">
+            <div class="card-icon">${monthData.icon}</div>
+            <h2 class="card-title">${month} ${year}</h2>
+          </div>
+          <p class="card-description">${monthData.description}</p>
+          ${mobileNotice}
+          <button class="download-button ${btnDisabled ? 'unavailable' : ''}" 
+                  ${btnDisabled ? 'disabled' : ''} 
+                  onclick="downloadFile(event, '${year}', '${month}')">
+            <span>${!btnDisabled ? '📥 ดาวน์โหลดไฟล์' : '⏳ ยังไม่พร้อม'}</span>
+          </button>
+          ${monthData.available ? 
+            `<div class="file-size">ขนาดไฟล์: ${monthData.fileSize}</div>` : 
+            '<div class="coming-soon">เร็วๆ นี้</div>'
+          }
+          <div class="progress-container" id="progress-${year}-${month}">
+            <div class="progress-bar"></div>
+          </div>
+        `;
+        
+        grid.appendChild(card);
+      });
+    }
+
+    function showMonthView(year) {
+      const data = getCurrentData();
+      if (!data[year] || !data[year].available) return;
+      
+      currentYear = year;
+      navigateTo('monthlyView');
+      generateMonthCards(year);
+    }
+
+    // Download Function
+    function downloadFile(ev, year, month) {
+      const data = getCurrentData();
+      const monthData = data[year]?.months[month];
+      if (!monthData || !monthData.available || !monthData.url) return;
+
+      const mobile = isMobile();
+      const targetUrl = mobile && monthData.exportUrl ? monthData.exportUrl : monthData.url;
+
+      let newTab = null;
+      if (mobile && targetUrl !== '#') {
+        newTab = window.open('about:blank', '_blank');
+        if (!newTab) {
+          window.location.href = targetUrl;
+          return;
+        }
+      }
+
+      const progressContainer = document.getElementById(`progress-${year}-${month}`);
+      const progressBar = progressContainer.querySelector('.progress-bar');
+      progressContainer.style.display = 'block';
+
+      if (ev && ev.target) {
+        ev.target.style.transform = 'translateY(-2px) scale(0.95)';
+        setTimeout(() => {
+          ev.target.style.transform = '';
+        }, 200);
+      }
+
+      let progress = 0;
+      const progressInterval = setInterval(() => {
+        progress += Math.random() * 20;
+        if (progress > 100) progress = 100;
+        progressBar.style.width = progress + '%';
+
+        if (progress >= 100) {
+          clearInterval(progressInterval);
+          
+          if (targetUrl === '#') {
+            alert(`✅ ดาวน์โหลดข้อมูล ${currentDataType === 'scrap' ? 'Scrap' : 'Power Meter'} เสร็จสิ้น`);
+          } else if (mobile && newTab) {
+            newTab.location.href = targetUrl;
+          } else {
+            const link = document.createElement('a');
+            link.href = targetUrl;
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+          }
+
+          setTimeout(() => {
+            progressContainer.style.display = 'none';
+            progressBar.style.width = '0%';
+          }, 1200);
+        }
+      }, 80);
+    }
+
+    // Particles System
+    function createParticle() {
+      const particle = document.createElement('div');
+      particle.className = 'particle';
+      particle.style.left = Math.random() * 100 + '%';
+      particle.style.top = Math.random() * 100 + '%';
+      particle.style.animationDelay = Math.random() * 8 + 's';
+      document.getElementById('particleContainer').appendChild(particle);
+      setTimeout(() => particle.remove(), 8000);
+    }
+
+    function initParticles() {
+      for (let i = 0; i < 6; i++) createParticle();
+      setInterval(createParticle, 2000);
+    }
+
+    // Management API
+    window.powerMeterManager = {
+      enableMonth: function(year, month, url, exportUrl = '', fileSize = '~2.5 MB') {
+        const data = getCurrentData();
+        if (!data[year] || !data[year].months[month]) {
+          console.error(`Month ${month} in year ${year} not found`);
+          return;
+        }
+        
+        if (!exportUrl && url && url.includes('docs.google.com/spreadsheets/d/')) {
+          const docId = url.match(/\/d\/([a-zA-Z0-9-_]+)/);
+          const gidMatch = url.match(/gid=([0-9]+)/);
+          if (docId) {
+            exportUrl = `https://docs.google.com/spreadsheets/d/${docId[1]}/export?format=xlsx`;
+            if (gidMatch) exportUrl += `&gid=${gidMatch[1]}`;
+          }
+        }
+        
+        const isScrap = currentDataType === 'scrap';
+        data[year].months[month] = {
+          ...data[year].months[month],
+          url, exportUrl, fileSize, available: true,
+          description: isScrap ? `ข้อมูล Scrap เดือน${month}<br>พร้อมให้ดาวน์โหลด` : `ข้อมูลเดือน${month}<br>พร้อมให้ดาวน์โหลด`
+        };
+        data[year].available = true;
+        
+        console.log(`✅ Enabled: ${month} ${year} (${isScrap ? 'Scrap' : 'Power Meter'})`);
+        generateYearCards();
+        if (currentYear === year) generateMonthCards(year);
+      },
+      
+      disableMonth: function(year, month) {
+        const data = getCurrentData();
+        if (!data[year] || !data[year].months[month]) {
+          console.error(`Month ${month} in year ${year} not found`);
+          return;
+        }
+        
+        const isScrap = currentDataType === 'scrap';
+        data[year].months[month] = {
+          ...data[year].months[month],
+          url: '', exportUrl: '', available: false,
+          description: isScrap ? `ข้อมูล Scrap เดือน${month}<br>กำลังเตรียมข้อมูล` : `ข้อมูลเดือน${month}<br>กำลังเตรียมข้อมูล`
+        };
+        
+        const hasAvailable = Object.values(data[year].months).some(m => m.available);
+        if (!hasAvailable) data[year].available = false;
+        
+        console.log(`❌ Disabled: ${month} ${year} (${isScrap ? 'Scrap' : 'Power Meter'})`);
+        generateYearCards();
+        if (currentYear === year) generateMonthCards(year);
+      },
+      
+      getCurrentData: () => getCurrentData(),
+      isMobile,
+      selectDataType,
+      navigateTo
+    };
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      autoEnableCurrentMonth();
+      initParticles();
+      console.log('✨ Power Meter & Scrap Manager loaded!');
+      console.log('📝 Use window.powerMeterManager.enableMonth() to add URLs');
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        goBack();
+      }
+    });
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
 
