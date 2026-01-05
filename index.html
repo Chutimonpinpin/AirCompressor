@@ -400,17 +400,16 @@
         }
       },
       '2026': { 
-        icon: '📅', 
         title: '2026', 
-        description: 'ข้อมูล Power Meter ปี 2026<br>กำลังเตรียมข้อมูล', 
+        description: 'ข้อมูล Power Meter ปี 2026<br>พร้อมให้ดาวน์โหลด', 
         available: false,
         months: {
           'มกราคม': { 
-            description: 'ข้อมูลเดือนมกราคม<br>กำลังเตรียมข้อมูล', 
+            description: 'ข้อมูลเดือนมกราคม<br>พร้อมให้ดาวน์โหลด', 
             fileSize: '~2.5 MB', 
-            url: '', 
-            exportUrl: '', 
-            available: false 
+            url: 'https://docs.google.com/spreadsheets/d/1K-LhquT_dPktlOUhEOF8kYtinRmd3lZy/edit?usp=sharing&ouid=103243829117381280273&rtpof=true&sd=true', 
+            exportUrl: 'https://docs.google.com/spreadsheets/d/1K-LhquT_dPktlOUhEOF8kYtinRmd3lZy/export?format=xlsx', 
+            available: true
           },
           'กุมภาพันธ์': { 
             description: 'ข้อมูลเดือนกุมภาพันธ์<br>กำลังเตรียมข้อมูล', 
@@ -549,16 +548,15 @@
       '2026': { 
         icon: '♻️', 
         title: '2026', 
-        description: 'ข้อมูล Scrap ปี 2026<br>กำลังเตรียมข้อมูล', 
+        description: 'ข้อมูล Scrap ปี 2026<br>พร้อมให้ดาวน์โหลด', 
         available: false,
         months: {
           'มกราคม': { 
-            icon: '🎊', 
-            description: 'ข้อมูล Scrap เดือนมกราคม<br>กำลังเตรียมข้อมูล', 
+            description: 'ข้อมูล Scrap เดือนมกราคม<br>พร้อมให้ดาวน์โหลด', 
             fileSize: '~1.8 MB', 
-            url: '', 
-            exportUrl: '', 
-            available: false 
+            url: 'https://docs.google.com/spreadsheets/d/16E9LrUNG72WoSsL03QRq4VOBEEJRvFEj/edit?usp=sharing&ouid=103243829117381280273&rtpof=true&sd=true', 
+            exportUrl: 'https://docs.google.com/spreadsheets/d/16E9LrUNG72WoSsL03QRq4VOBEEJRvFEj/export?format=xlsx', 
+            available: true 
           },
           'กุมภาพันธ์': { 
             icon: '💝', 
@@ -706,17 +704,22 @@ const airCompData = {
         fileSize: '~2.1 MB',
         url: 'https://docs.google.com/spreadsheets/d/16gk51Yj4wq3JD-rTOulxEPYjCO9zHcHa/edit?usp=sharing&ouid=103243829117381280273&rtpof=true&sd=true',
         exportUrl: 'https://docs.google.com/spreadsheets/d/16gk51Yj4wq3JD-rTOulxEPYjCO9zHcHa/export?format=xlsx',
-        available: false
+        available: true
       }
     }
   },
   '2026': {
     icon: '💨',
     title: '2026',
-    description: 'ข้อมูล Air Compressor ปี 2026<br>กำลังเตรียมข้อมูล',
+    description: 'ข้อมูล Air Compressor ปี 2026<br>พร้อมให้ดาวน์โหลด',
     available: false,
     months: {
-      'มกราคม': { icon: '💨', description: 'ข้อมูล Air เดือนมกราคม<br>กำลังเตรียมข้อมูล', fileSize: '~1.8 MB', url: '', exportUrl: '', available: false },
+      'มกราคม': { 
+        description: 'ข้อมูลเดือนมกราคม<br>พร้อมให้ดาวน์โหลด', 
+        fileSize: '~1.8 MB', 
+        url: 'https://docs.google.com/spreadsheets/d/1tF38Sqks1oFIV1CUN48q4oR_2bTKGvTU/edit?usp=sharing&ouid=103243829117381280273&rtpof=true&sd=true', 
+        exportUrl: 'https://docs.google.com/spreadsheets/d/1tF38Sqks1oFIV1CUN48q4oR_2bTKGvTU/export?format=xlsx', 
+        available: true },
       'กุมภาพันธ์': { icon: '💨', description: 'ข้อมูล Air เดือนกุมภาพันธ์<br>กำลังเตรียมข้อมูล', fileSize: '~1.7 MB', url: '', exportUrl: '', available: false },
       'มีนาคม': { icon: '💨', description: 'ข้อมูล Air เดือนมีนาคม<br>กำลังเตรียมข้อมูล', fileSize: '~1.9 MB', url: '', exportUrl: '', available: false },
       'เมษายน': { icon: '💨', description: 'ข้อมูล Air เดือนเมษายน<br>กำลังเตรียมข้อมูล', fileSize: '~2.0 MB', url: '', exportUrl: '', available: false },
@@ -1138,6 +1141,7 @@ function selectDataType(type) {
   </script>
 </body>
 </html>
+
 
 
 
